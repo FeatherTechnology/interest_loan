@@ -15,7 +15,7 @@ $(document).ready(function () {
         event.preventDefault();
         //Validation
         let company_name = $('#company_name').val(); let address = $('#address').val(); let state = $('#state').val(); let district = $('#district').val(); let taluk = $('#taluk').val(); let place = $('#place').val(); let pincode = $('#pincode').val(); let website = $('#website').val(); let mailid = $('#mailid').val(); let mobile = $('#mobile').val(); let whatsapp = $('#whatsapp').val(); let landline_code = $('#landline_code').val(); let landline = $('#landline').val(); let companyid = $('#companyid').val();
-        var data = ['company_name', 'address', 'state','place', 'district', 'taluk', 'pincode']
+        var data = ['company_name', 'address', 'state', 'place', 'district', 'taluk', 'pincode']
         var isValid = true;
         data.forEach(function (entry) {
             var fieldIsValid = validateField($('#' + entry).val(), entry);
@@ -26,10 +26,12 @@ $(document).ready(function () {
         if (isValid) {
             /////////////////////////// submit page AJAX /////////////////////////////////////
             $.post('api/company_creation_files/submit_company_creation.php', { company_name, address, state, district, taluk, place, pincode, website, mailid, mobile, whatsapp, landline_code, landline, companyid }, function (response) {
-                if (response == '1') {
+                if (response == '2') {
                     swalSuccess('Success', 'Company Added Successfully!');
-                } else {
+                } else if (response == '1') {
                     swalSuccess('Success', 'Company Updated Successfully!')
+                } else {
+                    swalError('Error', 'Error Occurs!')
                 }
 
                 $('#company_creation').trigger('reset');
@@ -42,59 +44,59 @@ $(document).ready(function () {
     });
 
     ///////////////////////////////////// EDIT Screen START   /////////////////////////////////////
- $(document).on('click', '.companyActionBtn', async function () {
-    var id = $(this).attr('value'); // Get value attribute
-    swapTableAndCreation(); // Switch to form view
+    $(document).on('click', '.companyActionBtn', async function () {
+        var id = $(this).attr('value'); // Get value attribute
+        swapTableAndCreation(); // Switch to form view
 
-    try {
-        const response = await $.ajax({
-            url: 'api/company_creation_files/get_company_creation_data.php',
-            type: 'POST',
-            data: { id },
-            dataType: 'json'
-        });
+        try {
+            const response = await $.ajax({
+                url: 'api/company_creation_files/get_company_creation_data.php',
+                type: 'POST',
+                data: { id },
+                dataType: 'json'
+            });
 
-        $('#companyid').val(id);
-        $('#company_name').val(response[0].company_name);
-        $('#address').val(response[0].address);
-        $('#state').val(response[0].state);
-        await getDistrictList(response[0].state);
-        await getTalukList(response[0].district);
-        $('#district').val(response[0].district);
-        $('#taluk').val(response[0].taluk);
-        $('#place').val(response[0].place);
-        $('#pincode').val(response[0].pincode);
-        $('#website').val(response[0].website);
-        $('#mailid').val(response[0].mailid);
-        $('#mobile').val(response[0].mobile);
-        $('#whatsapp').val(response[0].whatsapp);
-        $('#landline_code').val(response[0].landline_code);
-        $('#landline').val(response[0].landline);
+            $('#companyid').val(id);
+            $('#company_name').val(response[0].company_name);
+            $('#address').val(response[0].address);
+            $('#state').val(response[0].state);
+            await getDistrictList(response[0].state);
+            await getTalukList(response[0].district);
+            $('#district').val(response[0].district);
+            $('#taluk').val(response[0].taluk);
+            $('#place').val(response[0].place);
+            $('#pincode').val(response[0].pincode);
+            $('#website').val(response[0].website);
+            $('#mailid').val(response[0].mailid);
+            $('#mobile').val(response[0].mobile);
+            $('#whatsapp').val(response[0].whatsapp);
+            $('#landline_code').val(response[0].landline_code);
+            $('#landline').val(response[0].landline);
 
-    } catch (error) {
-        console.error('Error fetching company data:', error);
-    }
-});
+        } catch (error) {
+            console.error('Error fetching company data:', error);
+        }
+    });
 
     ///////////////////////////////////// EDIT Screen END  /////////////////////////////////////
 
-    $('#mobile, #whatsapp').change(function () {       
+    $('#mobile, #whatsapp').change(function () {
         checkMobileNo($(this).val(), $(this).attr('id'));
     });
 
-    $('#landline').change(function () {       
+    $('#landline').change(function () {
         checkLandlineFormat($(this).val(), $(this).attr('id'));
     });
-    
+
     $('#mailid').on('change', function () {
         validateEmail($(this).val(), $(this).attr('id'));
     });
 
     $('button[type="reset"],  .backBtn').click(function () {
-    event.preventDefault();
-    $('#company_creation input').css('border', '1px solid #cecece');
-    $('#company_creation select').css('border', '1px solid #cecece');
-});
+        event.preventDefault();
+        $('#company_creation input').css('border', '1px solid #cecece');
+        $('#company_creation select').css('border', '1px solid #cecece');
+    });
 
 });//Document END.
 

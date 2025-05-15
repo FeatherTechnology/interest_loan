@@ -25,10 +25,12 @@ $(document).ready(function () {
         });
         if (isValid) {
             $.post('api/branch_creation/submit_branch_creation.php', { company_name, branch_code, branch_name, address, state, district, taluk, place, pincode, email_id, mobile_number, whatsapp, landline, landline_code, branchid }, function (response) {
-                if (response == '1') {
+                if (response == '2') {
                     swalSuccess('Success', 'Branch Added Successfully!');
-                } else {
+                } else if(response == '1') {
                     swalSuccess('Success', 'Branch Updated Successfully!')
+                }else{
+                    swalError('Error', 'Error Occurs!')
                 }
                 $('#branchid').val('');
                 $('#branch_creation').trigger('reset');

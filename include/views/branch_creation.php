@@ -119,7 +119,7 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="email_id"> E-Mail ID</label>
-                                    <input type="email" class="form-control" id="email_id" name="email_id" placeholder="Enter E-Mail Id" tabindex="10">
+                                    <input type="email" class="form-control" id="email_id" name="email_id" placeholder="Enter E-Mail ID" tabindex="10">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
