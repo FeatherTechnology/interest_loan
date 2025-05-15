@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 15, 2025 at 06:47 AM
+-- Generation Time: May 15, 2025 at 01:39 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,77 @@ SET time_zone = "+00:00";
 --
 -- Database: `interest_loan`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `branch_creation`
+--
+
+CREATE TABLE `branch_creation` (
+  `id` int(11) NOT NULL,
+  `company_name` varchar(255) NOT NULL,
+  `branch_code` varchar(50) NOT NULL,
+  `branch_name` varchar(100) NOT NULL,
+  `address` varchar(100) DEFAULT NULL,
+  `state` int(11) NOT NULL,
+  `district` int(11) NOT NULL,
+  `taluk` int(11) NOT NULL,
+  `place` varchar(100) NOT NULL,
+  `pincode` varchar(100) NOT NULL,
+  `email_id` varchar(100) DEFAULT NULL,
+  `mobile_number` varchar(100) DEFAULT NULL,
+  `whatsapp` varchar(100) DEFAULT NULL,
+  `landline_code` varchar(50) DEFAULT NULL,
+  `landline` varchar(100) DEFAULT NULL,
+  `insert_login_id` int(11) NOT NULL,
+  `update_login_id` int(11) DEFAULT NULL,
+  `created_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_date` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `branch_creation`
+--
+
+INSERT INTO `branch_creation` (`id`, `company_name`, `branch_code`, `branch_name`, `address`, `state`, `district`, `taluk`, `place`, `pincode`, `email_id`, `mobile_number`, `whatsapp`, `landline_code`, `landline`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(1, 'Feather Technology', 'F-101', 'Villianur', 'Gandhi road', 2, 39, 314, 'Cheyyar', '605110', 'akshaya1@gmail.com', '6786786786', '8787878787', '67876', '87686787', 1, 1, '2025-05-15 14:47:05', '2025-05-15'),
+(2, 'Feather Technology', 'F-102', 'Villianur', 'Buusy Street', 1, 10, 87, 'Kanchipuram', '605110', 'vidhyaparthihss@gmail.com', '6868686787', '7878777878', '676', '77878787', 1, NULL, '2025-05-15 14:57:40', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `company_creation`
+--
+
+CREATE TABLE `company_creation` (
+  `id` int(11) NOT NULL,
+  `company_name` varchar(100) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `state` int(11) NOT NULL,
+  `district` int(11) NOT NULL,
+  `taluk` int(11) NOT NULL,
+  `place` varchar(255) DEFAULT NULL,
+  `pincode` varchar(255) DEFAULT NULL,
+  `website` varchar(255) DEFAULT NULL,
+  `mailid` varchar(255) DEFAULT NULL,
+  `mobile` varchar(255) DEFAULT NULL,
+  `whatsapp` varchar(255) DEFAULT NULL,
+  `landline_code` varchar(100) DEFAULT NULL,
+  `landline` varchar(255) DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
+  `insert_user_id` int(11) NOT NULL,
+  `update_user_id` int(11) DEFAULT NULL,
+  `created_date` datetime NOT NULL,
+  `updated_date` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `company_creation`
+--
+
+INSERT INTO `company_creation` (`id`, `company_name`, `address`, `state`, `district`, `taluk`, `place`, `pincode`, `website`, `mailid`, `mobile`, `whatsapp`, `landline_code`, `landline`, `status`, `insert_user_id`, `update_user_id`, `created_date`, `updated_date`) VALUES
+(1, 'Feather Technology', 'Bussy Street', 2, 39, 313, 'Pondy', '605110', 'akvschoolcbse.org', 'feather@gmail.com', '7897898978', '9789789789', '78978', '78678678', 1, 1, NULL, '2025-05-15 12:36:11', NULL);
 
 -- --------------------------------------------------------
 
@@ -554,11 +625,29 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `user_code`, `role`, `designation`, `address`, `place`, `email`, `mobile`, `user_name`, `password`, `branch`, `loan_category`, `line`, `collection_access`, `download_access`, `screens`, `insert_login_id`, `update_login_id`, `created_on`, `updated_on`) VALUES
-(1, 'Super Admin', 'US-001', 1, 1, '', '', '', '', 'admin', '123', '1,2,4,5,6', '1,2,3,4,5,7', '1,2,6,8,10,12', 1, 0, '1,2', '1', '1', '2024-06-13', '2024-09-21');
+(1, 'Super Admin', 'US-001', 1, 1, '', '', '', '', 'admin', '123', '1,2,4,5,6', '1,2,3,4,5,7', '1,2,6,8,10,12', 1, 1, '1,2,3', '1', '1', '2024-06-13', '2024-09-21');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `branch_creation`
+--
+ALTER TABLE `branch_creation`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `state_id` (`state`),
+  ADD KEY `district_id` (`district`),
+  ADD KEY `taluk_id` (`taluk`);
+
+--
+-- Indexes for table `company_creation`
+--
+ALTER TABLE `company_creation`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `State ids` (`state`),
+  ADD KEY `District ids` (`district`),
+  ADD KEY `Taluk ids` (`taluk`);
 
 --
 -- Indexes for table `districts`
@@ -607,6 +696,18 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `branch_creation`
+--
+ALTER TABLE `branch_creation`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `company_creation`
+--
+ALTER TABLE `company_creation`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `districts`
 --
 ALTER TABLE `districts`
@@ -645,6 +746,22 @@ ALTER TABLE `users`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `branch_creation`
+--
+ALTER TABLE `branch_creation`
+  ADD CONSTRAINT `district_id` FOREIGN KEY (`district`) REFERENCES `districts` (`id`),
+  ADD CONSTRAINT `state_id` FOREIGN KEY (`state`) REFERENCES `states` (`id`),
+  ADD CONSTRAINT `taluk_id` FOREIGN KEY (`taluk`) REFERENCES `taluks` (`id`);
+
+--
+-- Constraints for table `company_creation`
+--
+ALTER TABLE `company_creation`
+  ADD CONSTRAINT `District ids` FOREIGN KEY (`district`) REFERENCES `districts` (`id`),
+  ADD CONSTRAINT `State ids` FOREIGN KEY (`state`) REFERENCES `states` (`id`),
+  ADD CONSTRAINT `Taluk ids` FOREIGN KEY (`taluk`) REFERENCES `taluks` (`id`);
 
 --
 -- Constraints for table `districts`

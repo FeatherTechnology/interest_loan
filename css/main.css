@@ -53,7 +53,7 @@ body.authentication {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url(../img/bg_with_colour.png);
+  background: var(--primary-color);
   
 }
 

@@ -1,6 +1,6 @@
 <?php
 require '../../ajaxconfig.php';
-
+// used in both Branch creation and Company Creation
 $district_id = $_POST['district_id'];
 
 $qry = $pdo->query("SELECT id, taluk_name FROM taluks WHERE district_id='$district_id' AND status = 1 ");
