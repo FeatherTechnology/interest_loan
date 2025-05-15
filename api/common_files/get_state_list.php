@@ -1,5 +1,6 @@
 <?php
 require '../../ajaxconfig.php';
+// used in both Branch creation and Company Creation
 
 $qry = $pdo->query("SELECT id, state_name FROM states WHERE status = 1 ");
 if ($qry->rowCount() > 0) {

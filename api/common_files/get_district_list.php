@@ -1,4 +1,5 @@
 <?php
+// used in both Branch creation and Company Creation
 require '../../ajaxconfig.php';
 
 $state_id = $_POST['state_id'];
