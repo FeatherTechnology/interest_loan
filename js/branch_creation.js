@@ -153,6 +153,7 @@ function getStateList() {
         $('#state').empty().append(appendStateOption);
     }, 'json');
 }
+
 async function getDistrictList(state_id) {
     return new Promise((resolve, reject) => {
         $.post('api/common_files/get_district_list.php', { state_id }, function (response) {
