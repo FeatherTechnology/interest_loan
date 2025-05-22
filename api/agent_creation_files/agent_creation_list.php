@@ -1,5 +1,4 @@
 <?php
-//Also Using in Loan Entry- Loan Calculation.
 require '../../ajaxconfig.php';
 
 $agent_list_arr = array();
@@ -16,5 +15,6 @@ if ($qry->rowCount() > 0) {
     }
 }
 
-echo json_encode($agent_list_arr);
 $pdo = null; // Close Connection
+
+echo json_encode($agent_list_arr);

@@ -19,5 +19,7 @@ while( $row = $result->fetch()){
     $linename_arr[] = array("id" => $id, "linename" => $linename,"disabled"=>$disabled);
 }
 
+$pdo = null; // Close Connection
+
 echo json_encode($linename_arr);
 ?>

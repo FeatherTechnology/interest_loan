@@ -56,4 +56,6 @@ if ($kyc_id != '') {
     }
 }
 
+$pdo = null; // Close Connection
+
 echo json_encode($result);

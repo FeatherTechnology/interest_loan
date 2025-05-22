@@ -42,9 +42,7 @@ $data = [];
 foreach ($result as $row) {
     $sub_array = array();
     $sub_array[] = $sno++;
-    $sub_array[] = isset($row['areaname']) ? $row['areaname'] : '';
-   // $sub_array[] = isset($row['status']) ? $row['status'] : '';
-  
+    $sub_array[] = isset($row['areaname']) ? $row['areaname'] : ''; 
     $sub_array[] = ($row['status'] =='1') ? 'Enable' : 'Disable';
     $action = "<span class='icon-border_color areanameActionBtn' value='" . $row['id'] . "'></span><span class='icon-trash-2 areanameDeleteBtn' value='" . $row['id'] . "'></span>";
     $sub_array[] = $action;
@@ -65,6 +63,8 @@ $output = array(
     'recordsFiltered' => $number_filter_row,
     'data' => $data
 );
+
+$pdo = null; // Close Connection
 
 echo json_encode($output);
 ?>

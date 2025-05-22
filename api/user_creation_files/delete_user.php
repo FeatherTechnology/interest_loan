@@ -9,4 +9,6 @@ if ($qry) {
     $result = '1';
 }
 
+$pdo = null; // Close Connection
+
 echo json_encode($result);

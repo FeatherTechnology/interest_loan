@@ -21,5 +21,7 @@ if ($selectIC->rowCount() > 0) {
     $agent_code = $initialapp;
 }
 
+$pdo = null; // Close Connection
+
 echo json_encode($agent_code);
 ?>

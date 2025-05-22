@@ -1,6 +1,4 @@
-
 <?php
-//also Using In Loan Entry - Loan Calculation.
 require '../../ajaxconfig.php';
 
 $id = $_POST['id'];

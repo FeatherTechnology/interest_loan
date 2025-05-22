@@ -85,4 +85,6 @@ try {
     exit;
 }
 
+$pdo = null; // Close Connection
+
 echo json_encode($result);

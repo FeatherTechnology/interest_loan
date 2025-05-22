@@ -14,4 +14,6 @@ try {
     $result = 2; // Handle general exceptions
 }
 
+$pdo = null; // Close Connection
+
 echo json_encode($result);

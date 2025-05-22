@@ -36,3 +36,4 @@ if ($current_page != '') {
 }
 $response = ob_get_clean(); // Get the output buffer content and clear it
 echo $response;
+

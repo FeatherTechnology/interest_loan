@@ -28,8 +28,9 @@ if ($qry->rowCount() > 0) {
     }
 }
 
-echo json_encode($family_list_arr);
 $pdo = null; // Close Connection
+
+echo json_encode($family_list_arr);
 
 
 

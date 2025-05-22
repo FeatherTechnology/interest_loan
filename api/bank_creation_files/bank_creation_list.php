@@ -8,8 +8,6 @@ $status_arr = ['Inactive', 'Active']; // Ensure 'Inactive' and 'Active' are corr
 $qry = $pdo->prepare("SELECT id, bank_name, account_number, branch_name, status FROM bank_creation");
 if ($qry->execute()) {
     while ($row = $qry->fetch(PDO::FETCH_ASSOC)) {
-        // Debug status value
-        error_log('Status Value: ' . $row['status']); // Log the status value for debugging
 
         $bank_list_arr[$i]['id'] = $row['id'];
         $bank_list_arr[$i]['bank_name'] = $row['bank_name'];

@@ -1,8 +1,6 @@
 <?php
 
 //Also using in property holder name, KYC Family Member
-//Aslo Using in Loan Issue.
-//Also using in NOC.
 
 require '../../ajaxconfig.php';
 
