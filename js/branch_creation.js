@@ -1,6 +1,7 @@
 $(document).ready(function () {
     $(document).on('click', '#add_branch, #back_btn', function () {
         swapTableAndCreation();
+        getCompanyName();
     });
 
     $('#state').change(function () {
@@ -27,9 +28,9 @@ $(document).ready(function () {
             $.post('api/branch_creation/submit_branch_creation.php', { company_name, branch_code, branch_name, address, state, district, taluk, place, pincode, email_id, mobile_number, whatsapp, landline, landline_code, branchid }, function (response) {
                 if (response == '2') {
                     swalSuccess('Success', 'Branch Added Successfully!');
-                } else if(response == '1') {
+                } else if (response == '1') {
                     swalSuccess('Success', 'Branch Updated Successfully!')
-                }else{
+                } else {
                     swalError('Error', 'Error Occurs!')
                 }
                 $('#branchid').val('');
@@ -132,7 +133,6 @@ function swapTableAndCreation() {
         $('.addbranchBtn').hide();
         $('#branch_creation_content').show();
         $('.backBtn').show();
-        getCompanyName();
         getStateList();
 
     } else {
