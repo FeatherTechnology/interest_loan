@@ -31,9 +31,9 @@ try {
             $result = 1; //update
         }
     } else {
+        $str = preg_replace('/\s+/', '', $company_name);
+        $myStr = mb_substr($str, 0, 1);
         if ($selectIC->rowCount() > 0) {
-            $str = preg_replace('/\s+/', '', $company_name);
-            $myStr = mb_substr($str, 0, 1);
             $row = $selectIC->fetch();
             $ac2 = $row["branch_code"];
             $appno2 = ltrim(strstr($ac2, '-'), '-');
