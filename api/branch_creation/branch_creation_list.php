@@ -83,6 +83,8 @@ $output = array(
     'data' => $data
 );
 
+$pdo = null; // Close Connection
+
 echo json_encode($output);
 ?>
 
