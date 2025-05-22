@@ -26,9 +26,8 @@ try {
             $result = 1; //Update
         }
     } else {
-
+        $myStr = "AG";
         if ($selectIC->rowCount() > 0) {
-            $myStr = "AG";
             $row = $selectIC->fetch();
             $ac2 = $row["agent_code"];
             $appno2 = ltrim(strstr($ac2, '-'), '-');
