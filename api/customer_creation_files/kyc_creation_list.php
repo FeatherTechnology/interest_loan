@@ -7,7 +7,7 @@ $kyc_list_arr = array();
 $i = 0;
 
 try {
-    $qry = $pdo->query("SELECT ki.id,  ki.proof_of, ki.name ,
+    $qry = $pdo->query("SELECT ki.id,  ki.proof_of,
                             CASE 
                                 WHEN ki.proof_of = 1 THEN CONCAT(cc.first_name, ' ', COALESCE(cc.last_name, ''))
                                 ELSE fi.fam_name 

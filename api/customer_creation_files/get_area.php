@@ -3,7 +3,8 @@ require '../../ajaxconfig.php';
 
 $response = [];
 
-$qry = $pdo->prepare(" SELECT anc.id, anc.areaname FROM area_creation ac JOIN area_name_creation anc ON FIND_IN_SET(anc.id, ac.area_id) WHERE ac.status = 1");
+$qry = $pdo->prepare(" SELECT anc.id, anc.areaname FROM area_creation ac LEFT JOIN area_creation_area_name acan ON ac.id = acan.area_creation_id
+LEFT JOIN area_name_creation anc ON acan.area_id = anc.id WHERE ac.status = 1");
 
 $qry->execute();
 if ($qry->rowCount() > 0) {
