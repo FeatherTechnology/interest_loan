@@ -4,21 +4,27 @@ $branch_id = $_POST['branch_id'];
 
 $areaname_arr = array();
 
-$result = $pdo->query("SELECT id,areaname,status FROM area_name_creation WHERE branch_id ='$branch_id' AND status=1");
+$result = $pdo->query("SELECT id, areaname, status FROM area_name_creation WHERE branch_id = '$branch_id' AND status = 1");
+
 while ($row = $result->fetch()) {
     $id = $row['id'];
     $areaname = $row['areaname'];
 
-    $checkQry = $pdo->query("SELECT * FROM area_creation where status=1 and FIND_IN_SET($id,area_id)");
-    if ($checkQry->rowCount() > 0) {
-        $disabled = true;
-    } else {
-        $disabled = false;
-    }
+    // Check if this area_id exists in any active area_creation through the mapping table
+    $checkQry = $pdo->query("SELECT *
+        FROM area_creation_area_name acan
+        JOIN area_creation ac ON ac.id = acan.area_creation_id
+        WHERE acan.area_id = $id AND ac.status = 1");
 
-    $areaname_arr[] = array("id" => $id, "areaname" => $areaname, "disabled" => $disabled);
+    $disabled = $checkQry->rowCount() > 0;
+
+    $areaname_arr[] = array(
+        "id" => $id,
+        "areaname" => $areaname,
+        "disabled" => $disabled
+    );
 }
 
-$pdo = null; // Close Connection
-
 echo json_encode($areaname_arr);
+
+$pdo = null; // Close Connection

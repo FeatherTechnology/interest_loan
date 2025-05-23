@@ -130,7 +130,11 @@ $(document).ready(function () {
     $('#submit_area_creation').click(function () {
         event.preventDefault();
         //Validation
-        let branch_id = $('#branch_name').val(); let line_id = $('#line_name').val(); let area_id = $('#area_name').val(); let id = $('#area_creation_id').val();
+        let branch_id = $('#branch_name').val();
+        let line_id = $('#line_name').val();
+        let area_id = $('#area_name').val();
+        let area_name2 = $('#area_name2').val(); // Checking Existing Id For Area Multi Select
+        let id = $('#area_creation_id').val();
         var data = ['branch_name', 'line_name']
 
         var isValid = true;
@@ -145,12 +149,14 @@ $(document).ready(function () {
 
             /////////////////////////// submit page AJAX /////////////////////////////////////
 
-            area_id = area_id.join(",");
-            $.post('api/area_creation_files/submit_area_creation.php', { branch_id, line_id, area_id, id }, function (response) {
-                if (response == '1') {
+            $.post('api/area_creation_files/submit_area_creation.php', { branch_id, line_id, area_id, area_name2, id }, function (response) {
+
+                if (response === '2') {
                     swalSuccess('Success', 'Area Added Successfully!');
+                } else if (response === '1') {
+                    swalSuccess('Success', 'Area Updated Successfully!');
                 } else {
-                    swalSuccess('Success', 'Area Updated Successfully!')
+                    swalError('Error', 'Error Occurred!');
                 }
 
                 $('#area_creation').trigger('reset');
@@ -175,6 +181,7 @@ $(document).ready(function () {
                 dataType: 'json'
             });
 
+
             $('#area_creation_id').val(id);
             $('#line_name2').val(response[0].line_id);
 
@@ -187,7 +194,7 @@ $(document).ready(function () {
             await getAreaNameDropdown();
 
             $('#line_name').val(response[0].line_id);
-            $('#area_name').val(response[0].area_id);
+            // $('#area_name').val(response[0].area_id);
 
             getModalAttr();
             swapTableAndCreation();
