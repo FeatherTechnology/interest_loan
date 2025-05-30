@@ -1098,7 +1098,7 @@ function getFamilyMember() {
     return new Promise((resolve, reject) => {
         let cus_id = $('#cus_id').val();
         $.post(
-            'api/customer_creation_files/get_guarantor_name.php',
+            'api/customer_creation_files/get_family_name.php',
             { cus_id },
             function (response) {
                 let appendHolderOption = "<option value=''>Select Family Member</option>";

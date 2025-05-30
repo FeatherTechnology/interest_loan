@@ -17,3 +17,5 @@ if (isset($_POST['loan_entry_id']) && isset($_POST['family_info_id'])) {
 } else {
     echo json_encode(0); // Invalid input
 }
+
+$pdo = null; // Close the connection

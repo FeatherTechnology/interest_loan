@@ -622,7 +622,7 @@ $(document).ready(function () {
     $('#guarantor_name').change(function () {
         var family_info_id = $(this).val();
         if (family_info_id) {
-            getGrelationshipName(family_info_id);
+            getFamilyRelationship(family_info_id);
         } else {
             $('#relationship').val('');
         }
@@ -1083,7 +1083,7 @@ function getGuarantorName() {
     let cus_id = $('#cus_id').val();
 
     return new Promise((resolve, reject) => {
-        $.post('api/customer_creation_files/get_guarantor_name.php', { cus_id }, function (response) {
+        $.post('api/customer_creation_files/get_family_name.php', { cus_id }, function (response) {
             let appendGuarantorOption = "<option value=''>Select Guarantor Name</option>";
             let editGId = $('#guarantor_name_edit').val();
 
@@ -1098,9 +1098,9 @@ function getGuarantorName() {
     });
 }
 
-function getGrelationshipName(family_info_id) {
+function getFamilyRelationship(family_info_id) {
     $.ajax({
-        url: 'api/customer_creation_files/getGrelationship.php',
+        url: 'api/customer_creation_files/getFamilyRelationship.php',
         type: 'POST',
         data: { family_info_id: family_info_id },
         dataType: 'json',
