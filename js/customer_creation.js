@@ -1265,7 +1265,7 @@ function getPropertyHolder() {
     let first_name = $("#first_name").val().trim();
     let last_name = $("#last_name").val().trim();
     let cus_name = first_name + (last_name ? " " + last_name : "");
-    $.post('api/customer_creation_files/get_guarantor_name.php', { cus_id }, function (response) {
+    $.post('api/customer_creation_files/get_family_name.php', { cus_id }, function (response) {
         let appendHolderOption = '';
         appendHolderOption += "<option value=''>Select Property Holder</option>";
         appendHolderOption += "<option value='" + 0 + "'>" + cus_name + "</option>";
