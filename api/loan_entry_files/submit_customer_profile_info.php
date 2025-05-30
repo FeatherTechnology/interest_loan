@@ -6,6 +6,8 @@ $cus_id = $_POST['cus_id'];
 $aadhar_number = $_POST['aadhar_number'];
 $user_id = $_SESSION['user_id'];
 $loan_entry_id = $_POST['customer_profile_id'];
+$cus_limit = $_POST['cus_limit'];
+$about_cus = $_POST['about_cus'];
 
 // Query to get customer profile along with customer status
 $qry = $pdo->query("SELECT cs.status 
@@ -31,6 +33,8 @@ $result = 0;
 
 if ($loan_entry_id != '') {
     $qry = $pdo->query("UPDATE `loan_entry` SET  `aadhar_number`='$aadhar_number',`cus_id`='$cus_id', `cus_data`='$cus_data', `update_login_id`='$user_id',updated_on = now() WHERE `id`='$loan_entry_id'");
+
+    $qry = $pdo->query("UPDATE `customer_creation` SET  `cus_limit`='$cus_limit', `about_cus`='$about_cus', `update_login_id`='$user_id',updated_on = now() WHERE `id`='$loan_entry_id'");
 
     if ($qry) {
         $result = 1; // Update successfull

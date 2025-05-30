@@ -1,13 +1,7 @@
 $(document).ready(function () {
     // Loan Entry Tab Change Radio buttons
-    $(document).on('click', '#add_loan ,#back_btn', function () {
+    $(document).on('click', '#back_btn', function () {
         swapTableAndCreation();
-    });
-
-    $(document).on('click', '.move-loan-entry', function () {
-        let cus_sts_id = $(this).attr('value');
-        swalConfirm('Approve', 'Are you ready to move to the Approval Screen?', moveToNext, cus_sts_id);
-        return;
     });
 
     ////////////////////////////////////////////////////////////////////// Kyc Modal Start ////////////////////////////////////////////////////////////////////////////////
@@ -571,11 +565,58 @@ $(document).ready(function () {
 
     //////////////////////////////////////////////////////////// Customer Profile Edit start /////////////////////////////////////////////////////////////////////
 
-    $(document).on('click', '.edit-loan-entry', function () {
+    $(document).on('click', '.approval-edit', function () {
         let id = $(this).attr('value');
         $('#customer_profile_id').val(id);
         swapTableAndCreation();
         editCustmerProfile(id);
+    });
+
+    $(document).on('click', '.approval-approve', function () {
+        let loan_entry_id = $(this).attr('data-id');
+        let cus_sts_id = $(this).attr('value');
+        let cus_sts = 4;
+
+        // Call check Customer Limit and only proceed when response is valid
+        checkCustomerLimit(loan_entry_id, cus_sts_id, cus_sts);
+    });
+
+
+    $(document).on('click', '.approval-cancel', function () {
+        let cus_sts_id = $(this).attr('value');
+        let cus_sts = 5;
+        $('#add_info_modal').modal('show');
+        $('#exampleModalLongTitle').text('Cancel');
+        $('.modal_revoke').text('Cancel');
+        $('#customer_profile_id').val(cus_sts_id);
+        $('#customer_status').val(cus_sts);
+        $('#remark').val('');
+    });
+
+    $(document).on('click', '.approval-revoke', function () {
+        let cus_sts_id = $(this).attr('value');
+        let cus_sts = 6;
+        $('#add_info_modal').modal('show');
+        $('#exampleModalLongTitle').text('Revoke');
+        $('.modal_revoke').text('Revoke');
+        $('#customer_profile_id').val(cus_sts_id);
+        $('#customer_status').val(cus_sts);
+        $('#remark').val('');
+    });
+
+    $(document).on('click', '#submit_remark', function () {
+        event.preventDefault();
+        let action = $('#exampleModalLongTitle').text().toLowerCase(); // Get action (cancel or revoke)
+        let cus_sts_id = $('#customer_profile_id').val();
+        let cus_sts = $('#customer_status').val();
+        let remark = $('#remark').val();
+
+        if (remark === '') {
+            alert('Please enter a remark.');
+            return;
+        }
+
+        submitForm(action, cus_sts_id, cus_sts, remark);
     });
 
     //////////////////////////////////////////////////////////// Customer Profile Edit End ///////////////////////////////////////////////////////////////////////
@@ -607,21 +648,18 @@ $(document).ready(function () {
 
     //<------------------------------------ aadhar number Change  ------------------------------------------------->
 
-    // Aadhaar validation and existing customer check
-    $("#aadhar_number").on("blur change", function () {
-        let aadhar_number = $(this).val().trim().replace(/\s/g, '');
-
-        // Aadhaar must be exactly 12 digits
-        if (aadhar_number.length !== 12 || !/^\d{12}$/.test(aadhar_number)) {
-            $(this).val('');
-            swalError('Warning', 'Kindly enter a valid 12-digit Aadhaar number');
-            return;
-        }
-
-        // Proceed to check existing profile
+    $("#aadhar_number").on("blur", function () {
+        let aadhar_number = $("#aadhar_number").val().trim().replace(/\s/g, "");
         existingCustmerProfile(aadhar_number);
     });
 
+    $('input[data-type="adhaar-number"]').change(function () {
+        let len = $(this).val().length;
+        if (len < 14) {
+            $(this).val('');
+            swalError('Warning', 'Kindly Enter Valid Aadhaar Number');
+        }
+    });
 
     // Function to format Aadhaar number input
     $('input[data-type="adhaar-number"]').keyup(function () {
@@ -841,39 +879,75 @@ $(document).ready(function () {
 
 //On Load function 
 $(function () {
-    getLoanEntryTable();
+    getApprovalTable();
 });
 
-function getLoanEntryTable() {
-    serverSideTable('#loan_entry_table', '', 'api/loan_entry_files/loan_entry_list.php');
+function getApprovalTable() {
+    serverSideTable('#approval_table', '', 'api/approval_files/approval_list.php');
 }
 
 function swapTableAndCreation() {
     if ($('.loan_table_content').is(':visible')) {
         $('.loan_table_content').hide();
-        $('#add_loan').hide();
         $('#loan_entry_content').show();
         $('#back_btn').show();
 
     } else {
         $('.loan_table_content').show();
-        $('#add_loan').show();
         $('#loan_entry_content').hide();
         $('#back_btn').hide();
-        getLoanEntryTable();
+        getApprovalTable();
         clearLoanEntryForm();
         $('#customer_profile').trigger('click')
     }
 }
 
-function moveToNext(cus_sts_id) {
-    let cus_sts = 3;
+function moveToNext(cus_sts_id, cus_sts) {
     $.post('api/common_files/move_to_next.php', { cus_sts_id, cus_sts }, function (response) {
         if (response == '0') {
-            swalSuccess('Success', 'Moved to Approval');
-            getLoanEntryTable();
+            let alertName;
+            if (cus_sts == '4') {
+                alertName = 'Approved Successfully';
+            }
+            else if (cus_sts == '5') {
+                alertName = 'Cancelled Successfully';
+            }
+            else if (cus_sts == '6') {
+                alertName = 'Revoked Successfully';
+            }
+            swalSuccess('Success', alertName);
+            getApprovalTable();
         } else {
-            swalError('Alert', 'Failed to Move to Approval');
+            swalError('Alert', 'Failed To Move');
+        }
+    }, 'json');
+}
+
+function submitForm(action, cus_sts_id, cus_sts, remark) {
+    $.post('api/common_files/update_status.php', { cus_sts_id, remark, cus_sts }, function (response) {
+        if (response == '0') {
+            $('#add_info_modal').modal('hide');
+            moveToNext(cus_sts_id, cus_sts);
+        } else {
+            swalError('Alert', 'Failed to ' + action);
+        }
+    }, 'json');
+}
+
+function closeRemarkModal() {
+    $('#add_info_modal').modal('hide');
+}
+
+function checkCustomerLimit(loan_entry_id, cus_sts_id, cus_sts) {
+    $.post('api/common_files/check_customer_limit.php', { loan_entry_id }, function (response) {
+        if (response == '1') {
+            swalError('Warning', 'Kindly Enter The Customer Limit');
+        } else if (response == '2') {
+            swalError('Warning', 'Customer limit is less than the loan amount. Please update either the customer limit or the loan amount.');
+        } else if (response == '3') {
+            moveToNext(cus_sts_id, cus_sts);
+        } else {
+            swalError('Alert', 'Failed To Approved');
         }
     }, 'json');
 }
@@ -899,7 +973,7 @@ async function editCustmerProfile(id) {
         $('#mobile1').val(data.mobile1);
         $('#mobile2').val(data.mobile2);
         $('#whatsapp').val(data.whatsapp);
-        $('#cus_limit').val(data.cus_limit);
+        $('#cus_limit').val(moneyFormatIndia(data.cus_limit));
         $('#about_cus').val(data.about_cus);
 
         if (data.whatsapp === data.mobile1) {

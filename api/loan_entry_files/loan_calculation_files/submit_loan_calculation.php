@@ -35,7 +35,7 @@ if ($id != '') {
 
     if ($qry) {
         $status = 2;
-        $qry = $pdo->query("UPDATE `customer_status` SET `status` = '$cus_status', `update_login_id` = '$user_id', `updated_on` = NOW() WHERE `loan_entry_id` = '$id' ");
+        $qry = $pdo->query("UPDATE `customer_status` SET `status` = '$cus_status', `update_login_id` = '$user_id', `updated_on` = NOW() WHERE `loan_entry_id` = '$id' AND status = 1 ");
     }
 }
 
