@@ -29,7 +29,7 @@ LEFT JOIN area_name_creation anc ON cc.area = anc.id
 LEFT JOIN area_creation ac ON cc.line = ac.line_id
 LEFT JOIN branch_creation bc ON ac.branch_id = bc.id
 LEFT JOIN customer_status cs ON le.id = cs.loan_entry_id 
-WHERE cc.insert_login_id = '$user_id' AND (cs.status = '1' OR cs.status = '2') ";
+WHERE cc.insert_login_id = '$user_id' AND cs.status = 3 ";
 
 if (isset($_POST['search'])) {
     if ($_POST['search'] != "") {
@@ -49,6 +49,8 @@ if (isset($_POST['search'])) {
         )";
     }
 }
+
+
 
 if (isset($_POST['order'])) {
     $query .= " ORDER BY " . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'];
@@ -91,11 +93,12 @@ foreach ($result as $row) {
     $action = "<div class='dropdown'>
                 <button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button>
                 <div class='dropdown-content'>";
-    if ($row['c_sts'] == '1' || $row['c_sts'] == '2') {
-        $action .= "<a href='#' class='edit-loan-entry' value='" . $row['loan_entry_id'] . "' title='Edit details'>Edit</a>";
-    }
-    if ($row['c_sts'] == '2') {
-        $action  .= "<a href='#' class='move-loan-entry' value='" . $row['cus_sts_id'] . "' title='Move'>Move</a>";
+    if ($row['c_sts'] == '3') {
+
+        $action .= "<a href='#' class='approval-edit' value='" . $row['loan_entry_id'] . "' title='Edit details'>Edit</a>";
+        $action .= "<a href='#' class='approval-approve' value='" . $row['cus_sts_id'] . "' data-id='" . $row['loan_entry_id'] . "' title='Approve'>Approve</a>";
+        $action .= "<a href='#' class='approval-cancel' value='" . $row['cus_sts_id'] . "' title='Cancel'>Cancel</a>";
+        $action .= "<a href='#' class='approval-revoke' value='" . $row['cus_sts_id'] . "' title='Revoke'>Revoke</a>";
     }
     $action .= "</div></div>";
     $sub_array[] = $action;
@@ -147,4 +150,5 @@ $output = array(
     'data' => $data
 );
 
+$pdo = null; // Close Connection
 echo json_encode($output);

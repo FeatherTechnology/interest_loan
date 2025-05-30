@@ -11,6 +11,7 @@ $(document).ready(function () {
         'agent_creation': 'admin',
         'customer_creation': 'customer_creation',
         'loan_entry': 'loan_entry', 
+        'approval': 'approval', 
         'auction': 'auction',
         'settlement':'settlement',
         'collection':'collection',

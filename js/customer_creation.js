@@ -1020,6 +1020,8 @@ function getFamilyDelete(id) {
             if (response == "1") {
                 swalSuccess("Success", "Family Info Deleted Successfully!");
                 getFamilyTable();
+            } else if (response == "3") {
+                swalError("Warning","Used in Loan Entry");
             } else {
                 swalError("Warning", "Error occur While Delete Family Info.");
             }
