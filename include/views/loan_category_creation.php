@@ -109,7 +109,7 @@
                                 <div class="row">
                                     <div class="col-md-3 col-sm-4">
                                         <div class="form-group">
-                                            <label for="due_period">Due Period</label><span class="text-danger">*</span>
+                                            <label for="due_period">Due Period</label><span class="text-danger"> (Month) *</span>
                                             <input type="number" class="form-control" id="due_period" name="due_period" placeholder="Enter Due Period" tabindex="21">
                                         </div>
                                     </div>
