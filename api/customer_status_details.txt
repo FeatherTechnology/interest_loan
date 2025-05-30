@@ -1,0 +1,4 @@
+Customer status Details:
+
+1 = customer profile insert;
+2 = Loan Calculation insert;

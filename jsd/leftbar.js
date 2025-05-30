@@ -10,6 +10,7 @@ $(document).ready(function () {
         'bank_creation': 'admin',
         'agent_creation': 'admin',
         'customer_creation': 'customer_creation',
+        'loan_entry': 'loan_entry', 
         'auction': 'auction',
         'settlement':'settlement',
         'collection':'collection',
