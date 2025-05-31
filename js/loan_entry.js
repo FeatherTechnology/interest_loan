@@ -608,7 +608,7 @@ $(document).ready(function () {
     //<------------------------------------ aadhar number Change  ------------------------------------------------->
 
     // Aadhaar validation and existing customer check
-    $("#aadhar_number").on("blur change", function () {
+    $("#aadhar_number").on("blur", function () {
         let aadhar_number = $(this).val().trim().replace(/\s/g, '');
 
         // Aadhaar must be exactly 12 digits
@@ -1462,11 +1462,13 @@ function isFormDataValid(formData) {
 
 function callLoanCaculationFunctions() {
     getLoanCategoryName();
-    getAutoGenLoanId();
     let cus_profile_id = $('#customer_profile_id').val();
     getDocNeedTable(cus_profile_id);
     let loanCalcId = $('#customer_profile_id').val();
     loanCalculationEdit(loanCalcId);
+    if (!cus_profile_id){
+        getAutoGenLoanId()
+    }
 }
 
 function getAutoGenLoanId() {
