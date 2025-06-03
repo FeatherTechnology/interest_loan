@@ -12,7 +12,7 @@ $(document).ready(function () {
         'customer_creation': 'customer_creation',
         'loan_entry': 'loan_entry', 
         'approval': 'approval', 
-        'auction': 'auction',
+        'loan_issue': 'loan_issue',
         'settlement':'settlement',
         'collection':'collection',
         'accounts':'accounts',

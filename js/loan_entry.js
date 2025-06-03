@@ -878,6 +878,21 @@ function moveToNext(cus_sts_id) {
     }, 'json');
 }
 
+function getLoanCount(cus_id) {
+    $.ajax({
+        url: 'api/loan_entry_files/get_loan_count.php',
+        type: 'POST',
+        data: { cus_id: cus_id },
+        dataType: 'json',
+        cache: false,
+        success: function (response) {
+            $('#loan_count').val(response.loan_count);
+            let formattedDate = response.first_loan_date.split('-').reverse().join('-');
+            $('#first_loan_date').val(formattedDate);
+        },
+    });
+}
+
 ///////////////////////////////////////////////////////////// Customer Profile edit Start //////////////////////////////////////////////////////////////////////////////////
 
 async function editCustmerProfile(id) {
@@ -908,6 +923,14 @@ async function editCustmerProfile(id) {
         } else if (data.whatsapp === data.mobile2) {
             $('#mobile2_radio').prop('checked', true);
             $('#selected_mobile_radio').val('mobile2');
+        }
+
+        if (data.cus_data == 'Existing') {
+            $('#loan_count_div').show();
+            let cus_id = $('#cus_id').val();
+            getLoanCount(cus_id);
+        } else {
+            $('#loan_count_div').hide();
         }
 
         await getGuarantorName();
@@ -998,6 +1021,7 @@ async function existingCustmerProfile(aadhar_number) {
             $("#occ_detail").val("");
             $("#relationship").val("");
             $('#guarantor_info tbody').empty();
+            $('#loan_count_div').hide();
 
             $("#per_pic").val("");
             $("#imgshow").attr("src", "img/avatar.png");
@@ -1029,6 +1053,14 @@ async function existingCustmerProfile(aadhar_number) {
             } else if (response[0].whatsapp === response[0].mobile2) {
                 $("#mobile2_radio").prop("checked", true);
                 $("#selected_mobile_radio").val("mobile2");
+            }
+
+            if (response[0].customer_data == '2') {
+                $('#loan_count_div').show();
+                let cus_id = $('#cus_id').val();
+                getLoanCount(cus_id);
+            } else {
+                $('#loan_count_div').hide();
             }
 
             $("#area").trigger("change");
@@ -1466,7 +1498,7 @@ function callLoanCaculationFunctions() {
     getDocNeedTable(cus_profile_id);
     let loanCalcId = $('#customer_profile_id').val();
     loanCalculationEdit(loanCalcId);
-    if (!cus_profile_id){
+    if (!cus_profile_id) {
         getAutoGenLoanId()
     }
 }

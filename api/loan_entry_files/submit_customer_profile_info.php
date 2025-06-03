@@ -18,13 +18,7 @@ $qry = $pdo->query("SELECT cs.status
 
 if ($qry->rowCount() > 0) {
     $result = $qry->fetch();
-    $status = $result['status'];  // Customer status from the customer_status table
-
-    if ($status >= 1 && $status <= 6) {
-        $cus_data = 'New';  // Since we found a matching record, it's considered 'Existing'
-    } else {
         $cus_data = 'Existing';  // Since we found a matching record, it's considered 'Existing'
-    }
 } else {
     $cus_data = 'New';        // No matching record found, it's considered 'New'
 }
@@ -51,6 +45,8 @@ if ($loan_entry_id != '') {
     $status = 0;
     $last_id = $pdo->lastInsertId();
     $qry = $pdo->query("INSERT INTO `customer_status`( `cus_id`, `loan_entry_id`, `status`, `insert_login_id`, `created_on`) VALUES ('$cus_id', '$last_id', '1', '$user_id',CURRENT_TIMESTAMP() )");
+
+    $qry = $pdo->query("UPDATE `customer_creation` SET `customer_data`='2', `update_login_id`='$user_id',updated_on = now() WHERE `cus_id`='$cus_id'");
 }
 
 if (isset($_POST['guarantorMappingData'])) {

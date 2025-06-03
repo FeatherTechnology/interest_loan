@@ -952,6 +952,21 @@ function checkCustomerLimit(loan_entry_id, cus_sts_id, cus_sts) {
     }, 'json');
 }
 
+function getLoanCount(cus_id) {
+    $.ajax({
+        url: 'api/loan_entry_files/get_loan_count.php',
+        type: 'POST',
+        data: { cus_id: cus_id },
+        dataType: 'json',
+        cache: false,
+        success: function (response) {
+            $('#loan_count').val(response.loan_count);
+            let formattedDate = response.first_loan_date.split('-').reverse().join('-');
+            $('#first_loan_date').val(formattedDate);
+        },
+    });
+}
+
 ///////////////////////////////////////////////////////////// Customer Profile edit Start //////////////////////////////////////////////////////////////////////////////////
 
 async function editCustmerProfile(id) {
@@ -1002,6 +1017,14 @@ async function editCustmerProfile(id) {
             $('#gur_imgshow').attr('src', guPath + data.gu_pic);
         } else {
             $('#gur_imgshow').attr('src', 'img/avatar.png');
+        }
+
+        if (data.cus_data == 'Existing') {
+            $('#loan_count_div').show();
+            let cus_id = $('#cus_id').val(); 
+            getLoanCount(cus_id);
+        } else {
+            $('#loan_count_div').hide();
         }
 
         $('#guarantor_info tbody').empty();
