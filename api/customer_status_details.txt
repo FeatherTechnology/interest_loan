@@ -6,3 +6,6 @@ Customer status Details:
 4 = Approve in Approval || In Loan Issue;
 5 = Cancel in Approval;
 6 = Revoke in Approval;
+7 = Loan Issued || Collection;
+8 = Cancel in Loan Issue;
+9 = Revoke in Loan Issue

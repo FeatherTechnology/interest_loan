@@ -5,7 +5,7 @@ $id = $_POST['id'];
 $response = [];
 
 // Fetch customer profile info
-$qry = $pdo->prepare("SELECT cc.*, le.id as loan_entry_id
+$qry = $pdo->prepare("SELECT cc.*, le.id as loan_entry_id , le.cus_data
 FROM customer_creation cc
 LEFT JOIN loan_entry le ON cc.cus_id = le.cus_id 
 LEFT JOIN line_name_creation lnc ON cc.line = lnc.id 

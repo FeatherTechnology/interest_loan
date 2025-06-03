@@ -77,7 +77,7 @@
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="last_name">Last Name</label>
-                                            <input type="last_name" class="form-control" id="last_name" name="last_name" placeholder="Enter Last name" tabindex="4" readonly>
+                                            <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter Last name" tabindex="4" readonly>
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -324,6 +324,22 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">Customer Summary</div>
+                    </div>
+                    <div class="card-body" style="display:none;" id="loan_count_div">
+                        <div class="row">
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                                <div class="form-group">
+                                    <label for="loan_count"> Loan Count </label><span class="text-danger">*</span>
+                                    <input type="text" class="form-control" id="loan_count" name="loan_count" disabled placeholder="Loan Count" tabindex="34" readonly>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                                <div class="form-group">
+                                    <label for="first_loan_date">First Loan Date </label><span class="text-danger">*</span>
+                                    <input type="text" class="form-control" id="first_loan_date" name="first_loan_date" disabled placeholder="First Loan Date" tabindex="35" readonly>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -963,7 +979,7 @@
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <form id="approve_form">    
+                    <form id="approve_form">
                         <div class="row">
                             <input type="hidden" name="customer_status" id='customer_status'>
                             <div class="col-sm-3 col-md-3 col-lg-3"></div>

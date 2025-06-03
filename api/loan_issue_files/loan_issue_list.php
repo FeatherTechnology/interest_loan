@@ -29,7 +29,7 @@ LEFT JOIN area_name_creation anc ON cc.area = anc.id
 LEFT JOIN area_creation ac ON cc.line = ac.line_id
 LEFT JOIN branch_creation bc ON ac.branch_id = bc.id
 LEFT JOIN customer_status cs ON le.id = cs.loan_entry_id 
-WHERE cc.insert_login_id = '$user_id' AND cs.status = 3 ";
+WHERE cc.insert_login_id = '$user_id' AND cs.status = 4 ";
 
 if (isset($_POST['search'])) {
     if ($_POST['search'] != "") {
@@ -93,13 +93,10 @@ foreach ($result as $row) {
     $action = "<div class='dropdown'>
                 <button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button>
                 <div class='dropdown-content'>";
-    if ($row['c_sts'] == '3') {
 
-        $action .= "<a href='#' class='approval-edit' value='" . $row['loan_entry_id'] . "' title='Edit details'>Edit</a>";
-        $action .= "<a href='#' class='approval-approve' value='" . $row['cus_sts_id'] . "' data-id='" . $row['loan_entry_id'] . "' title='Approve'>Approve</a>";
-        $action .= "<a href='#' class='approval-cancel' value='" . $row['cus_sts_id'] . "' title='Cancel'>Cancel</a>";
-        $action .= "<a href='#' class='approval-revoke' value='" . $row['cus_sts_id'] . "' title='Revoke'>Revoke</a>";
-    }
+    $action .= "<a href='#' class='edit-loan-issue' value='" . $row['loan_entry_id'] . "' data-id='" . $row['cus_id'] . "' title='Edit details'>Edit</a>";
+    $action .= "<a href='#' class='loan-issue-cancel' value='" . $row['cus_sts_id'] . "' title='Cancel'>Cancel</a>";
+    $action .= "<a href='#' class='loan-issue-revoke' value='" . $row['cus_sts_id'] . "' title='Revoke'>Revoke</a>";
     $action .= "</div></div>";
     $sub_array[] = $action;
     $data[] = $sub_array;
