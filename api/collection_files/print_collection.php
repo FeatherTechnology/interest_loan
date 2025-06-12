@@ -1,8 +1,10 @@
 <?php
 require '../../ajaxconfig.php';
+require_once '../../include/views/money_format_india.php';
+
 $collection_id = $_POST["collection_id"];
 
-$qry = $pdo->query("SELECT * FROM `collection` WHERE collection_id ='" . strip_tags($collection_id) . "'");
+$qry = $pdo->query("SELECT principal_amount_track , interest_amount_track , penalty_track , fine_charge_track , interest_amount , collection_date , loan_entry_id , cus_id FROM `collection` WHERE collection_id ='" . strip_tags($collection_id) . "'");
 $row = $qry->fetch();
 
 extract($row); // Extracts the array values into variables
@@ -115,31 +117,10 @@ $loan_balance = getBalance($pdo, $loan_entry_id, $collection_date);
 </script>
 
 <?php
-function moneyFormatIndia($num)
-{
-    $explrestunits = "";
-    if (strlen($num) > 3) {
-        $lastthree = substr($num, strlen($num) - 3, strlen($num));
-        $restunits = substr($num, 0, strlen($num) - 3);
-        $restunits = (strlen($restunits) % 2 == 1) ? "0" . $restunits : $restunits;
-        $expunit = str_split($restunits, 2);
-        for ($i = 0; $i < sizeof($expunit); $i++) {
-            if ($i == 0) {
-                $explrestunits .= (int)$expunit[$i] . ",";
-            } else {
-                $explrestunits .= $expunit[$i] . ",";
-            }
-        }
-        $thecash = $explrestunits . $lastthree;
-    } else {
-        $thecash = $num;
-    }
-    return $thecash;
-}
 
 function getBalance($pdo, $loan_entry_id, $collection_date)
 {
-    $result = $pdo->query("SELECT * FROM `loan_entry` WHERE id = $loan_entry_id ");
+    $result = $pdo->query("SELECT loan_amnt_calc FROM `loan_entry` WHERE id = $loan_entry_id ");
     if ($result->rowCount() > 0) {
         $row = $result->fetch();
         $loan_arr = $row;
@@ -148,7 +129,7 @@ function getBalance($pdo, $loan_entry_id, $collection_date)
     }
 
     $coll_arr = array();
-    $result = $pdo->query("SELECT * FROM `collection` WHERE loan_entry_id ='" . $loan_entry_id . "' and date(collection_date) <= date('" . $collection_date . "') ");
+    $result = $pdo->query("SELECT principal_amount_track , interest_amount_track , principal_waiver , paid_amount FROM `collection` WHERE loan_entry_id ='" . $loan_entry_id . "' and date(collection_date) <= date('" . $collection_date . "') ");
     if ($result->rowCount() > 0) {
         while ($row = $result->fetch()) {
             $coll_arr[] = $row;

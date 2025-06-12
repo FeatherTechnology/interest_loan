@@ -1,5 +1,6 @@
 <?php
 require '../../ajaxconfig.php';
+require_once '../../include/views/money_format_india.php';
 ?>
 <table class="table custom-table table-responsive" id='dueChartListTable'>
 
@@ -7,22 +8,21 @@ require '../../ajaxconfig.php';
     $le_id = $_POST['le_id'];
     $curDateChecker = true;
 
-    $loanStart = $pdo->query("SELECT * , due_startdate_calc, maturity_date_calc, due_method , interest_rate_calc , interest_calculate FROM loan_entry  WHERE id = '$le_id' ");
+    $loanStart = $pdo->query("SELECT due_startdate_calc, maturity_date_calc , interest_rate_calc , interest_calculate , loan_date FROM loan_entry  WHERE id = '$le_id' ");
     $loanFrom = $loanStart->fetch();
     //If Due method is Monthly, Calculate penalty by checking the month has ended or not
     $due_startdate_calc = $loanFrom['due_startdate_calc'];
     $maturity_date_calc = $loanFrom['maturity_date_calc'];
     $interest_rate_calc = $loanFrom['interest_rate_calc'];
     $interest_calculate = $loanFrom['interest_calculate'];
+    $loan_date = $loanFrom['loan_date'];
     $start_date_obj = DateTime::createFromFormat('Y-m-d', $due_startdate_calc);
     $end_date_obj = DateTime::createFromFormat('Y-m-d', $maturity_date_calc);
     $maturity_month_obj = new DateTime($maturity_date_calc);
     $i = 1;
 
-    if ($loanFrom['due_method'] == 'Monthly') {
-        //If Monthly Add one month interval to loop from start date to end date.
-        $interval = new DateInterval('P1M'); // Create a one month interval
-    }
+    //If Monthly Add one month interval to loop from start date to end date.
+    $interval = new DateInterval('P1M'); // Create a one month interval
 
     //Looping the Due month.
     $dueMonth[] = $due_startdate_calc;
@@ -64,31 +64,26 @@ require '../../ajaxconfig.php';
     <tbody>
         <tr>
             <td> </td>
-            <td><?php
-                if ($loanFrom['due_method'] == 'Monthly') {
-                    //For Monthly.
-                    echo date('m-Y', strtotime($issue_date));
-                } else {
-                    //For Weekly && Day.
-                    echo date('d-m-Y', strtotime($issue_date));
-                } ?>
+            <td>
+                <?php
+                echo date('m-Y', strtotime($issue_date));
+                ?>
             </td>
-            <td><?php echo $loan_amount; ?></td>
-            <td><?php echo $interest_amnt_calc; ?></td>
+            <td><?php echo moneyFormatIndia($loan_amount); ?></td>
+            <td><?php echo moneyFormatIndia($interest_amnt_calc); ?></td>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
-            <td><?php echo $loan_amount; ?></td>
+            <td><?php echo moneyFormatIndia($loan_amount); ?></td>
             <td></td>
         </tr>
         <?php
         $issued = date('Y-m-d', strtotime($issue_date));
-        if ($loanFrom['due_method'] == 'Monthly') {
 
-            $run = $pdo->query("SELECT c.collection_id, c.loan_amount, c.interest_amount , c.pending_amount, c.payable_amount, c.collection_date, c.principal_amount_track, c.interest_amount_track, c.balance_amount, c.fine_charge_track, c.principal_waiver
+        $run = $pdo->query("SELECT c.collection_id, c.loan_amount, c.interest_amount , c.pending_amount, c.payable_amount, c.collection_date, c.principal_amount_track, c.interest_amount_track, c.balance_amount, c.fine_charge_track, c.principal_waiver
             FROM `collection` c
             LEFT JOIN users u ON c.insert_login_id = u.id
             WHERE c.`loan_entry_id` = '$le_id' AND ( c.principal_waiver!='' OR c.principal_amount_track != '' OR c.interest_amount_track != '')
@@ -103,9 +98,9 @@ require '../../ajaxconfig.php';
                     )
                 ) 
             )");
-        }
 
-        //For showing data before due start date
+        // <-------------------------------------------- For Showing Data Before Due Start Date Collection Table Data ------------------------------------------>
+
         $totalPaid = 0;
         $totalPreClose = 0;
         $totalPaidPrinc = 0;
@@ -122,40 +117,86 @@ require '../../ajaxconfig.php';
                 if ($last_bal_amt != 0) {
                     $balance_amount = $last_bal_amt - $PcollectionAmnt - $waiver;
                 } else {
-                    $balance_amount = $last_bal_amt - $PcollectionAmnt - $waiver;
+                    $balance_amount = $balance_amount - $PcollectionAmnt - $waiver;
                 }
 
         ?>
                 <tr>
-                    <td><?php $pendingMinusCollection = (intVal($row['pending_amount'])); ?></td>
-                    <td><?php $payableMinusCollection = (intVal($row['payable_amount'])); ?></td>
-                    <td><?php echo date('d-m-Y', strtotime($row['collection_date'])); ?></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
 
-                    <!-- for collected amt -->
-
+                    <!-- Pending Amount For Current Date For Before Due Start Date -->
                     <td>
-                        <?php if ($PcollectionAmnt > 0) {
-                            $totalPaidPrinc += $PcollectionAmnt;
-
-                            echo $PcollectionAmnt;
-                        } elseif ($row['principal_waiver'] > 0) {
-                            $totalPreClose += $row['principal_waiver'];
-
-                            echo $row['principal_waiver'];
-                        } ?>
-                    </td>
-                    <td>
-                        <?php if ($IcollectionAmnt > 0) {
-                            echo $IcollectionAmnt;
-                        } ?>
-                    </td>
-
-                    <td><?php echo $balance_amount; ?></td>
-                    <td><?php if ($row['principal_waiver'] > 0) {
-                            echo $row['principal_waiver'];
+                        <?php $pending_amount = (intVal($row['pending_amount']));
+                        if ($pending_amount != '') {
+                            echo moneyFormatIndia($pending_amount);
                         } else {
-                            echo '0';
-                        } ?></td>
+                            echo 0;
+                        } ?>
+                    </td>
+
+                    <!-- Payable AmountFor Current Date For Before Due Start Date -->
+                    <td>
+                        <?php $payable_amount = (intVal($row['payable_amount']));
+                        if ($payable_amount != '') {
+                            echo moneyFormatIndia($payable_amount);
+                        } else {
+                            echo 0;
+                        } ?>
+                    </td>
+
+                    <!-- Paid Date For Current Date For Before Due Start Date -->
+                    <td>
+                        <?php echo date('d-m-Y', strtotime($row['collection_date'])); ?>
+                    </td>
+
+                    <!-- Payable AmountFor Current Date For Before Due Start Date -->
+                    <td>
+                        <?php $paid_interest_amount = (intVal($row['interest_amount_track']));
+                        if ($paid_interest_amount != '') {
+                            echo moneyFormatIndia($paid_interest_amount);
+                        } else {
+                            echo 0;
+                        } ?>
+                    </td>
+
+                    <!-- Balance Interest Amount (Payable - Paid) Before Due Start Date -->
+                    <td>
+                        <?php $balance_Interest_Amount = $payable_amount - $paid_interest_amount;
+                        if ($paid_interest_amount != '') {
+                            echo moneyFormatIndia($balance_Interest_Amount);
+                        } else {
+                            echo 0;
+                        } ?>
+                    </td>
+
+                    <!-- Paid Principal Amount For Before Due Start Date -->
+                    <td>
+                        <?php $paid_Principal_Amount = (intVal($row['principal_amount_track']));
+                        if ($paid_Principal_Amount != '') {
+                            echo moneyFormatIndia($paid_Principal_Amount);
+                        } else {
+                            echo 0;
+                        } ?>
+                    </td>
+
+                    <!-- Balance Principal Amount For Before Due Start Date -->
+                    <td>
+                        <?php
+                        $balance_Principalt_Amount = $balance_amount;
+                        echo moneyFormatIndia($balance_Principalt_Amount);
+                        $last_princ_amt = $balance_Principalt_Amount;
+                        ?>
+                    </td>
+
+
+                    <!-- Action For Before Due Start Date -->
+                    <td>
+                        <a class='print_due_coll' id="" value="<?php echo $row['collection_id']; ?>"> <i class="fa fa-print" aria-hidden="true"></i> </a>
+                    </td>
+
                 </tr>
                 <?php
                 $last_bal_amt = $balance_amount;
@@ -164,89 +205,60 @@ require '../../ajaxconfig.php';
             $last_bal_amt = $loan_amount;
         }
 
-        //For showing collection after due start date
+        // <---------------------------------------------------- For Showing Data After Due Start Date ----------------------------------------------------->
+
         $waiver = 0;
         $totalPaidPrinc = 0;
-        $jj = 0;
         $last_int_amt = $interest_amnt_calc;
         $last_princ_amt = $last_bal_amt;
 
         $lastCusdueMonth = '1970-00-00';
         foreach ($dueMonth as $cusDueMonth) {
-            if ($loanFrom['due_method'] == 'Monthly') {
-                //Query for Monthly.
-                $run = $pdo->query("SELECT c.collection_id, c.loan_amount,  c.interest_amount , c.pending_amount, c.payable_amount, c.collection_date, c.principal_amount_track, c.interest_amount_track, c.balance_amount, c.fine_charge_track, c.principal_waiver  FROM `collection` c 
+            //Query for Monthly.
+            $run = $pdo->query("SELECT c.collection_id, c.loan_amount,  c.interest_amount , c.pending_amount, c.payable_amount, c.collection_date, c.principal_amount_track, c.interest_amount_track, c.balance_amount, c.fine_charge_track, c.principal_waiver  FROM `collection` c 
                 LEFT JOIN users u ON c.insert_login_id = u.id 
                 WHERE c.loan_entry_id = $le_id AND ( c.principal_amount_track != '' OR c.interest_amount_track != '' 
                 OR c.principal_waiver != '') 
                 AND MONTH(c.collection_date) = MONTH('$cusDueMonth') 
                 AND YEAR(c.collection_date) = YEAR('$cusDueMonth');");
-            }
 
             if ($run->rowCount() > 0) {
                 while ($row = $run->fetch()) {
 
-                    if ($loanFrom['due_method'] == 'Monthly') {
-                        $principal_amount_track = intVal($row['principal_amount_track']);
-                        $interest_amount_track = intVal($row['interest_amount_track']);
-                    }
-
+                    $principal_amount_track = intVal($row['principal_amount_track']);
+                    $interest_amount_track = intVal($row['interest_amount_track']);
                     $waiver = intVal($row['principal_waiver']);
                     $balance_amount = intVal($last_princ_amt) - $principal_amount_track - $waiver;
                 ?>
                     <tr>
                         <?php
-                        if ($loanFrom['due_method'] == 'Monthly') { //this is for monthly loan to check lastcusduemonth comparision
-                            if (date('Y-m', strtotime($lastCusdueMonth)) != date('Y-m', strtotime($row['collection_date']))) {
-                                // this condition is to check whether the same month has collection again. if yes the no need to show month name and due amount and serial number
+                        //this is for monthly loan to check lastcusduemonth comparision
+                        if (date('Y-m', strtotime($lastCusdueMonth)) != date('Y-m', strtotime($row['collection_date']))) {
+                            // this condition is to check whether the same month has collection again. if yes the no need to show month name and due amount and serial number
                         ?>
-                                <td><?php echo $i;
-                                    $i++; ?>
-                                </td>
+                            <td><?php echo $i;
+                                $i++; ?>
+                            </td>
 
-                                <td>
-                                    <?php
-                                    if ($loanFrom['due_method'] == 'Monthly') {
-                                        //For Monthly.
-                                        echo date('m-Y', strtotime($cusDueMonth));
-                                    } else {
-                                        //For Weekly && Day.
-                                        echo date('d-m-Y', strtotime($cusDueMonth));
-                                    }
-                                    ?>
-                                </td>
+                            <td>
+                                <?php
+                                echo date('m-Y', strtotime($cusDueMonth));
+                                ?>
+                            </td>
 
-                            <?php } else { ?>
-                                <td></td>
-                                <td></td>
-                            <?php }
-                        } else { //this is for weekly and daily loan to check lastcusduemonth comparision
-                            if (date('Y-m-d', strtotime($lastCusdueMonth)) != date('Y-m-d', strtotime($row['collection_date']))) {
-                                // this condition is to check whether the same month has collection again. if yes the no need to show month name and due amount and serial number
-                            ?>
-                                <td><?php echo $i;
-                                    $i++; ?></td>
-                                <td><?php
-                                    if ($loanFrom['due_method'] == 'Monthly') {
-                                        //For Monthly.
-                                        echo date('m-Y', strtotime($cusDueMonth));
-                                    } else {
-                                        //For Weekly && Day.
-                                        echo date('d-m-Y', strtotime($cusDueMonth));
-                                    }
-                                    ?></td>
-                            <?php } else { ?>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                        <?php } else { ?>
+                            <td></td>
+                            <td></td>
                         <?php }
-                        } ?>
-
+                        ?>
                         <!-- Else part end  -->
-                        <td><?php echo $last_princ_amt; ?></td>
 
-                        <!-- Interest Calculation based on reduced principal -->
+                        <!-- Principal Amount For After Due Start Date -->
+                        <td>
+                            <?php echo moneyFormatIndia($last_princ_amt); ?>
+                        </td>
+
+                        <!-- Interest Calculation based on reduced principal For After Due Start Date -->
                         <td>
                             <?php
                             $interest_rate_calc = $loanFrom['interest_rate_calc'];
@@ -268,75 +280,75 @@ require '../../ajaxconfig.php';
                                 $curInterest += 5;
                             }
 
-                            echo $curInterest;
+                            echo moneyFormatIndia($curInterest);
                             ?>
                         </td>
 
-                        <!-- Pending Amount -->
+                        <!-- Pending Amount For After Due Start Date -->
                         <td>
                             <?php $pendingMinusCollection = (intVal($row['pending_amount']));
                             if ($pendingMinusCollection != '') {
-                                echo $pendingMinusCollection;
+                                echo moneyFormatIndia($pendingMinusCollection);
                             } else {
                                 echo 0;
                             } ?>
                         </td>
 
-                        <!-- Payable Amount -->
+                        <!-- Payable AmountFor For After Due Start Date -->
                         <td>
                             <?php $payableMinusCollection = (intVal($row['payable_amount']));
                             if ($payableMinusCollection != '') {
-                                echo $payableMinusCollection;
+                                echo moneyFormatIndia($payableMinusCollection);
                             } else {
                                 echo 0;
                             } ?>
                         </td>
 
-                        <!-- Paid Date -->
+                        <!-- Paid Date For For After Due Start Date -->
                         <td>
                             <?php echo date('d-m-Y', strtotime($row['collection_date'])); ?>
                         </td>
 
-                        <!-- Paid Interest Amount -->
+                        <!-- Paid Interest Amount For After Due Start Date -->
                         <td>
                             <?php $paidInterestMinusCollection = (intVal($row['interest_amount_track']));
                             if ($paidInterestMinusCollection != '') {
-                                echo $paidInterestMinusCollection;
+                                echo moneyFormatIndia($paidInterestMinusCollection);
                             } else {
                                 echo 0;
                             } ?>
                         </td>
 
-                        <!-- Balance Interest Amount (Payable - Paid) -->
+                        <!-- Balance Interest Amount (Payable - Paid) For After Due Start Date -->
                         <td>
                             <?php $balanceInterestAmount = $payableMinusCollection - $paidInterestMinusCollection;
                             if ($paidInterestMinusCollection != '') {
-                                echo $balanceInterestAmount;
+                                echo moneyFormatIndia($balanceInterestAmount);
                             } else {
                                 echo 0;
                             } ?>
                         </td>
 
-                        <!-- Paid Principal Amount -->
+                        <!-- Paid Principal Amount For After Due Start Date -->
                         <td>
                             <?php $paidPrincipalAmount = (intVal($row['principal_amount_track']));
                             if ($paidPrincipalAmount != '') {
-                                echo $paidPrincipalAmount;
+                                echo moneyFormatIndia($paidPrincipalAmount);
                             } else {
                                 echo 0;
                             } ?>
                         </td>
 
-                        <!-- Balance Principal Amount -->
+                        <!-- Balance Principal Amount For After Due Start Date -->
                         <td>
                             <?php
-                            $balancePrincipaltAmount = $balance_amount;
-                            echo $balancePrincipaltAmount != '' ? $balancePrincipaltAmount : 0;
-                            $last_princ_amt = $balancePrincipaltAmount;
+                            $balance_Principalt_Amount = $balance_amount;
+                            echo moneyFormatIndia($balance_Principalt_Amount);
+                            $last_princ_amt = moneyFormatIndia($balance_Principalt_Amount);
                             ?>
                         </td>
 
-                        <!-- Action -->
+                        <!-- Action For After Due Start Date -->
                         <td>
                             <a class='print_due_coll' id="" value="<?php echo $row['collection_id']; ?>"> <i class="fa fa-print" aria-hidden="true"></i> </a>
                         </td>
@@ -350,101 +362,74 @@ require '../../ajaxconfig.php';
                     <td><?php echo $i; ?></td>
 
                     <td><?php
-                        if ($loanFrom['due_method'] == 'Monthly') {
-                            //For Monthly.
-                            echo date('m-Y', strtotime($cusDueMonth));
-                        } ?>
+                        echo date('m-Y', strtotime($cusDueMonth));
+                        ?>
                     </td>
                     <?php
-                    if ($loanFrom['due_method'] == 'Monthly') {
-                        if (date('Y-m', strtotime($cusDueMonth)) <=  date('Y-m')) { ?>
-                            <td>
-                                <?php echo $last_princ_amt; ?>
-                            </td>
 
-                            <!-- Interest Calculation based on reduced principal -->
-                            <td>
-                                <?php
-                                $interest_rate_calc = $loanFrom['interest_rate_calc'];
-                                $current_principal = $last_princ_amt;
-                                $interest_calculate = $loanFrom['interest_calculate']; // 'Month' or 'Days'
+                    if (date('Y-m', strtotime($cusDueMonth)) <=  date('Y-m')) { ?>
+                        <td>
+                            <?php echo moneyFormatIndia($last_princ_amt); ?>
+                        </td>
 
-                                // Interest calculation
-                                if ($interest_calculate == 'Month') {
-                                    $int = $current_principal * ($interest_rate_calc / 100);
-                                } else if ($interest_calculate == 'Days') {
-                                    $int = ($current_principal * ($interest_rate_calc / 100) / 30);
-                                } else {
-                                    $int = 0; // default fallback
-                                }
+                        <!-- Interest Calculation based on reduced principal For After Due Start Date -->
+                        <td>
+                            <?php
+                            $interest_rate_calc = $loanFrom['interest_rate_calc'];
+                            $current_principal = $last_princ_amt;
+                            $interest_calculate = $loanFrom['interest_calculate']; // 'Month' or 'Days'
 
-                                // Round up to next multiple of 5
-                                $curInterest = ceil($int / 5) * 5;
-                                if ($curInterest < $int) {
-                                    $curInterest += 5;
-                                }
+                            // Interest calculation
+                            if ($interest_calculate == 'Month') {
+                                $int = $current_principal * ($interest_rate_calc / 100);
+                            } else if ($interest_calculate == 'Days') {
+                                $int = ($current_principal * ($interest_rate_calc / 100) / 30);
+                            } else {
+                                $int = 0; // default fallback
+                            }
 
-                                echo $curInterest;
-                                ?>
-                            </td>
+                            // Round up to next multiple of 5
+                            $curInterest = ceil($int / 5) * 5;
+                            if ($curInterest < $int) {
+                                $curInterest += 5;
+                            }
 
-                            <!-- Pending Calculation -->
-                            <td>
-                                <?php
-                                $pendingval = ceil(pendingCalculation($loanFrom, $curInterest, $pdo, $le_id));
-                                echo $pendingval;
-                                ?>
-                            </td>
+                            echo moneyFormatIndia($curInterest);
+                            ?>
+                        </td>
 
-                            <td>
-                                <?php
-                                $payable = ceil(payableCalculation($loanFrom, $curInterest, $pdo, $le_id));
-                                echo ceilAmount($payable);
-                                ?>
-                            </td>
+                        <!-- Pending Calculation For After Due Start Date -->
+                        <td>
+                            <?php
+                            $pendingval = ceilAmount(pendingCalculation($loanFrom, $curInterest, $pdo, $le_id));
+                            echo moneyFormatIndia($pendingval);
+                            ?>
+                        </td>
 
+                        <!-- Payable Calculation For After Due Start Date -->
+                        <td>
+                            <?php
+                            $payable = ceilAmount(payableCalculation($loanFrom, $curInterest, $pdo, $le_id));
+                            echo moneyFormatIndia($payable);
+                            ?>
+                        </td>
 
-                        <?php } else if (date('Y-m', strtotime($cusDueMonth)) >  date('Y-m') && $curDateChecker == true) { ?>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        <?php
-                            $curDateChecker = false; //set to false because, pending and payable only need one month after current month
-                        } else {
-                        ?>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        <?php
-                        }
-                    } else {
-                        if (date('Y-m-d', strtotime($cusDueMonth)) <=  date('Y-m-d')) { ?>
-                            <td>
-                                <?php
-                                ?>
-                            </td>
-                            <td>
-                                <?php
-                                ?>
-                            </td>
-                        <?php } else if (date('Y-m-d', strtotime($cusDueMonth)) >  date('Y-m-d') && $curDateChecker == true) { ?>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        <?php
-                            $curDateChecker = false; //set to false because, pending and payable only need one month after current month
-                        } else {
-                        ?>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                    <?php } else if (date('Y-m', strtotime($cusDueMonth)) >  date('Y-m') && $curDateChecker == true) { ?>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     <?php
-                        }
+                        $curDateChecker = false; //set to false because, pending and payable only need one month after current month
+                    } else {
+                    ?>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    <?php
                     }
+
                     ?>
                     <td></td>
                     <td></td>
@@ -459,79 +444,115 @@ require '../../ajaxconfig.php';
             }
         }
 
+        // <---------------------------------------------------- For Showing Data After Maturity End Date ----------------------------------------------------->
+
         $currentMonth = date('Y-m-d');
         //The collection_date column is using datetime datatype if check only date it not return record.
         //Using between is useful to check last year to current year. 
         $startTime = '00:00:00'; //Set starting time of clock
         $endTime = '23:59:59'; //set end time of clock 
         $currentMonth = $currentMonth . ' ' . $endTime;
-        if ($loanFrom['due_method'] == 'Monthly') {
-            $maturity_date_calc = $maturity_month_obj->modify('+1 month')->format('Y-m-01');
-            $maturity_date_calc = $maturity_date_calc . ' ' . $startTime;
-            //Query for Monthly.
-            $run = $pdo->query("SELECT c.collection_id, c.pending_amount, c.payable_amount, c.collection_date, c.principal_amount_track ,c.interest_amount_track, c.balance_amount, c.fine_charge_track, c.principal_waiver
+
+        $maturity_date_calc = $maturity_month_obj->modify('+1 month')->format('Y-m-01');
+        $maturity_date_calc = $maturity_date_calc . ' ' . $startTime;
+        //Query for Monthly.
+        $run = $pdo->query("SELECT c.collection_id, c.pending_amount, c.payable_amount, c.collection_date, c.principal_amount_track ,c.interest_amount_track, c.balance_amount, c.fine_charge_track, c.principal_waiver
             FROM `collection` c
             LEFT JOIN users u ON c.insert_login_id = u.id
-            WHERE c.`loan_entry_id` = '$le_id' AND (c.principal_waiver!='')
+            WHERE c.`loan_entry_id` = '$le_id' 
             AND 
             (
                 (c.collection_date BETWEEN '$maturity_date_calc' AND '$currentMonth') 
             )");
-        }
 
         if ($run->rowCount() > 0) {
             $waiver = 0;
             while ($row = $run->fetch()) {
-                $waiver = intVal($row['principal_waiver']);
-                $balance_amount = $balance_amount  - $waiver;
+                $waiver = $waiver + intVal($row['principal_waiver']);
+
+                $PcollectionAmnt = intVal($row['principal_amount_track']);
+                $IcollectionAmnt = intVal($row['interest_amount_track']);
+                if ($last_bal_amt != 0) {
+                    $balance_amount = $last_bal_amt - $PcollectionAmnt - $waiver;
+                } else {
+                    $balance_amount = $balance_amount - $PcollectionAmnt - $waiver;
+                }
             ?>
                 <tr>
                     <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
 
-                    <td><?php $pendingMinusCollection = (intVal($row['pending_amount']));
-                        if ($pendingMinusCollection != '') {
-                            echo $pendingMinusCollection;
+                    <!-- Pending Amount For Current Date For After Maturity End Date -->
+                    <td>
+                        <?php $pending_amount = (intVal($row['pending_amount']));
+                        if ($pending_amount != '') {
+                            echo moneyFormatIndia($pending_amount);
                         } else {
                             echo 0;
                         } ?>
                     </td>
 
-                    <td><?php $payableMinusCollection = (intVal($row['payable_amount']));
-                        if ($payableMinusCollection != '') {
-                            echo $payableMinusCollection;
-                        }
+                    <!-- Payable AmountFor Current Date For After Maturity End Date -->
+                    <td>
+                        <?php $payable_amount = (intVal($row['payable_amount']));
+                        if ($payable_amount != '') {
+                            echo moneyFormatIndia($payable_amount);
+                        } else {
+                            echo 0;
+                        } ?>
+                    </td>
+
+                    <!-- Paid Date For Current Date For After Maturity End Date -->
+                    <td>
+                        <?php echo date('d-m-Y', strtotime($row['collection_date'])); ?>
+                    </td>
+
+                    <!-- Payable AmountFor Current Date For After Maturity End Date -->
+                    <td>
+                        <?php $paid_interest_amount = (intVal($row['interest_amount_track']));
+                        if ($paid_interest_amount != '') {
+                            echo moneyFormatIndia($paid_interest_amount);
+                        } else {
+                            echo 0;
+                        } ?>
+                    </td>
+
+                    <!-- Balance Interest Amount (Payable - Paid) After Maturity End Date -->
+                    <td>
+                        <?php $balance_Interest_Amount = $payable_amount - $paid_interest_amount;
+                        if ($paid_interest_amount != '') {
+                            echo moneyFormatIndia($balance_Interest_Amount);
+                        } else {
+                            echo 0;
+                        } ?>
+                    </td>
+
+                    <!-- Paid Principal Amount For After Maturity End Date -->
+                    <td>
+                        <?php $paid_Principal_Amount = (intVal($row['principal_amount_track']));
+                        if ($paid_Principal_Amount != '') {
+                            echo moneyFormatIndia($paid_Principal_Amount);
+                        } else {
+                            echo 0;
+                        } ?>
+                    </td>
+
+                    <!-- Balance Principal Amount For After Maturity End Date -->
+                    <td>
+                        <?php
+                        $balance_Principalt_Amount = $balance_amount;
+                        echo moneyFormatIndia($balance_Principalt_Amount);
+                        $last_princ_amt = moneyFormatIndia($balance_Principalt_Amount);
                         ?>
                     </td>
 
-                    <td><?php echo date('d-m-Y', strtotime($row['collection_date'])); ?></td>
-
+                    <!-- Action For After Maturity End Date -->
                     <td>
-                        <?php if ($PcollectionAmnt > 0) {
-                            echo $PcollectionAmnt;
-                        } elseif ($row['principal_waiver'] > 0) {
-                            echo $row['principal_waiver'];
-                        } ?>
+                        <a class='print_due_coll' id="" value="<?php echo $row['collection_id']; ?>"> <i class="fa fa-print" aria-hidden="true"></i> </a>
                     </td>
-
-                    <td>
-                        <?php if ($IcollectionAmnt > 0) {
-                            echo $IcollectionAmnt;
-                        } ?>
-                    </td>
-
-                    <td><?php echo $balance_amount; ?></td>
-
-                    <td><?php if ($row['principal_waiver'] > 0) {
-                            echo $row['principal_waiver'];
-                        } else {
-                            echo '0';
-                        } ?></td>
                 </tr>
-
         <?php
                 $i++;
             }

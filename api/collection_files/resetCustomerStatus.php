@@ -138,23 +138,20 @@ foreach ($le_arr as $le_id) {
 //for knowing the customer status for due followup screen
 //this will give the customer's sub status in the order of Legal, Error, OD, Due Nill, Pending, Current
 
-if ($cus_id != '') {
-    $response['sub_status_customer'] = checkStatusOfCustomer($response, $loan_arr, $cus_id, $pdo);
-}
+$response['sub_status_customer'] = checkStatusOfCustomer($response, $loan_arr);
 
 $response['sub_status_customer'] = $response['sub_status_customer'] ?? false;
 
 function calculateOthers($loan_arr, $response, $pdo, $le_id)
 {
-    if ($loan_arr['due_method'] == 'Monthly') {
+    $interest_details = calculateInterestLoan($loan_arr, $response, $pdo, $le_id);
+    $all_data = array_merge($response, $interest_details);
+    $response = $all_data;
 
-        $interest_details = calculateInterestLoan($loan_arr, $response, $pdo, $le_id);
-        $all_data = array_merge($response, $interest_details);
-        $response = $all_data;
-    }
     if ($response['pending_amount'] < 0) {
         $response['pending_amount'] = 0;
     }
+
     return $response;
 }
 
@@ -609,7 +606,7 @@ function dueAmtCalculation($pdo, $start_date, $end_date, $interest_amount, $loan
     return $result;
 }
 
-function checkStatusOfCustomer($response, $loan_arr, $cus_id, $pdo)
+function checkStatusOfCustomer($response, $loan_arr)
 {
 
     if ($response) {
