@@ -5,7 +5,6 @@ $user_id = $_SESSION['user_id'];
 
 $column = array(
     'cc.id',
-    'le.loan_date_calc',
     'cc.cus_id',
     'cc.aadhar_number',
     "CONCAT(cc.first_name, ' ', COALESCE(cc.last_name, ''))",
@@ -19,7 +18,7 @@ $column = array(
     'cc.id'
 );
 
-$query = "SELECT le.id AS loan_entry_id, cc.id , cc.cus_id ,  CONCAT(cc.first_name, ' ', COALESCE(cc.last_name, '')) AS cus_name, cc.aadhar_number , lc.loan_category , le.loan_amount , le.loan_date_calc , le.cus_data , anc.areaname , lnc.linename , bc.branch_name , cc.mobile1, cs.id as cus_sts_id,  cs.status as c_sts
+$query = "SELECT le.id AS loan_entry_id, cc.id , cc.cus_id ,  CONCAT(cc.first_name, ' ', COALESCE(cc.last_name, '')) AS cus_name, cc.aadhar_number , lc.loan_category , le.loan_amount , le.cus_data , anc.areaname , lnc.linename , bc.branch_name , cc.mobile1, cs.id as cus_sts_id,  cs.status as c_sts
 FROM customer_creation cc
 LEFT JOIN loan_entry le ON cc.cus_id = le.cus_id
 LEFT JOIN loan_category_creation lcc ON le.loan_category = lcc.id
@@ -36,7 +35,6 @@ if (isset($_POST['search'])) {
         $search = $_POST['search'];
         $query .= " AND (
             cc.cus_id LIKE '" . $search . "%'
-            OR le.loan_date_calc LIKE '%" . $search . "%'
             OR cc.aadhar_number LIKE '%" . $search . "%'
             OR CONCAT(cc.first_name, ' ', COALESCE(cc.last_name, '')) LIKE '%" . $search . "%'
             OR anc.areaname LIKE '%" . $search . "%'
@@ -76,8 +74,6 @@ foreach ($result as $row) {
     $sub_array = array();
 
     $sub_array[] = $sno++;
-    $date = $row['loan_date_calc'] ?? '';
-    $sub_array[] = (strtotime($date) && $date != '0000-00-00') ? date('d-m-Y', strtotime($date))  : '';
     $sub_array[] = isset($row['cus_id']) ? $row['cus_id'] : '';
     $sub_array[] = isset($row['aadhar_number']) ? $row['aadhar_number'] : '';
     $sub_array[] = isset($row['cus_name']) ? $row['cus_name'] : '';

@@ -6,6 +6,7 @@ $user_id = $_SESSION['user_id'];
 $cus_id = $_POST['cus_id'];
 $loan_entry_id = $_POST['loan_entry_id'];
 $loan_amount_calc = $_POST['loan_amount_calc'];
+$loan_date = $_POST['loan_date'];
 $due_startdate_calc = $_POST['due_startdate_calc'];
 $maturity_date_calc = $_POST['maturity_date_calc'];
 $net_cash = $_POST['net_cash'];
@@ -28,7 +29,7 @@ $issue_relationship = $_POST['issue_relationship'];
 
 $qry = $pdo->query("INSERT INTO `loan_issue`(`cus_id`, `loan_entry_id`, `loan_amnt`, `net_cash`,`net_bal_cash`,`payment_type`, `payment_mode`, `bank_name`,`cash`,`cheque_val`,`transaction_val`, `transaction_id`, `cheque_no`,`cheque_remark`,`tran_remark`,`balance_amount`, `issue_date`, `issue_person`, `relationship`, `insert_login_id`, `created_on`) VALUES ('$cus_id','$loan_entry_id','$loan_amount_calc','$net_cash','$bal_net_cash','$payment_type','$payment_mode','$bank_name','$cash','$chequeValue','$transaction_value','$transaction_id','$chequeno','$chequeRemark','$transaction_remark','$bal_amount','$issue_date','$issue_person','$issue_relationship','$user_id',now())");
 
-$qry2 = $pdo->query("UPDATE `loan_entry` SET `due_startdate_calc`='$due_startdate_calc',`maturity_date_calc`='$maturity_date_calc',`update_login_id`='$user_id',`updated_on`=now() WHERE `id`='$loan_entry_id' ");
+$qry2 = $pdo->query("UPDATE `loan_entry` SET `loan_date`='$loan_date', `due_startdate_calc`='$due_startdate_calc',`maturity_date_calc`='$maturity_date_calc',`update_login_id`='$user_id',`updated_on`=now() WHERE `id`='$loan_entry_id' ");
 
 if ($payment_type == "1") {
     // Check if balance_amount is zero

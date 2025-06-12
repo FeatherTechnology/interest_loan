@@ -722,8 +722,6 @@ $(document).ready(function () {
     {
         // Get today's date
         var today = new Date().toISOString().split('T')[0];
-        //Set loan date
-        $('#loan_date_calc').val(today);
         //Due start date -- set min date = current date.
         $('#due_startdate_calc').attr('min', today);
     }
@@ -831,7 +829,6 @@ $(document).ready(function () {
             'processing_fees_calculate': $('#processing_fees_calculate').val().replace(/,/g, ''),
             'net_cash_calc': $('#net_cash_calc').val().replace(/,/g, ''),
             'interest_amnt_calc': $('#interest_amnt_calc').val().replace(/,/g, ''),
-            'loan_date_calc': $('#loan_date_calc').val(),
             'due_startdate_calc': $('#due_startdate_calc').val(),
             'maturity_date_calc': $('#maturity_date_calc').val(),
             'referred_calc': $('#referred_calc').val(),
@@ -1736,7 +1733,6 @@ async function loanCalculationEdit(id) {
             $('#processing_fees_calculate').val(data.processing_fees_calculate);
             $('#net_cash_calc').val(data.net_cash_calc);
             $('#interest_amnt_calc').val(data.interest_amnt_calc);
-            $('#loan_date_calc').val(data.loan_date_calc);
             $('#due_startdate_calc').val(data.due_startdate_calc);
             $('#maturity_date_calc').val(data.maturity_date_calc);
             $('#referred_calc').val(data.referred_calc).trigger('change');
@@ -1908,7 +1904,7 @@ function clearLoanEntryForm() {
 
     $('#loan_entry_loan_calculation').find('input').each(function () {
         var id = $(this).attr('id');
-        if (id !== 'loan_date_calc' && id != 'due_period' && id != 'submit_doc_need' && id != 'refresh_cal') {
+        if (id != 'due_period' && id != 'submit_doc_need' && id != 'refresh_cal') {
             $(this).val('');
         }
     });
