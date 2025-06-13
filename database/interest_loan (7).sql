@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 12, 2025 at 07:50 AM
+-- Generation Time: Jun 13, 2025 at 02:03 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -186,7 +186,8 @@ CREATE TABLE `bank_info` (
 INSERT INTO `bank_info` (`id`, `cus_id`, `bank_name`, `branch_name`, `acc_holder_name`, `acc_number`, `ifsc_code`, `insert_login_id`, `update_login_id`, `created_on`, `updated_on`) VALUES
 (1, 'C-101', 'State Bank of India', 'Villianur', 'vasanth', '967878', '6788788', 1, NULL, '2025-06-10', NULL),
 (2, 'C-102', 'Indian Bank', 'Pondicherry', 'Vijay', '9886787', '867868', 1, NULL, '2025-06-10', NULL),
-(3, 'C-103', 'Axis Bank', 'Madurai', 'Ajith', '8567767', '67567', 1, NULL, '2025-10-11', NULL);
+(3, 'C-103', 'Axis Bank', 'Madurai', 'Ajith', '8567767', '67567', 1, NULL, '2025-10-11', NULL),
+(4, 'C-104', 'Indian Bank', 'Villianur', 'Vikaram', '979787', '7897898', 1, NULL, '2025-06-12', NULL);
 
 -- --------------------------------------------------------
 
@@ -333,8 +334,9 @@ CREATE TABLE `collection` (
 --
 
 INSERT INTO `collection` (`id`, `loan_entry_id`, `cus_id`, `collection_status`, `coll_sub_status`, `loan_amount`, `paid_amount`, `balance_amount`, `interest_amount`, `pending_amount`, `payable_amount`, `penalty`, `fine_charge`, `till_now_payable`, `interest_amount_track`, `penalty_track`, `fine_charge_track`, `principal_amount_track`, `total_paid_track`, `interest_waiver`, `penalty_waiver`, `fine_charge_waiver`, `principal_waiver`, `total_waiver`, `collection_date`, `collection_id`, `collection_mode`, `bank_id`, `transaction_id`, `collect_sts`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
-(1, 1, 'C-101', 'Present', 'Current', '50000', '0', '50000', '1000', '0', '0', '0', '150', NULL, '', '', '', '50000', '50000', '', '', '', '', '', '2025-06-12 09:44:20', 'COL-101', 1, 0, 0, 0, '1', NULL, NULL, '2025-06-12 09:44:20', '2025-06-12 09:44:20'),
-(2, 2, 'C-102', 'Present', 'Current', '25000', '0', '25000', '500', '0', '0', '0', '100', NULL, '', '', '', '25000', '25000', '', '', '', '', '', '2025-06-12 09:45:30', 'COL-102', 1, 0, 0, 0, '1', NULL, NULL, '2025-06-12 09:45:30', '2025-06-12 09:45:30');
+(1, 2, 'C-101', 'Present', 'Current', '75000', '0', '75000', '2250', '0', '0', '0', '0', NULL, '', '', '', '500', '500', '', '', '', '', '', '2025-06-13 17:07:19', 'COL-101', 1, 0, 0, 0, '1', NULL, NULL, '2025-06-13 17:07:19', '2025-06-13 17:07:19'),
+(2, 1, 'C-101', 'Present', 'Current', '50000', '0', '50000', '1000', '0', '0', '0', '0', NULL, '', '', '', '50000', '50000', '', '', '', '', '', '2025-06-13 17:07:38', 'COL-102', 1, 0, 0, 0, '1', NULL, NULL, '2025-06-13 17:07:38', '2025-06-13 17:07:38'),
+(3, 2, 'C-101', 'Present', 'Current', '75000', '500', '74500', '2235', '0', '0', '0', '0', NULL, '', '', '', '74500', '74500', '', '', '', '', '', '2025-06-13 17:17:33', 'COL-103', 1, 0, 0, 0, '1', NULL, NULL, '2025-06-13 17:17:33', '2025-06-13 17:17:33');
 
 -- --------------------------------------------------------
 
@@ -409,9 +411,10 @@ CREATE TABLE `customer_creation` (
 --
 
 INSERT INTO `customer_creation` (`id`, `cus_id`, `aadhar_number`, `first_name`, `last_name`, `dob`, `age`, `area`, `line`, `customer_data`, `mobile1`, `mobile2`, `whatsapp`, `occupation`, `occ_detail`, `address`, `native_address`, `cus_limit`, `about_cus`, `pic`, `insert_login_id`, `update_login_id`, `created_on`, `updated_on`) VALUES
-(1, 'C-101', '345434534535', 'Testing ', 'One', '2002-01-31', '23', '14', '15', '2', '9687868678', '8768766786', '9687868678', 'Business', 'Tailor shop and sales', 'No.10 Pondicherry ', 'No.10 Pondicherry ', '100000', 'Good', '6847d42bbaaa5.jpg', 1, 1, '2025-06-10', '2025-06-10'),
-(2, 'C-102', '977657567567', 'Testing', 'Two', '2001-01-25', '24', '20', '17', '2', '9677687867', '8787867867', '8787867867', 'Nurse', 'Private hospital', 'No.8 Villianur', 'No.8 Villianur', '100000', 'Good', '6847d504936d2.jpg', 1, 1, '2025-06-10', '2025-06-12'),
-(3, 'C-103', '475675675675', 'Testing ', 'Three', '2001-02-25', '24', '18', '17', '2', '9578567567', '8657567657', '', 'College Staff', 'Christ College ', 'No.5 Mullakulam', 'No.5 Mullakulam', '50000', 'Good', '68e9e567e0b10.png', 1, 1, '2025-10-11', '2025-09-11');
+(1, 'C-101', '345434534535', 'Testing ', 'One', '2002-01-31', '23', '14', '15', '2', '9687868678', '8768766786', '9687868678', 'Business', 'Tailor shop and sales', 'No.10 Pondicherry ', 'No.10 Pondicherry ', '100000', 'Good', '6847d42bbaaa5.jpg', 1, 1, '2025-06-10', '2025-06-13'),
+(2, 'C-102', '977657567567', 'Testing', 'Two', '2001-01-25', '24', '20', '17', '1', '9677687867', '8787867867', '8787867867', 'Nurse', 'Private hospital', 'No.8 Villianur', 'No.8 Villianur', '100000', 'Good', '6847d504936d2.jpg', 1, 1, '2025-06-10', '2025-06-12'),
+(3, 'C-103', '475675675675', 'Testing ', 'Three', '2001-02-25', '24', '18', '17', '1', '9578567567', '8657567657', '', 'College Staff', 'Christ College ', 'No.5 Mullakulam', 'No.5 Mullakulam', '50000', 'Good', '68e9e567e0b10.png', 1, 1, '2025-10-11', '2025-09-11'),
+(4, 'C-104', '857567567567', 'Testing ', 'Four', '2001-02-02', '24', '18', '17', '1', '9789789789', '8767867878', '9789789789', '', '', '', '', '50000', 'gggg', '684aa1955b999.png', 1, 1, '2025-06-12', '2025-06-12');
 
 -- --------------------------------------------------------
 
@@ -425,6 +428,9 @@ CREATE TABLE `customer_status` (
   `loan_entry_id` int(11) NOT NULL,
   `status` int(15) NOT NULL,
   `collection_status` varchar(100) NOT NULL,
+  `closed_date` datetime DEFAULT NULL,
+  `sub_status` int(11) DEFAULT NULL,
+  `remark` varchar(50) DEFAULT NULL,
   `insert_login_id` int(11) NOT NULL,
   `update_login_id` int(11) DEFAULT NULL,
   `created_on` date NOT NULL,
@@ -435,12 +441,9 @@ CREATE TABLE `customer_status` (
 -- Dumping data for table `customer_status`
 --
 
-INSERT INTO `customer_status` (`id`, `cus_id`, `loan_entry_id`, `status`, `collection_status`, `insert_login_id`, `update_login_id`, `created_on`, `updated_on`) VALUES
-(1, 'C-101', 1, 7, 'Due Nil', 1, 1, '2025-06-10', '2025-06-12'),
-(2, 'C-102', 2, 7, 'Due Nil', 1, 1, '2025-06-10', '2025-06-12'),
-(3, 'C-103', 3, 7, 'Current', 1, 1, '2025-10-11', '2025-09-11'),
-(4, 'C-103', 4, 7, 'Current', 1, 1, '2025-09-11', '2025-09-11'),
-(5, 'C-102', 5, 7, '', 1, 1, '2025-06-12', '2025-06-12');
+INSERT INTO `customer_status` (`id`, `cus_id`, `loan_entry_id`, `status`, `collection_status`, `closed_date`, `sub_status`, `remark`, `insert_login_id`, `update_login_id`, `created_on`, `updated_on`) VALUES
+(1, 'C-101', 1, 12, 'Closed', '2025-06-13 17:15:47', 1, 'lkj', 1, 1, '2025-06-13', '2025-06-13'),
+(2, 'C-101', 2, 12, 'Closed', '2025-06-13 17:20:02', 2, '', 1, 1, '2025-06-13', '2025-06-13');
 
 -- --------------------------------------------------------
 
@@ -618,7 +621,8 @@ CREATE TABLE `family_info` (
 INSERT INTO `family_info` (`id`, `cus_id`, `fam_name`, `fam_relationship`, `relation_type`, `fam_age`, `fam_occupation`, `fam_aadhar`, `fam_mobile`, `insert_login_id`, `update_login_id`, `created_on`, `updated_on`) VALUES
 (1, 'C-101', 'vasanth', 'Brother', '', '22', 'Accounts', '123325564654', '9879878987', 1, NULL, '2025-06-10', NULL),
 (2, 'C-102', 'Vijay', 'Brother', '', '22', 'Developer', '545646456456', '9547456456', 1, NULL, '2025-06-10', NULL),
-(3, 'C-103', 'Ajith', 'Brother', '', '50', 'Racer', '756545654654', '8446645464', 1, NULL, '2025-10-11', NULL);
+(3, 'C-103', 'Ajith', 'Brother', '', '50', 'Racer', '756545654654', '8446645464', 1, NULL, '2025-10-11', NULL),
+(4, 'C-104', 'Vikaram', 'Son', '', '23', 'Actor', '756567567567', '9576756756', 1, NULL, '2025-06-12', NULL);
 
 -- --------------------------------------------------------
 
@@ -642,33 +646,6 @@ CREATE TABLE `fine_charges` (
   `created_date` datetime DEFAULT NULL COMMENT 'Create Time',
   `updated_date` datetime DEFAULT current_timestamp() COMMENT 'Update Time'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `fine_charges`
---
-
-INSERT INTO `fine_charges` (`id`, `loan_entry_id`, `cus_id`, `fine_date`, `fine_purpose`, `fine_charge`, `paid_date`, `paid_amnt`, `waiver_amnt`, `status`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(1, 1, NULL, NULL, NULL, '0', '2025-06-10', '0', '', NULL, NULL, NULL, NULL, '2025-06-10 12:21:29'),
-(2, 1, NULL, NULL, NULL, '0', '2025-06-10', '0', '', NULL, NULL, NULL, NULL, '2025-06-10 12:28:24'),
-(3, 1, NULL, NULL, NULL, '0', '2025-06-10', '0', '', NULL, NULL, NULL, NULL, '2025-06-10 12:33:04'),
-(4, 1, NULL, NULL, NULL, '0', '2025-06-10', '0', '', NULL, NULL, NULL, NULL, '2025-06-10 12:38:00'),
-(5, 1, NULL, NULL, NULL, '0', '2025-06-10', '0', '', NULL, NULL, NULL, NULL, '2025-06-10 12:39:15'),
-(6, 1, NULL, NULL, NULL, '0', '2025-06-10', '0', '', NULL, NULL, NULL, NULL, '2025-06-10 12:41:19'),
-(7, 1, NULL, NULL, NULL, '0', '2025-06-10', '0', '', NULL, NULL, NULL, NULL, '2025-06-10 12:44:03'),
-(8, 1, NULL, NULL, NULL, '0', '2025-06-10', '0', '', NULL, NULL, NULL, NULL, '2025-06-10 12:59:45'),
-(9, 1, NULL, NULL, NULL, '0', '2025-06-10', '0', '', NULL, NULL, NULL, NULL, '2025-06-10 13:01:44'),
-(10, 1, NULL, NULL, NULL, '0', '2025-06-10', '0', '', NULL, NULL, NULL, NULL, '2025-06-10 13:06:12'),
-(11, 1, NULL, NULL, NULL, '0', '2025-06-10', '0', '', NULL, NULL, NULL, NULL, '2025-06-10 13:10:36'),
-(12, 1, NULL, NULL, NULL, '0', '2025-06-10', '0', '', NULL, NULL, NULL, NULL, '2025-06-10 13:14:19'),
-(13, 1, NULL, NULL, NULL, '0', '2025-06-10', '0', '', NULL, NULL, NULL, NULL, '2025-06-10 13:19:17'),
-(14, 1, NULL, NULL, NULL, '0', '2025-06-10', '0', '', NULL, NULL, NULL, NULL, '2025-06-10 13:20:39'),
-(15, 1, NULL, NULL, NULL, '0', '2025-06-10', '0', '', NULL, NULL, NULL, NULL, '2025-06-10 13:27:08'),
-(16, 1, NULL, NULL, NULL, '0', '2025-06-10', '0', '', NULL, NULL, NULL, NULL, '2025-06-10 13:42:40'),
-(17, 1, NULL, NULL, NULL, '0', '2025-06-10', '0', '', NULL, NULL, NULL, NULL, '2025-06-10 13:43:19'),
-(18, 1, NULL, NULL, NULL, '0', '2025-06-10', '0', '', NULL, NULL, NULL, NULL, '2025-06-10 15:25:13'),
-(19, 1, NULL, NULL, NULL, '0', '2025-08-10', '0', '', NULL, NULL, NULL, NULL, '2025-08-10 17:14:05'),
-(20, 2, 'C-102', '2025-06-12', 'Delay', '100', NULL, '0', '0', 0, '1', NULL, '2025-06-12 09:39:38', '2025-06-12 09:39:38'),
-(21, 1, 'C-101', '2025-06-12', 'Delay', '150', NULL, '0', '0', 0, '1', NULL, '2025-06-12 09:44:10', '2025-06-12 09:44:10');
 
 -- --------------------------------------------------------
 
@@ -712,9 +689,8 @@ CREATE TABLE `guarantor_info` (
 --
 
 INSERT INTO `guarantor_info` (`id`, `loan_entry_id`, `family_info_id`, `gu_pic`) VALUES
-(1, 1, 1, '6847d5191d758.png'),
-(2, 2, 2, '6847f988ec1ee.png'),
-(3, 3, 3, '68e9e57eb89ab.jpg');
+(1, 1, 1, '684bda692fde4.jpg'),
+(2, 2, 1, '684bf5c68b55d.jpg');
 
 -- --------------------------------------------------------
 
@@ -743,7 +719,8 @@ CREATE TABLE `kyc_info` (
 INSERT INTO `kyc_info` (`id`, `cus_id`, `proof_of`, `fam_mem`, `proof`, `proof_detail`, `upload`, `insert_login_id`, `update_login_id`, `created_on`, `updated_on`) VALUES
 (1, 'C-101', '1', NULL, 1, '902532', '6847d3fe3d91b.jpg', 1, NULL, '2025-06-10', NULL),
 (2, 'C-102', '1', NULL, 2, '67867868', '', 1, NULL, '2025-06-10', NULL),
-(3, 'C-103', '2', 3, 2, '654654645', '', 1, NULL, '2025-10-11', NULL);
+(3, 'C-103', '2', 3, 2, '654654645', '', 1, NULL, '2025-10-11', NULL),
+(4, 'C-104', '1', NULL, 2, '7567567567', '', 1, NULL, '2025-06-12', NULL);
 
 -- --------------------------------------------------------
 
@@ -835,7 +812,8 @@ CREATE TABLE `loan_category_creation` (
 
 INSERT INTO `loan_category_creation` (`id`, `loan_category`, `loan_limit`, `status`, `profit_type`, `due_method`, `due_type`, `benefit_method`, `due_period`, `interest_calculate`, `due_calculate`, `interest_rate_min`, `interest_rate_max`, `document_charge`, `doc_charge_min`, `doc_charge_max`, `processing_fee_type`, `processing_fee_min`, `processing_fee_max`, `overdue_type`, `overdue_penalty`, `insert_login_id`, `update_login_id`, `created_on`, `updated_on`) VALUES
 (1, 1, '50000', '1', 'Calculation', 'Monthly', 'Interest', 'After Benefit', '12', '1', 'On Date', '1', '2', 'percentage', '3', '4', 'percentage', '5', '6', 'rupee', '200', 1, NULL, '2025-05-27', NULL),
-(2, 2, '100000', '1', 'Calculation', 'Monthly', 'Interest', 'After Benefit', '18', '2', 'On Date', '2', '4', 'percentage', '4', '6', 'rupee', '200', '300', 'percentage', '5', 1, NULL, '2025-05-27', NULL);
+(2, 2, '100000', '1', 'Calculation', 'Monthly', 'Interest', 'After Benefit', '18', '2', 'On Date', '2', '4', 'percentage', '4', '6', 'rupee', '200', '300', 'percentage', '5', 1, NULL, '2025-05-27', NULL),
+(3, 3, '100000', '1', 'Calculation', 'Monthly', 'Interest', 'After Benefit', '3', '1', 'On Date', '2', '3', 'rupee', '250', '500', 'percentage', '2', '4', 'rupee', '300', 1, NULL, '2025-06-12', NULL);
 
 -- --------------------------------------------------------
 
@@ -883,11 +861,8 @@ CREATE TABLE `loan_entry` (
 --
 
 INSERT INTO `loan_entry` (`id`, `aadhar_number`, `cus_id`, `cus_data`, `loan_id`, `loan_category`, `loan_amount`, `benefit_method`, `due_method`, `due_period`, `interest_calculate`, `due_calculate`, `interest_rate_calc`, `due_period_calc`, `doc_charge_calc`, `processing_fees_calc`, `loan_amnt_calc`, `doc_charge_calculate`, `processing_fees_calculate`, `net_cash_calc`, `interest_amnt_calc`, `loan_date`, `due_startdate_calc`, `maturity_date_calc`, `referred_calc`, `agent_id_calc`, `agent_name_calc`, `remark`, `insert_login_id`, `update_login_id`, `created_on`, `updated_on`) VALUES
-(1, '345434534535', 'C-101', 'New', 'LID-101', '1', '50000', 'After Benefit', 'Monthly', 'Month', 'Month', 'On Date', '2', '12', '3', '5', '50000', '1500', '2500', '46000', '1000', '2025-06-10', '2025-06-10', '2026-05-10', '1', '', '', NULL, 1, 1, '2025-06-10', '2025-06-10'),
-(2, '977657567567', 'C-102', 'New', 'LID-102', '1', '25000', 'After Benefit', 'Monthly', 'Month', 'Month', 'On Date', '2', '12', '3', '5', '25000', '750', '1250', '23000', '500', '2025-06-10', '2025-06-10', '2026-05-10', '1', '', '', NULL, 1, 1, '2025-06-10', '2025-06-10'),
-(3, '475675675675', 'C-103', 'New', 'LID-103', '2', '50000', 'After Benefit', 'Monthly', 'Month', 'Days', 'On Date', '2', '18', '4', '250', '50000', '2000', '250', '47750', '35', '2025-06-11', '2025-06-12', '2026-11-12', '1', '', '', NULL, 1, 1, '2025-10-11', '2025-06-11'),
-(4, '475675675675', 'C-103', 'Existing', 'LID-104', '1', '40000', 'After Benefit', 'Monthly', 'Month', 'Month', 'On Date', '2', '12', '3', '5', '40000', '1200', '2000', '36800', '800', '2025-09-11', '2025-09-11', '2026-08-11', '1', '', '', NULL, 1, 1, '2025-09-11', '2025-09-11'),
-(5, '977657567567', 'C-102', 'Existing', 'LID-105', '2', '45000', 'After Benefit', 'Monthly', 'Month', 'Days', 'On Date', '2', '18', '4', '200', '45000', '1800', '200', '43000', '30', '2025-06-12', '2025-06-13', '2026-11-13', '1', '', '', NULL, 1, 1, '2025-06-12', '2025-06-12');
+(1, '345434534535', 'C-101', 'New', 'LID-101', '1', '50000', 'After Benefit', 'Monthly', 'Month', 'Month', 'On Date', '2', '12', '3', '5', '50000', '1500', '2500', '46000', '1000', '2025-06-13', '2025-06-13', '2026-05-13', '1', '', '', 'dd', 1, 1, '2025-06-13', '2025-06-13'),
+(2, '345434534535', 'C-101', 'Existing', 'LID-102', '3', '75000', 'After Benefit', 'Monthly', 'Month', 'Month', 'On Date', '3', '3', '250', '2', '75000', '250', '1500', '73250', '2250', '2025-06-13', '2025-06-14', '2025-08-14', '1', '', '', NULL, 1, 1, '2025-06-13', '2025-06-13');
 
 -- --------------------------------------------------------
 
@@ -927,11 +902,8 @@ CREATE TABLE `loan_issue` (
 --
 
 INSERT INTO `loan_issue` (`id`, `cus_id`, `loan_entry_id`, `loan_amnt`, `net_cash`, `net_bal_cash`, `payment_type`, `payment_mode`, `bank_name`, `cash`, `cheque_val`, `transaction_val`, `transaction_id`, `cheque_no`, `cheque_remark`, `tran_remark`, `balance_amount`, `issue_date`, `issue_person`, `relationship`, `insert_login_id`, `update_login_id`, `created_on`, `updated_on`) VALUES
-(1, 'C-101', 1, 50000, 46000, '46000', 2, '1', '', '46000', '', '', '', '', '', '', '0', '2025-06-10', 'Testing  One', 'Customer', 1, NULL, '2025-06-10 12:18:53', NULL),
-(2, 'C-102', 2, 25000, 23000, '23000', 2, '1', '', '23000', '', '', '', '', '', '', '0', '2025-06-10', 'Testing Two', 'Customer', 1, NULL, '2025-06-10 14:56:13', NULL),
-(3, 'C-103', 3, 50000, 47750, '47750', 2, '1', '', '47750', '', '', '', '', '', '', '0', '2025-06-11', 'Testing  Three', 'Customer', 1, NULL, '2025-06-11 10:38:58', NULL),
-(4, 'C-103', 4, 40000, 36800, '36800', 2, '1', '', '36800', '', '', '', '', '', '', '0', '2025-09-11', 'Testing  Three', 'Customer', 1, NULL, '2025-09-11 17:15:18', NULL),
-(5, 'C-102', 5, 45000, 43000, '43000', 2, '1', '', '43000', '', '', '', '', '', '', '0', '2025-06-12', 'Testing Two', 'Customer', 1, NULL, '2025-06-12 10:23:54', NULL);
+(1, 'C-101', 1, 50000, 46000, '46000', 2, '1', '', '46000', '', '', '', '', '', '', '0', '2025-06-13', 'Testing  One', 'Customer', 1, NULL, '2025-06-13 13:32:16', NULL),
+(2, 'C-101', 2, 75000, 73250, '73250', 2, '1', '', '73250', '', '', '', '', '', '', '0', '2025-06-13', 'Testing  One', 'Customer', 1, NULL, '2025-06-13 15:28:05', NULL);
 
 -- --------------------------------------------------------
 
@@ -1019,13 +991,8 @@ CREATE TABLE `penalty_charges` (
 --
 
 INSERT INTO `penalty_charges` (`loan_entry_id`, `penalty_date`, `penalty`, `paid_date`, `paid_amnt`, `waiver_amnt`, `created_date`, `updated_time`) VALUES
-('3', '2025-06', '33', NULL, '0', '0', '2025-09-11 10:53:13', '2025-09-11 10:53:13'),
-('3', '2025-07', '50', NULL, '0', '0', '2025-09-11 10:53:13', '2025-09-11 10:53:13'),
-('3', '2025-08', '50', NULL, '0', '0', '2025-11-11 15:00:48', '2025-11-11 15:00:48'),
-('3', '2025-09', '50', NULL, '0', '0', '2025-11-11 15:00:48', '2025-11-11 15:00:48'),
-('1', '2025-06', '200', NULL, '0', '0', '2025-09-11 17:06:36', '2025-09-11 17:06:36'),
-('1', '2025-07', '200', NULL, '0', '0', '2025-09-11 17:06:36', '2025-09-11 17:06:36'),
-('3', NULL, NULL, '2025-09-11', '50', '', '2025-09-11 18:19:45', '2025-09-11 18:19:45');
+('6', '2025-06', '300', NULL, '0', '0', '2025-09-13 10:42:31', '2025-09-13 10:42:31'),
+('6', '2025-07', '300', NULL, '0', '0', '2025-09-13 10:42:31', '2025-09-13 10:42:31');
 
 -- --------------------------------------------------------
 
@@ -1075,7 +1042,8 @@ CREATE TABLE `property_info` (
 INSERT INTO `property_info` (`id`, `cus_id`, `property`, `property_detail`, `property_holder`, `insert_login_id`, `update_login_id`, `created_on`, `updated_on`) VALUES
 (1, 'C-101', 'house', 'Own House', 0, 1, NULL, '2025-06-10', NULL),
 (2, 'C-102', 'Bike', 'Own Bike', 0, 1, NULL, '2025-06-10', NULL),
-(3, 'C-103', 'Car', 'Own car', 0, 1, NULL, '2025-10-11', NULL);
+(3, 'C-103', 'Car', 'Own car', 0, 1, NULL, '2025-10-11', NULL),
+(4, 'C-104', 'house', 'own house', 4, 1, NULL, '2025-06-12', NULL);
 
 -- --------------------------------------------------------
 
@@ -1543,7 +1511,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `user_code`, `role`, `designation`, `address`, `place`, `email`, `mobile`, `user_name`, `password`, `branch`, `loan_category`, `line`, `collection_access`, `download_access`, `screens`, `insert_login_id`, `update_login_id`, `created_on`, `updated_on`) VALUES
-(1, 'Super Admin', 'US-001', 1, 1, 'No.8 Mullakulam', 'Arumathupuram', 'vasanth@gmail.com', '9798798798', 'admin', '123', '7,8', '1,2', '15,17', 1, 1, '2,3,4,5,6,7,8,9,10,11,12,13', '1', '1', '2024-06-13', '2025-06-09');
+(1, 'Super Admin', 'US-001', 1, 1, 'No.8 Mullakulam', 'Arumathupuram', 'vasanth@gmail.com', '9798798798', 'admin', '123', '7,8', '1,2,3', '15,17', 1, 1, '2,3,4,5,6,7,8,9,10,11,12,13,14', '1', '1', '2024-06-13', '2025-06-12');
 
 --
 -- Indexes for dumped tables
@@ -1838,7 +1806,7 @@ ALTER TABLE `bank_creation`
 -- AUTO_INCREMENT for table `bank_info`
 --
 ALTER TABLE `bank_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `branch_creation`
@@ -1868,7 +1836,7 @@ ALTER TABLE `cheque_upd`
 -- AUTO_INCREMENT for table `collection`
 --
 ALTER TABLE `collection`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `company_creation`
@@ -1880,13 +1848,13 @@ ALTER TABLE `company_creation`
 -- AUTO_INCREMENT for table `customer_creation`
 --
 ALTER TABLE `customer_creation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `customer_status`
 --
 ALTER TABLE `customer_status`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `designation`
@@ -1922,13 +1890,13 @@ ALTER TABLE `endorsement_info`
 -- AUTO_INCREMENT for table `family_info`
 --
 ALTER TABLE `family_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `fine_charges`
 --
 ALTER TABLE `fine_charges`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key';
 
 --
 -- AUTO_INCREMENT for table `gold_info`
@@ -1940,13 +1908,13 @@ ALTER TABLE `gold_info`
 -- AUTO_INCREMENT for table `guarantor_info`
 --
 ALTER TABLE `guarantor_info`
-  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `kyc_info`
 --
 ALTER TABLE `kyc_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `line_name_creation`
@@ -1964,19 +1932,19 @@ ALTER TABLE `loan_category`
 -- AUTO_INCREMENT for table `loan_category_creation`
 --
 ALTER TABLE `loan_category_creation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `loan_entry`
 --
 ALTER TABLE `loan_entry`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `loan_issue`
 --
 ALTER TABLE `loan_issue`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `menu_list`
@@ -2000,7 +1968,7 @@ ALTER TABLE `proof_info`
 -- AUTO_INCREMENT for table `property_info`
 --
 ALTER TABLE `property_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `role`

@@ -78,7 +78,7 @@ try {
     $fine_charge_check = intval($fine_charge_track) + intval($fine_charge_waiver) - intval($fine_charge);
 
     if ($check == 0 && $penalty_check == 0 && $fine_charge_check == 0) {
-        $closedQry = $pdo->query("UPDATE `customer_status` SET `collection_status`='Closed', `status`='8',`update_login_id`='$user_id',`updated_on`=now() WHERE `loan_entry_id`='$le_id' "); //balance is zero change the customer status as 8, moved to closed.
+        $closedQry = $pdo->query("UPDATE `customer_status` SET `collection_status`='Closed', `status`='10',`update_login_id`='$user_id',`updated_on`=now() WHERE `loan_entry_id`='$le_id' "); //balance is zero change the customer status as 10, moved to closed.
         if ($closedQry) {
             $result = '3';
         }
