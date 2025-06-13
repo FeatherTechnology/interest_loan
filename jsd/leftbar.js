@@ -14,6 +14,7 @@ $(document).ready(function () {
         'approval': 'approval', 
         'loan_issue': 'loan_issue',
         'collection':'collection',
+        'closed':'closed',
     };
 
     const current_page = localStorage.getItem('currentPage');

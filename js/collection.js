@@ -426,8 +426,10 @@ $(document).ready(function () {
         event.preventDefault();
         $(this).attr('disabled', true);
 
+        let LoanEntryId = $('#le_id').val();
+
         let collData = {
-            'le_id': $('#le_id').val(),
+            'le_id': LoanEntryId,
             'cus_id': $('#cus_id').val(),
             'status': $('#status').val(),
             'sub_status': $('#sub_status').val().trim(),
@@ -486,7 +488,7 @@ $(document).ready(function () {
                 await printCollection(response.collection_id);
             }
 
-            await getSubStatus();
+            await getSubStatus(le_id);
 
         } catch (error) {
             console.error("Collection submit failed:", error);
@@ -732,9 +734,16 @@ function getCollectionCode() {
 
 // <----------------------------------------------------------------------- Get Sub Status Function Start  ----------------------------------------------------------->
 
-async function getSubStatus() {
-    const le_id = $('#le_id').val();
-    const sub_status = $('#loan_list_table tbody tr').find('td:nth-child(8)').text().trim();
+async function getSubStatus(le_id) {
+    let sub_status = '';
+
+    $('#loan_list_table tbody tr').each(function () {
+        const row_le_id = $(this).find('.pay-due').attr('value');
+        if (row_le_id === le_id) {
+            // Get Sub Status from 8th column (adjust index if needed)
+            sub_status = $(this).find('td:nth-child(8)').text().trim();
+        }
+    });
 
     try {
         const response = await new Promise((resolve, reject) => {
