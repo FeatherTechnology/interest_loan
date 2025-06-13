@@ -29,8 +29,7 @@ foreach ($le_arr as $le_id) {
     $result = $pdo->query("SELECT * FROM `loan_entry` WHERE id = $le_id ");
 
     if ($result->rowCount() > 0) {
-        $row = $result->fetch();
-        $loan_arr = $row;
+        $loan_arr = $result->fetch();
 
         $response['loan_amount'] = intVal($loan_arr['loan_amnt_calc']);
         $response['interest_amount'] = intVal($loan_arr['interest_amnt_calc']);
@@ -134,9 +133,6 @@ foreach ($le_arr as $le_id) {
 
     $i++;
 }
-
-//for knowing the customer status for due followup screen
-//this will give the customer's sub status in the order of Legal, Error, OD, Due Nill, Pending, Current
 
 $response['sub_status_customer'] = checkStatusOfCustomer($response, $loan_arr);
 

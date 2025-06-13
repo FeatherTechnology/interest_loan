@@ -48,7 +48,7 @@ $(document).ready(function () {
         $('#back_to_coll_list').hide();
         $('.coll_details').show();
         $('#back_to_loan_list').show();
-        
+
         {
             // Get today's date
             var today = new Date();
@@ -424,7 +424,6 @@ $(document).ready(function () {
 
     $('#submit_collection').click(async function (event) {
         event.preventDefault();
-        getCollectionCode();
         $(this).attr('disabled', true);
 
         let collData = {
@@ -470,15 +469,17 @@ $(document).ready(function () {
                 }, 'json').fail(reject);
             });
 
-            if (response.status == '1') {
+            $('#submit_collection').attr('disabled', false);
+
+            if (response.result == '1') {
                 swalSuccess('Success', 'Collection Added Successfully.');
-            } else if (response.status == '2') {
+            } else if (response.result == '2') {
                 swalError('Error', 'Failed to Insert Collection');
-            } else if (response.status == '3') {
+                return;
+            } else if (response.result == '3') {
                 swalSuccess('Success', 'Moved to Closed Successfully.');
             }
 
-            $('#submit_collection').attr('disabled', false);
             $('#back_to_loan_list').trigger('click');
 
             if (response.collection_id) {
@@ -738,7 +739,7 @@ async function getSubStatus() {
     try {
         const response = await new Promise((resolve, reject) => {
             $.ajax({
-                url: 'api/collection_files/subStatus_list.php',
+                url: 'api/collection_files/get_sub_status.php',
                 data: { le_id, sub_status },
                 dataType: 'json',
                 type: 'POST',
