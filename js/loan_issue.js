@@ -681,7 +681,7 @@ $(document).ready(function () {
             alert('Popup blocked. Please allow popups for this website.');
         }
     })
-    
+
     /////////////////////////////////////////////////////////////////// Document Print END ////////////////////////////////////////////////////////////////////////
 
 
@@ -870,6 +870,7 @@ $(document).ready(function () {
             'cus_id': $('#cus_id').val(),
             'loan_entry_id': $('#loan_entry_id').val(),
             'loan_amount_calc': $('#loan_amount_calc').val(),
+            'loan_date': $('#loan_date').val(),
             'due_startdate_calc': $('#due_startdate_calc').val(),
             'maturity_date_calc': $('#maturity_date_calc').val(),
             'bal_net_cash': $('#balance_net_cash').val(),
@@ -1352,7 +1353,7 @@ function personalInfo() {
         $('#processing_fees_calculate').val(response[0].processing_fees_calculate);
         $('#net_cash_calc').val(response[0].net_cash_calc);
         $('#interest_amnt_calc').val(response[0].interest_amnt_calc);
-        $('#loan_date_calc').val(response[0].loan_date_calc);
+        $('#loan_date').val(response[0].loan_date);
         $('#due_startdate_calc').val(response[0].due_startdate_calc);
         $('#maturity_date_calc').val(response[0].maturity_date_calc);
         $('#loan_entry_id').val(response[0].id);
@@ -1369,6 +1370,16 @@ function personalInfo() {
             getLoanCount(cus_id);
         } else {
             $('#loan_count_div').hide();
+        }
+
+        // Get today's date
+        var today = new Date().toISOString().split('T')[0];
+
+        //Set loan date
+        let loan_date = $('#loan_date').val()
+        // Check if loan_date is null or empty string
+        if (loan_date === null || loan_date === '') {
+            $('#loan_date').val(today);
         }
 
     }, 'json');

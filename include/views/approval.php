@@ -5,7 +5,6 @@
                 <thead>
                     <tr>
                         <th>S.NO</th>
-                        <th>Loan Date</th>
                         <th>Customer ID</th>
                         <th>Aadhar Number</th>
                         <th>Customer Name</th>
@@ -526,12 +525,6 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-                                <div class="form-group">
-                                    <label for="loan_date_calc">Loan date</label><span class="text-danger">*</span>
-                                    <input type="date" class="form-control" id="loan_date_calc" name="loan_date_calc" tabindex="19" readonly>
-                                </div>
-                            </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="due_startdate_calc">Due Start Date</label><span class="text-danger">*</span>

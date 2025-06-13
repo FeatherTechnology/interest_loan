@@ -74,7 +74,7 @@
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="age"> Age</label>
-                                            <input type="number" class="form-control" id="age" name="age" readonly placeholder="Age" tabindex="8">
+                                            <input type="text" class="form-control" id="age" name="age" readonly placeholder="Age" tabindex="8">
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
