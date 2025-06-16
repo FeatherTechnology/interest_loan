@@ -100,7 +100,8 @@ $(document).ready(function () {
             return;
         }
 
-        let index = customerStatusResponse['le_id']?.indexOf(parseInt(le_id));
+        let index = customerStatusResponse['le_id']?.map(String).indexOf(String(le_id));
+
 
         if (index !== -1 && index !== undefined) {
             let res = customerStatusResponse;
@@ -130,7 +131,7 @@ $(document).ready(function () {
 
         // Interest Amount Track Validation
         $('#interest_amount_track').on('blur', function () {
-            let index = customerStatusResponse['le_id']?.indexOf(parseInt($('#le_id').val()));
+            let index = customerStatusResponse['le_id']?.map(String).indexOf(String($('#le_id').val()));
             let payable = parseFloat(customerStatusResponse['payable_as_req'][index]);
 
             if (parseFloat($(this).val()) > payable) {
@@ -142,7 +143,7 @@ $(document).ready(function () {
 
         // Principal Amount Track Validation
         $('#principal_amount_track').on('blur', function () {
-            let index = customerStatusResponse['le_id']?.indexOf(parseInt($('#le_id').val()));
+            let index = customerStatusResponse['le_id']?.map(String).indexOf(String($('#le_id').val()));
             let balance_amount = parseFloat(customerStatusResponse['balAmnt'][index]);
 
             if (parseFloat($(this).val()) > balance_amount) {
@@ -154,7 +155,7 @@ $(document).ready(function () {
 
         // Penalty Track Validation
         $('#penalty_track').on('blur', function () {
-            let index = customerStatusResponse['le_id']?.indexOf(parseInt($('#le_id').val()));
+            let index = customerStatusResponse['le_id']?.map(String).indexOf(String($('#le_id').val()));
             let penaltyValue = parseFloat($(this).val());
             let penaltyLimit = parseFloat(customerStatusResponse['Penalty'][index]);
 
@@ -169,7 +170,7 @@ $(document).ready(function () {
 
         // Fine Charge Track Validation
         $('#fine_charge_track').on('blur', function () {
-            let index = customerStatusResponse['le_id']?.indexOf(parseInt($('#le_id').val()));
+            let index = customerStatusResponse['le_id']?.map(String).indexOf(String($('#le_id').val()));
             let chargeEntered = parseFloat($(this).val());
             let fineLimit = parseFloat(customerStatusResponse['Fine_Charge'][index]);
 
@@ -182,7 +183,7 @@ $(document).ready(function () {
 
         // Penalty Waiver Validation
         $('#penalty_waiver').on('blur', function () {
-            let index = customerStatusResponse['le_id']?.indexOf(parseInt($('#le_id').val()));
+            let index = customerStatusResponse['le_id']?.map(String).indexOf(String($('#le_id').val()));
             let penalty_track = parseFloat($('#penalty_track').val()) || 0;
             let penaltyLimit = parseFloat(customerStatusResponse['Penalty'][index]);
 
@@ -195,7 +196,7 @@ $(document).ready(function () {
 
         // Fine Charge Waiver Validation
         $('#fine_charge_waiver').on('blur', function () {
-            let index = customerStatusResponse['le_id']?.indexOf(parseInt($('#le_id').val()));
+            let index = customerStatusResponse['le_id']?.map(String).indexOf(String($('#le_id').val()));
             let fine_charge_track = parseFloat($('#fine_charge_track').val()) || 0;
             let fineLimit = parseFloat(customerStatusResponse['Fine_Charge'][index]);
 
@@ -488,7 +489,7 @@ $(document).ready(function () {
                 await printCollection(response.collection_id);
             }
 
-            await getSubStatus(le_id);
+            await getSubStatus(LoanEntryId);
 
         } catch (error) {
             console.error("Collection submit failed:", error);
@@ -739,7 +740,7 @@ async function getSubStatus(le_id) {
 
     $('#loan_list_table tbody tr').each(function () {
         const row_le_id = $(this).find('.pay-due').attr('value');
-        if (row_le_id === le_id) {
+        if (row_le_id == le_id) {
             // Get Sub Status from 8th column (adjust index if needed)
             sub_status = $(this).find('td:nth-child(8)').text().trim();
         }
@@ -766,7 +767,6 @@ async function getSubStatus(le_id) {
         throw error;
     }
 }
-
 
 // <----------------------------------------------------------------------- Get Sub Status Function End ------------------------------------------------------------->
 

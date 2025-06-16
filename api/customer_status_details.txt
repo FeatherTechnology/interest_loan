@@ -12,3 +12,5 @@ Customer status Details:
 10 = To Closed [When Loan Balance Amount is 0, status has to change to '10' on collection screen. To Move Closed.];
 11 = Closed;
 12 = Move to NOC;
+13 = NOC Completed;
+14 = Removed From NOC;
