@@ -91,15 +91,24 @@ if ($cheque_sts == '2' && $mort_sts == '2' && $endorse_sts == '2' && $doc_sts ==
     $status = '1';
 }
 
-$qry2 = $pdo->query("SELECT * FROM `noc` WHERE `cus_profile_id`='$le_id'");
+$noc_Id = null;
+
+$qry2 = $pdo->query("SELECT id FROM `noc` WHERE `cus_profile_id`='$le_id'");
 if ($qry2->rowCount() > 0) {
+
+    // Get the existing ID before update
+    $row = $qry2->fetch();
+    $noc_Id = $row['id'];
+
     $qry = $pdo->query("UPDATE `noc` SET `cus_id`='$cus_id',`cheque_list`='$cheque_sts',`mortgage_list`='$mort_sts',`endorsement_list`='$endorse_sts',`document_list`='$doc_sts',`gold_info`='$gold_sts',`noc_status`='$status',`update_login_id`='$user_id',`updated_on`=now() WHERE `cus_profile_id`='$le_id' ");
 } else {
     $qry = $pdo->query("INSERT INTO `noc`( `cus_profile_id`, `cus_id`, `cheque_list`, `mortgage_list`, `endorsement_list`, `document_list`, `gold_info`, `noc_status`,  `insert_login_id`, `created_on`) VALUES ('$le_id','$cus_id','$cheque_sts','$mort_sts','$endorse_sts','$doc_sts','$gold_sts','$status','$user_id',now() )");
-}
-$last_id = $pdo->lastInsertId();
 
-$pdo->query("INSERT INTO `noc_ref`( `noc_id`, `date_of_noc`, `noc_member`, `noc_relationship`, `created_on`) VALUES ('$last_id','$date_of_noc','$noc_member','$noc_relation',now())");
+    // Only get lastInsertId if insert happened
+    $noc_Id = $pdo->lastInsertId();
+}
+
+$pdo->query("INSERT INTO `noc_ref`( `noc_id`, `date_of_noc`, `noc_member`, `noc_relationship`, `created_on`) VALUES ('$noc_Id','$date_of_noc','$noc_member','$noc_relation',now())");
 
 $result = 0;
 if ($qry) {
