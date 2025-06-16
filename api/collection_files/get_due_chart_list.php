@@ -344,7 +344,7 @@ require_once '../../include/views/money_format_india.php';
                             <?php
                             $balance_Principalt_Amount = $balance_amount;
                             echo moneyFormatIndia($balance_Principalt_Amount);
-                            $last_princ_amt = moneyFormatIndia($balance_Principalt_Amount);
+                            $last_princ_amt = $balance_Principalt_Amount;
                             ?>
                         </td>
 
@@ -544,7 +544,7 @@ require_once '../../include/views/money_format_india.php';
                         <?php
                         $balance_Principalt_Amount = $balance_amount;
                         echo moneyFormatIndia($balance_Principalt_Amount);
-                        $last_princ_amt = moneyFormatIndia($balance_Principalt_Amount);
+                        $last_princ_amt = $balance_Principalt_Amount;
                         ?>
                     </td>
 
