@@ -134,7 +134,6 @@
                                     <th>Status</th>
                                     <th>Sub Status</th>
                                     <th>Action</th>
-                                    </tr>
                                 </thead>
                                 <tbody></tbody>
                             </table>
