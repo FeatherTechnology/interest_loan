@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 16, 2025 at 12:21 PM
+-- Generation Time: Jun 17, 2025 at 01:26 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,32 @@ SET time_zone = "+00:00";
 --
 -- Database: `interest_loan`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `accounts_collect_entry`
+--
+
+CREATE TABLE `accounts_collect_entry` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `line` varchar(50) NOT NULL,
+  `branch` varchar(50) NOT NULL,
+  `collection_mode` int(11) NOT NULL,
+  `bank_id` varchar(50) DEFAULT NULL,
+  `no_of_bills` int(11) NOT NULL,
+  `collection_amnt` varchar(150) NOT NULL,
+  `insert_login_id` int(11) NOT NULL,
+  `created_on` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `accounts_collect_entry`
+--
+
+INSERT INTO `accounts_collect_entry` (`id`, `user_id`, `line`, `branch`, `collection_mode`, `bank_id`, `no_of_bills`, `collection_amnt`, `insert_login_id`, `created_on`) VALUES
+(1, 1, 'L1', 'Villianur', 1, '', 4, '225000', 1, '2025-06-17 11:23:03');
 
 -- --------------------------------------------------------
 
@@ -353,7 +379,8 @@ INSERT INTO `collection` (`id`, `loan_entry_id`, `cus_id`, `collection_status`, 
 (1, 2, 'C-101', 'Present', 'Current', '75000', '0', '75000', '2250', '0', '0', '0', '0', NULL, '', '', '', '75000', '75000', '', '', '', '', '', '2025-06-13 18:00:18', 'COL-101', 1, 0, 0, 0, '1', NULL, NULL, '2025-06-13 18:00:18', '2025-06-13 18:00:18'),
 (2, 1, 'C-101', 'Present', 'Current', '50000', '0', '50000', '1000', '0', '0', '0', '0', NULL, '', '', '', '50000', '50000', '', '', '', '', '', '2025-06-13 18:00:27', 'COL-102', 1, 0, 0, 0, '1', NULL, NULL, '2025-06-13 18:00:27', '2025-06-13 18:00:27'),
 (3, 3, 'C-102', 'Present', 'Current', '50000', '0', '50000', '1000', '0', '0', '0', '0', NULL, '', '', '', '50000', '50000', '', '', '', '', '', '2025-06-16 11:48:35', 'COL-103', 1, 0, 0, 0, '1', NULL, NULL, '2025-06-16 11:48:35', '2025-06-16 11:48:35'),
-(4, 4, 'C-102', 'Present', 'Current', '50000', '0', '50000', '1500', '0', '0', '0', '0', NULL, '', '', '', '50000', '50000', '', '', '', '', '', '2025-06-16 14:49:49', 'COL-104', 1, 0, 0, 0, '1', NULL, NULL, '2025-06-16 14:49:49', '2025-06-16 14:49:49');
+(4, 4, 'C-102', 'Present', 'Current', '50000', '0', '50000', '1500', '0', '0', '0', '0', NULL, '', '', '', '50000', '50000', '', '', '', '', '', '2025-06-16 14:49:49', 'COL-104', 1, 0, 0, 0, '1', NULL, NULL, '2025-06-16 14:49:49', '2025-06-16 14:49:49'),
+(5, 5, 'C-102', 'Present', 'Current', '40000', '0', '40000', '800', '0', '0', '0', '0', NULL, '', '', '', '40000', '40000', '', '', '', '', '', '2025-06-17 15:15:22', 'COL-105', 2, 1, 453443, 0, '1', NULL, NULL, '2025-06-17 15:15:22', '2025-06-17 15:15:22');
 
 -- --------------------------------------------------------
 
@@ -429,7 +456,7 @@ CREATE TABLE `customer_creation` (
 
 INSERT INTO `customer_creation` (`id`, `cus_id`, `aadhar_number`, `first_name`, `last_name`, `dob`, `age`, `area`, `line`, `customer_data`, `mobile1`, `mobile2`, `whatsapp`, `occupation`, `occ_detail`, `address`, `native_address`, `cus_limit`, `about_cus`, `pic`, `insert_login_id`, `update_login_id`, `created_on`, `updated_on`) VALUES
 (1, 'C-101', '345434534535', 'Testing ', 'One', '2002-01-31', '23', '14', '15', '2', '9687868678', '8768766786', '9687868678', 'Business', 'Tailor shop and sales', 'No.10 Pondicherry ', 'No.10 Pondicherry ', '100000', 'Good', '6847d42bbaaa5.jpg', 1, 1, '2025-06-10', '2025-06-13'),
-(2, 'C-102', '977657567567', 'Testing', 'Two', '2001-01-25', '24', '20', '17', '2', '9677687867', '8787867867', '8787867867', 'Nurse', 'Private hospital', 'No.8 Villianur', 'No.8 Villianur', '100000', 'Good', '6847d504936d2.jpg', 1, 1, '2025-06-10', '2025-06-16'),
+(2, 'C-102', '977657567567', 'Testing', 'Two', '2001-01-25', '24', '20', '17', '2', '9677687867', '8787867867', '8787867867', 'Nurse', 'Private hospital', 'No.8 Villianur', 'No.8 Villianur', '100000', 'Good', '6847d504936d2.jpg', 1, 1, '2025-06-10', '2025-06-17'),
 (3, 'C-103', '475675675675', 'Testing ', 'Three', '2001-02-25', '24', '18', '17', '1', '9578567567', '8657567657', '', 'College Staff', 'Christ College ', 'No.5 Mullakulam', 'No.5 Mullakulam', '50000', 'Good', '68e9e567e0b10.png', 1, 1, '2025-10-11', '2025-09-11'),
 (4, 'C-104', '857567567567', 'Testing ', 'Four', '2001-02-02', '24', '18', '17', '1', '9789789789', '8767867878', '9789789789', '', '', '', '', '50000', 'gggg', '684aa1955b999.png', 1, 1, '2025-06-12', '2025-06-12');
 
@@ -461,8 +488,9 @@ CREATE TABLE `customer_status` (
 INSERT INTO `customer_status` (`id`, `cus_id`, `loan_entry_id`, `status`, `collection_status`, `closed_date`, `sub_status`, `remark`, `insert_login_id`, `update_login_id`, `created_on`, `updated_on`) VALUES
 (1, 'C-101', 1, 12, 'Closed', '2025-06-13 18:01:03', 1, 'hh', 1, 1, '2025-06-13', '2025-06-13'),
 (2, 'C-101', 2, 12, 'Closed', '2025-06-16 10:09:00', 1, 'sss', 1, 1, '2025-06-13', '2025-06-16'),
-(3, 'C-102', 3, 14, 'Closed', '2025-06-16 11:48:58', 1, 'aaa', 1, 1, '2025-06-16', '2025-06-16'),
-(4, 'C-102', 4, 14, 'Closed', '2025-06-16 14:50:14', 1, 'dd', 1, 1, '2025-06-16', '2025-06-16');
+(3, 'C-102', 3, 14, 'Closed', '2025-06-16 11:48:58', 1, 'aaa', 1, 1, '2025-06-16', '2025-06-17'),
+(4, 'C-102', 4, 14, 'Closed', '2025-06-16 14:50:14', 1, 'dd', 1, 1, '2025-06-16', '2025-06-17'),
+(5, 'C-102', 5, 12, 'Closed', '2025-06-17 15:15:33', 1, 'tre', 1, 1, '2025-06-17', '2025-06-17');
 
 -- --------------------------------------------------------
 
@@ -577,7 +605,8 @@ CREATE TABLE `document_info` (
 
 INSERT INTO `document_info` (`id`, `cus_id`, `cus_profile_id`, `doc_name`, `doc_type`, `holder_name`, `relationship`, `upload`, `noc_status`, `date_of_noc`, `noc_member`, `noc_relationship`, `insert_login_id`, `update_login_id`, `created_on`, `updated_on`) VALUES
 (1, 'C-102', 3, 'Aadhar Card', 2, 2, 'Brother', '', 1, '2025-06-16', '2', 'Brother', 1, 1, '2025-06-16', '2025-06-16'),
-(2, 'C-102', 4, 'Pan Card', 2, 0, 'Customer', '', 1, '2025-06-16', 'Testing Two', 'Customer', 1, 1, '2025-06-16', '2025-06-16');
+(2, 'C-102', 4, 'Pan Card', 2, 0, 'Customer', '', 1, '2025-06-16', 'Testing Two', 'Customer', 1, 1, '2025-06-16', '2025-06-16'),
+(3, 'C-101', 2, 'hgfhgf', 1, 0, 'Customer', '68500813b6ea1.jpg', 0, NULL, NULL, NULL, 1, 1, '2025-06-16', '2025-06-16');
 
 -- --------------------------------------------------------
 
@@ -626,6 +655,36 @@ CREATE TABLE `endorsement_info` (
 INSERT INTO `endorsement_info` (`id`, `cus_id`, `cus_profile_id`, `owner_name`, `relationship`, `vehicle_details`, `endorsement_name`, `key_original`, `rc_original`, `upload`, `noc_status`, `date_of_noc`, `noc_member`, `noc_relationship`, `insert_login_id`, `update_login_id`, `created_on`, `updated_on`) VALUES
 (1, 'C-102', 3, 0, 'Customer', 'sdsd', 'sds', 'NO', 'NO', '', 1, '2025-06-16', '2', 'Brother', 1, 1, '2025-06-16', '2025-06-16'),
 (2, 'C-102', 4, 2, 'Brother', 'Car', 'vijay', 'YES', 'YES', '', 1, '2025-06-16', 'Testing Two', 'Customer', 1, 1, '2025-06-16', '2025-06-16');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `expenses`
+--
+
+CREATE TABLE `expenses` (
+  `id` int(11) NOT NULL,
+  `collection_mode` int(11) NOT NULL,
+  `bank_id` varchar(11) DEFAULT NULL,
+  `invoice_id` varchar(100) NOT NULL,
+  `branch` int(11) NOT NULL,
+  `expenses_category` varchar(50) NOT NULL,
+  `agent_id` varchar(50) DEFAULT NULL,
+  `total_issued` varchar(50) DEFAULT NULL,
+  `total_amount` varchar(100) DEFAULT NULL,
+  `description` varchar(255) NOT NULL,
+  `amount` varchar(150) NOT NULL,
+  `trans_id` varchar(150) NOT NULL,
+  `insert_login_id` int(11) NOT NULL,
+  `created_on` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `expenses`
+--
+
+INSERT INTO `expenses` (`id`, `collection_mode`, `bank_id`, `invoice_id`, `branch`, `expenses_category`, `agent_id`, `total_issued`, `total_amount`, `description`, `amount`, `trans_id`, `insert_login_id`, `created_on`) VALUES
+(3, 1, '', '2506001', 7, '2', '6', '0', '0', 'dsf', '5000', '', 1, '2025-06-17 16:05:52');
 
 -- --------------------------------------------------------
 
@@ -908,7 +967,8 @@ INSERT INTO `loan_entry` (`id`, `aadhar_number`, `cus_id`, `cus_data`, `loan_id`
 (1, '345434534535', 'C-101', 'New', 'LID-101', '1', '50000', 'After Benefit', 'Monthly', 'Month', 'Month', 'On Date', '2', '12', '3', '5', '50000', '1500', '2500', '46000', '1000', '2025-06-13', '2025-06-13', '2026-05-13', '1', '', '', 'dd', 1, 1, '2025-06-13', '2025-06-13'),
 (2, '345434534535', 'C-101', 'Existing', 'LID-102', '3', '75000', 'After Benefit', 'Monthly', 'Month', 'Month', 'On Date', '3', '3', '250', '2', '75000', '250', '1500', '73250', '2250', '2025-06-13', '2025-06-14', '2025-08-14', '1', '', '', NULL, 1, 1, '2025-06-13', '2025-06-13'),
 (3, '977657567567', 'C-102', 'New', 'LID-103', '1', '50000', 'After Benefit', 'Monthly', 'Month', 'Month', 'On Date', '2', '12', '3', '5', '50000', '1500', '2500', '46000', '1000', '2025-06-16', '2025-06-17', '2026-05-17', '1', '', '', NULL, 1, 1, '2025-06-16', '2025-06-16'),
-(4, '977657567567', 'C-102', 'Existing', 'LID-104', '3', '50000', 'After Benefit', 'Monthly', 'Month', 'Month', 'On Date', '3', '3', '250', '2', '50000', '250', '1000', '48750', '1500', '2025-06-16', '2025-06-17', '2025-08-17', '', '', '', NULL, 1, 1, '2025-06-16', '2025-06-16');
+(4, '977657567567', 'C-102', 'Existing', 'LID-104', '3', '50000', 'After Benefit', 'Monthly', 'Month', 'Month', 'On Date', '3', '3', '250', '2', '50000', '250', '1000', '48750', '1500', '2025-06-16', '2025-06-17', '2025-08-17', '', '', '', NULL, 1, 1, '2025-06-16', '2025-06-16'),
+(5, '977657567567', 'C-102', 'Existing', 'LID-105', '1', '40000', 'After Benefit', 'Monthly', 'Month', 'Month', 'On Date', '2', '12', '3', '5', '40000', '1200', '2000', '36800', '800', '2025-06-17', '2025-06-18', '2026-05-18', '0', '6', 'AG-101', NULL, 1, 1, '2025-06-17', '2025-06-17');
 
 -- --------------------------------------------------------
 
@@ -951,7 +1011,9 @@ INSERT INTO `loan_issue` (`id`, `cus_id`, `loan_entry_id`, `loan_amnt`, `net_cas
 (1, 'C-101', 1, 50000, 46000, '46000', 2, '1', '', '46000', '', '', '', '', '', '', '0', '2025-06-13', 'Testing  One', 'Customer', 1, NULL, '2025-06-13 13:32:16', NULL),
 (2, 'C-101', 2, 75000, 73250, '73250', 2, '1', '', '73250', '', '', '', '', '', '', '0', '2025-06-13', 'Testing  One', 'Customer', 1, NULL, '2025-06-13 15:28:05', NULL),
 (3, 'C-102', 3, 50000, 46000, '46000', 2, '1', '', '46000', '', '', '', '', '', '', '0', '2025-06-16', 'Vijay', 'Brother', 1, NULL, '2025-06-16 11:48:14', NULL),
-(4, 'C-102', 4, 50000, 48750, '48750', 2, '1', '', '48750', '', '', '', '', '', '', '0', '2025-06-16', 'Testing Two', 'Customer', 1, NULL, '2025-06-16 14:49:32', NULL);
+(4, 'C-102', 4, 50000, 48750, '48750', 2, '1', '', '48750', '', '', '', '', '', '', '0', '2025-06-16', 'Testing Two', 'Customer', 1, NULL, '2025-06-16 14:49:32', NULL),
+(5, 'C-102', 5, 40000, 36800, '36800', 1, '2', '1', '', '', '15000', '45345', '', '', '345435', '21800', '2025-06-17', 'Testing Two', 'Customer', 1, NULL, '2025-06-17 15:14:30', NULL),
+(6, 'C-102', 5, 40000, 36800, '21800', 1, '3', '1', '', '21800', '', '', '3534', '3454', '345435', '0', '2025-06-17', 'Testing Two', 'Customer', 1, NULL, '2025-06-17 15:15:01', NULL);
 
 -- --------------------------------------------------------
 
@@ -1052,8 +1114,8 @@ CREATE TABLE `noc` (
 --
 
 INSERT INTO `noc` (`id`, `cus_profile_id`, `cus_id`, `cheque_list`, `mortgage_list`, `endorsement_list`, `document_list`, `gold_info`, `noc_status`, `insert_login_id`, `update_login_id`, `created_on`, `updated_on`) VALUES
-(1, 4, 'C-102', 2, 2, 2, 2, 2, 2, 1, NULL, '2025-06-16', NULL),
-(2, 3, 'C-102', 2, 2, 2, 2, 2, 2, 1, NULL, '2025-06-16', NULL);
+(1, 4, 'C-102', 2, 2, 2, 2, 2, 2, 1, 1, '2025-06-16', '2025-06-16'),
+(2, 3, 'C-102', 2, 2, 2, 2, 2, 2, 1, 1, '2025-06-16', '2025-06-16');
 
 -- --------------------------------------------------------
 
@@ -1076,7 +1138,65 @@ CREATE TABLE `noc_ref` (
 
 INSERT INTO `noc_ref` (`id`, `noc_id`, `date_of_noc`, `noc_member`, `noc_relationship`, `created_on`) VALUES
 (1, 1, '2025-06-16', 'Testing Two', 'Customer', '2025-06-16'),
-(2, 2, '2025-06-16', '2', 'Brother', '2025-06-16');
+(2, 2, '2025-06-16', '2', 'Brother', '2025-06-16'),
+(3, 0, '2025-06-16', 'Testing Two', 'Customer', '2025-06-16'),
+(4, 2, '2025-06-16', '2', 'Brother', '2025-06-16');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `other_transaction`
+--
+
+CREATE TABLE `other_transaction` (
+  `id` int(11) NOT NULL,
+  `collection_mode` int(11) NOT NULL,
+  `bank_id` varchar(11) DEFAULT NULL,
+  `trans_cat` int(11) NOT NULL,
+  `name` int(11) NOT NULL,
+  `type` int(11) NOT NULL,
+  `ref_id` varchar(100) DEFAULT NULL,
+  `trans_id` varchar(100) DEFAULT NULL,
+  `user_name` varchar(11) DEFAULT NULL,
+  `amount` varchar(150) NOT NULL,
+  `remark` varchar(255) NOT NULL,
+  `insert_login_id` int(11) NOT NULL,
+  `created_on` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `other_transaction`
+--
+
+INSERT INTO `other_transaction` (`id`, `collection_mode`, `bank_id`, `trans_cat`, `name`, `type`, `ref_id`, `trans_id`, `user_name`, `amount`, `remark`, `insert_login_id`, `created_on`) VALUES
+(2, 1, '', 2, 2, 1, 'INV-101', '', NULL, '5000000', 'wwwe', 1, '2025-06-17 16:05:17'),
+(3, 1, '', 1, 1, 1, 'DEP-101', '', NULL, '5000', 'hhf', 1, '2025-06-17 16:26:28'),
+(4, 1, '', 3, 3, 1, 'EL-101', '', NULL, '10000', 'yyy', 1, '2025-06-17 16:27:27'),
+(5, 1, '', 4, 4, 1, 'EXC-101', '', NULL, '3000', 'kk', 1, '2025-06-17 16:28:07');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `other_trans_name`
+--
+
+CREATE TABLE `other_trans_name` (
+  `id` int(11) NOT NULL,
+  `trans_cat` int(11) NOT NULL,
+  `name` varchar(150) NOT NULL,
+  `insert_login_id` int(11) NOT NULL,
+  `created_on` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `other_trans_name`
+--
+
+INSERT INTO `other_trans_name` (`id`, `trans_cat`, `name`, `insert_login_id`, `created_on`) VALUES
+(1, 1, 'vas', 1, '2025-06-17'),
+(2, 2, 'fff', 1, '2025-06-17'),
+(3, 3, 'el', 1, '2025-06-17'),
+(4, 4, 'ex', 1, '2025-06-17');
 
 -- --------------------------------------------------------
 
@@ -1620,11 +1740,17 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `user_code`, `role`, `designation`, `address`, `place`, `email`, `mobile`, `user_name`, `password`, `branch`, `loan_category`, `line`, `collection_access`, `download_access`, `screens`, `insert_login_id`, `update_login_id`, `created_on`, `updated_on`) VALUES
-(1, 'Super Admin', 'US-001', 1, 1, 'No.8 Mullakulam', 'Arumathupuram', 'vasanth@gmail.com', '9798798798', 'admin', '123', '7,8', '1,2,3', '15,17', 1, 1, '2,3,4,5,6,7,8,9,10,11,12,13,14,15', '1', '1', '2024-06-13', '2025-06-12');
+(1, 'Super Admin', 'US-001', 1, 1, 'No.8 Mullakulam', 'Arumathupuram', 'vasanth@gmail.com', '9798798798', 'admin', '123', '7,8', '1,2,3', '15,17', 1, 1, '2,3,4,5,6,7,8,9,10,11,12,13,14,15,16', '1', '1', '2024-06-13', '2025-06-12');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `accounts_collect_entry`
+--
+ALTER TABLE `accounts_collect_entry`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `agent_creation`
@@ -1753,6 +1879,12 @@ ALTER TABLE `endorsement_info`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `expenses`
+--
+ALTER TABLE `expenses`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `family_info`
 --
 ALTER TABLE `family_info`
@@ -1843,6 +1975,18 @@ ALTER TABLE `noc_ref`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `other_transaction`
+--
+ALTER TABLE `other_transaction`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `other_trans_name`
+--
+ALTER TABLE `other_trans_name`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `proof_info`
 --
 ALTER TABLE `proof_info`
@@ -1892,6 +2036,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `accounts_collect_entry`
+--
+ALTER TABLE `accounts_collect_entry`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `agent_creation`
@@ -1957,7 +2107,7 @@ ALTER TABLE `cheque_upd`
 -- AUTO_INCREMENT for table `collection`
 --
 ALTER TABLE `collection`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `company_creation`
@@ -1975,7 +2125,7 @@ ALTER TABLE `customer_creation`
 -- AUTO_INCREMENT for table `customer_status`
 --
 ALTER TABLE `customer_status`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `designation`
@@ -1993,7 +2143,7 @@ ALTER TABLE `districts`
 -- AUTO_INCREMENT for table `document_info`
 --
 ALTER TABLE `document_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `document_need`
@@ -2006,6 +2156,12 @@ ALTER TABLE `document_need`
 --
 ALTER TABLE `endorsement_info`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `expenses`
+--
+ALTER TABLE `expenses`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `family_info`
@@ -2059,13 +2215,13 @@ ALTER TABLE `loan_category_creation`
 -- AUTO_INCREMENT for table `loan_entry`
 --
 ALTER TABLE `loan_entry`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `loan_issue`
 --
 ALTER TABLE `loan_issue`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `menu_list`
@@ -2089,7 +2245,19 @@ ALTER TABLE `noc`
 -- AUTO_INCREMENT for table `noc_ref`
 --
 ALTER TABLE `noc_ref`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `other_transaction`
+--
+ALTER TABLE `other_transaction`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `other_trans_name`
+--
+ALTER TABLE `other_trans_name`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `proof_info`
