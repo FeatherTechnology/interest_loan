@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 17, 2025 at 01:26 PM
+-- Generation Time: Jun 18, 2025 at 12:20 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -1172,7 +1172,7 @@ INSERT INTO `other_transaction` (`id`, `collection_mode`, `bank_id`, `trans_cat`
 (2, 1, '', 2, 2, 1, 'INV-101', '', NULL, '5000000', 'wwwe', 1, '2025-06-17 16:05:17'),
 (3, 1, '', 1, 1, 1, 'DEP-101', '', NULL, '5000', 'hhf', 1, '2025-06-17 16:26:28'),
 (4, 1, '', 3, 3, 1, 'EL-101', '', NULL, '10000', 'yyy', 1, '2025-06-17 16:27:27'),
-(5, 1, '', 4, 4, 1, 'EXC-101', '', NULL, '3000', 'kk', 1, '2025-06-17 16:28:07');
+(6, 2, '1', 4, 4, 1, 'EXC-101', '35005', NULL, '35000', 'fdf', 1, '2025-06-17 17:03:25');
 
 -- --------------------------------------------------------
 
@@ -1740,7 +1740,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `user_code`, `role`, `designation`, `address`, `place`, `email`, `mobile`, `user_name`, `password`, `branch`, `loan_category`, `line`, `collection_access`, `download_access`, `screens`, `insert_login_id`, `update_login_id`, `created_on`, `updated_on`) VALUES
-(1, 'Super Admin', 'US-001', 1, 1, 'No.8 Mullakulam', 'Arumathupuram', 'vasanth@gmail.com', '9798798798', 'admin', '123', '7,8', '1,2,3', '15,17', 1, 1, '2,3,4,5,6,7,8,9,10,11,12,13,14,15,16', '1', '1', '2024-06-13', '2025-06-12');
+(1, 'Super Admin', 'US-001', 1, 1, 'No.8 Mullakulam', 'Arumathupuram', 'vasanth@gmail.com', '9798798798', 'admin', '123', '7,8', '1,2,3', '15,17', 1, 1, '2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,18', '1', '1', '2024-06-13', '2025-06-12');
 
 --
 -- Indexes for dumped tables
@@ -2251,7 +2251,7 @@ ALTER TABLE `noc_ref`
 -- AUTO_INCREMENT for table `other_transaction`
 --
 ALTER TABLE `other_transaction`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `other_trans_name`

@@ -16,6 +16,8 @@ $(document).ready(function () {
         'collection':'collection',
         'closed':'closed',
         'noc':'noc',
+        'accounts':'accounts',
+        'balance_sheet':'balance_sheet',
     };
 
     const current_page = localStorage.getItem('currentPage');
