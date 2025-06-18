@@ -7,9 +7,12 @@ $user_id = ($_POST['user_id'] != '') ? $userwhere = " AND insert_login_id = '" .
 if ($type == 'today') {
     $current_date = date('Y-m-d');
     $where = " DATE(created_on) <='$current_date' - INTERVAL 1 DAY $userwhere";
+    $lewhere = " DATE(li.issue_date) = CURRENT_DATE $userwhere";
 } else if ($type == 'day') {
     $from_date = $_POST['from_date'];
+    $to_date = $_POST['to_date'];
     $where = " DATE(created_on) <= DATE('$from_date') - INTERVAL 1 DAY $userwhere";
+    $lewhere = " (DATE(li.issue_date) >= '$from_date' && DATE(li.issue_date) <= '$to_date' ) $userwhere ";
 } else if ($type == 'month') {
     // Get the selected month (format: YYYY‑MM) and compute the previous month
     $selectedMonth = $_POST['month'];  // e.g., '2025-06'
@@ -25,6 +28,7 @@ if ($type == 'today') {
             AND MONTH(created_on) <= '$month'
         )
     ) $userwhere";
+    $lewhere = " (MONTH(li.issue_date) = '$month' AND YEAR(li.issue_date) = $year) $userwhere";
 }
 
 $op_data = array();
@@ -121,14 +125,31 @@ if ($ot_db_bc_qry->rowCount() > 0) {
     $ot_db_bc = 0;
 }
 
-$hand_cash_credit = intval($c_cr_hc) + intval($ot_cr_hc);
-$hand_cash_debit = intval($ex_db_hc) + intval($ot_db_hc) + intval($li_db_hc);
-$bank_cash_credit = intval($c_cr_bc) + intval($ot_cr_bc);
-$bank_cash_debit = intval($ex_db_bc) + intval($ot_db_bc) + intval($li_db_bc);
+// <-------------------------------------------------------------- Document Charge and Processing Fess ----------------------------------------------------------->
 
-$op_data[0]['hand_cash'] = intval($hand_cash_credit) - intval($hand_cash_debit);
-$op_data[0]['bank_cash'] = intval($bank_cash_credit) - intval($bank_cash_debit);
+$qry = $pdo->query("SELECT  COALESCE(le.doc_charge_calculate, 0) AS doc_charges, COALESCE(le.processing_fees_calculate, 0) AS proc_charges 
+FROM loan_issue li JOIN loan_entry le ON li.loan_entry_id = le.id 
+WHERE $lewhere GROUP BY le.id");
+
+$total_doc_charges_cr = 0;
+$total_proc_charges_cr = 0;
+
+while ($row = $qry->fetch(PDO::FETCH_ASSOC)) {
+    $total_doc_charges_cr += $row['doc_charges'];
+    $total_proc_charges_cr += $row['proc_charges'];
+}
+
+// Calculate cash balances
+$hand_cash_credit = intval($c_cr_hc) + intval($ot_cr_hc) + intval($total_doc_charges_cr) + intval($total_proc_charges_cr);
+$hand_cash_debit  = intval($ex_db_hc) + intval($ot_db_hc) + intval($li_db_hc);
+
+$bank_cash_credit = intval($c_cr_bc) + intval($ot_cr_bc);
+$bank_cash_debit  = intval($ex_db_bc) + intval($ot_db_bc) + intval($li_db_bc);
+
+// Final opening balance
+$op_data[0]['hand_cash'] = $hand_cash_credit - $hand_cash_debit;
+$op_data[0]['bank_cash'] = $bank_cash_credit - $bank_cash_debit;
 $op_data[0]['opening_balance'] = $op_data[0]['hand_cash'] + $op_data[0]['bank_cash'];
 
-$pdo = null; //Close connection.
+$pdo = null; // Close DB connection
 echo json_encode($op_data);

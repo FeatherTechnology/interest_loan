@@ -6,16 +6,19 @@ $user_id = ($_POST['user_id'] != '') ? $userwhere = " AND insert_login_id = '" .
 if ($type == 'today') {
     $where = " DATE(created_on) = CURRENT_DATE $userwhere";
     $collwhere = " DATE(created_date) = CURRENT_DATE $userwhere";
+    $lewhere = " DATE(li.issue_date) = CURRENT_DATE $userwhere";
 } else if ($type == 'day') {
     $from_date = $_POST['from_date'];
     $to_date = $_POST['to_date'];
     $where = " (DATE(created_on) >= '$from_date' && DATE(created_on) <= '$to_date' ) $userwhere ";
     $collwhere = " (DATE(created_date) >= '$from_date' && DATE(created_date) <= '$to_date' ) $userwhere ";
+    $lewhere = " (DATE(li.issue_date) >= '$from_date' && DATE(li.issue_date) <= '$to_date' ) $userwhere ";
 } else if ($type == 'month') {
     $month = date('m', strtotime($_POST['month']));
     $year = date('Y', strtotime($_POST['month']));
     $where = " (MONTH(created_on) = '$month' AND YEAR(created_on) = $year) $userwhere";
     $collwhere = " (MONTH(created_date) = '$month' AND YEAR(created_date) = $year) $userwhere";
+    $lewhere = " (MONTH(li.issue_date) = '$month' AND YEAR(li.issue_date) = $year) $userwhere";
 }
 
 $result = array();
@@ -95,6 +98,19 @@ if ($qry7->rowCount() > 0) {
     $expdr = $qry7->fetch(PDO::FETCH_ASSOC)['exp_dr'];
 }
 
+// <---------------------------------------------------- Document Charge and Processing Fess --------------------------------------------------------->
+
+$qry = $pdo->query("SELECT  COALESCE(le.doc_charge_calculate, 0) AS doc_charges, COALESCE(le.processing_fees_calculate, 0) AS proc_charges FROM loan_issue li JOIN loan_entry le ON li.loan_entry_id = le.id WHERE $lewhere GROUP BY le.id"); // Group by each loan entry
+
+$total_doc_charges_cr = 0;
+$total_proc_charges_cr = 0;
+
+// Loop through all rows and accumulate
+while ($row = $qry->fetch(PDO::FETCH_ASSOC)) {
+    $total_doc_charges_cr += $row['doc_charges'];
+    $total_proc_charges_cr += $row['proc_charges'];
+}
+
 $qry8 = $pdo->query("SELECT COALESCE(SUM(principal_amount_track),0) AS princ, COALESCE(SUM(interest_amount_track),0) AS intrst, COALESCE(SUM(penalty_track),0) AS penalty, COALESCE(SUM(fine_charge_track),0) AS fine FROM `collection` WHERE $collwhere "); //Collection 
 if ($qry8->rowCount() > 0) {
     $row = $qry8->fetch(PDO::FETCH_ASSOC);
@@ -104,6 +120,8 @@ if ($qry8->rowCount() > 0) {
     $fine = $row['fine'];
 }
 
+$result[0]['doc_charges'] = $total_doc_charges_cr;
+$result[0]['proc_charges'] = $total_proc_charges_cr;
 $result[0]['invcr'] = $invcr;
 $result[0]['depcr'] = $depcr;
 $result[0]['elcr']  = $elcr;
