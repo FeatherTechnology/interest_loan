@@ -17,7 +17,8 @@ $(document).ready(function () {
         'closed':'closed',
         'noc':'noc',
         'accounts':'accounts',
-        'balance_sheet':'balance_sheet',
+        'balance_sheet':'accounts',
+        'update_customer':'update_customer',
     };
 
     const current_page = localStorage.getItem('currentPage');
