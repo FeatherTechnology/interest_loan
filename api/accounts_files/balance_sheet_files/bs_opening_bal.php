@@ -6,13 +6,12 @@ $user_id = ($_POST['user_id'] != '') ? $userwhere = " AND insert_login_id = '" .
 
 if ($type == 'today') {
     $current_date = date('Y-m-d');
-    $where = " DATE(created_on) <='$current_date' - INTERVAL 1 DAY $userwhere";
-    $lewhere = " DATE(li.issue_date) <='$current_date' - INTERVAL 1 DAY $userwhere";
+    $where = " DATE(created_on) < '$current_date' $userwhere";
+    $lewhere = " DATE(li.issue_date) < '$current_date' $userwhere";
 } else if ($type == 'day') {
     $from_date = $_POST['from_date'];
-    $to_date = $_POST['to_date'];
-    $where = " DATE(created_on) <= DATE('$from_date') - INTERVAL 1 DAY $userwhere";
-    $lewhere = " (DATE(li.issue_date) <= DATE('$from_date') - INTERVAL 1 DAY $userwhere ";
+    $where = " DATE(created_on) < DATE('$from_date') $userwhere";
+    $lewhere = " (DATE(li.issue_date) < DATE('$from_date') $userwhere ";
 } else if ($type == 'month') {
     // Get the selected month (format: YYYY‑MM) and compute the previous month
     $selectedMonth = $_POST['month'];  // e.g., '2025-06'
