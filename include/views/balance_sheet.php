@@ -195,8 +195,87 @@
                 </div>
             </div>
         </div>
+
+        <!----------------------------------------------------------- CARD END Net Profit ------------------------------------------------------------------------>
+
+        <!----------------------------------------------------------- CARD Start Outstanding ------------------------------------------------------------------------>
+
+        <div class="card net_benefit">
+            <div class="card-header">
+                <h5 class="card-title">Outstanding</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row">
+                            <table id="outstanding_table" class="table custom-table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th><b>Credit</b></th>
+                                        <th><b>Debit</b></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><b>Pre Outstanding</b></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Pre Accounts Collect</b></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Investment</b></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Deposit</b></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Exchange</b></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>EL</b></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Current Outstanding</b></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Current Accounts Collect</b></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Total</b></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Net Profit</b></td>
+                                        <td colspan="2"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!----------------------------------------------------------- CARD END Outstanding ------------------------------------------------------------------------>
     </div>
-    <!--------------------------------------------------------------- CARD END Net Profit ------------------------------------------------------------------------>
 </div>
 
 <!-------------------------------------------------------------------- Modal for Day Choose ------------------------------------------------------------------------>
