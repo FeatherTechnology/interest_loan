@@ -18,7 +18,7 @@ $(document).ready(function () {
         'noc':'noc',
         'accounts':'accounts',
         'balance_sheet':'accounts',
-        'update_customer':'update_customer',
+        'update_customer':'update',
     };
 
     const current_page = localStorage.getItem('currentPage');

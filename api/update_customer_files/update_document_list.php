@@ -114,7 +114,7 @@ function loanCustomerStatus($pdo, $loan_entry_id, $sub_status = [])
         } elseif ($cs_status == '13') {
             $status = 'NOC Completed';
         } elseif ($cs_status == '14') {
-            $status = 'Removed From NOC';
+            $status = 'NOC Removed';
         }
         return $status;
     }
