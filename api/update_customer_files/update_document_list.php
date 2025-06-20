@@ -57,7 +57,7 @@ if ($qry->rowCount() > 0) {
         <div class="dropdown-content">';
 
         if ($originalStatus <= '12') {
-            $loanInfo['action'] .= "<a href='#' class='doc-update' value='" . $loanInfo['loan_entry_id'] . "' data-id='" . $loanInfo['cus_id'] . "' title='update details'>Update</a>";
+            $loanInfo['action'] .= "<a href='#' class='doc-update' value='" . $loanInfo['loan_entry_id'] . "' title='update details'>Update</a>";
         }
         
         $loanInfo['action'] .= "<a href='#' class='doc-print' value='" . $loanInfo['loan_entry_id'] . "' title='print'>Print</a>";

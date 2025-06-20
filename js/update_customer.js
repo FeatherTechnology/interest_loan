@@ -11,12 +11,16 @@ $(document).ready(function () {
         $('#gold_info_card').hide();
     });
 
+    // <--------------------------------------------------  Edit Button  ------------------------------------------------------------->
+
     $(document).on('click', '.edit-cus-update', function () {
         let id = $(this).attr('value');
         $('#customer_profile_id').val(id);
         swapTableAndCreation();
         editCustomerCreation(id)
     });
+
+    // <--------------------------------------------------  Radio Button Customer Profile & Documentation ------------------------------------------------------------->
 
     $('input[name=update_type]').click(function () {
         let updateType = $(this).val();
@@ -31,12 +35,6 @@ $(document).ready(function () {
         var radioId = $(this).attr('for');
         $('#' + radioId).prop('checked', true);
     });
-
-    $(document).on('click', '#documentation', function (event) {
-        event.preventDefault();
-        let cus_id = $('#cus_id').val();
-        OnLoadFunctions(cus_id)
-    })
 
     /////////////////////////////////////////////////// family Modal Start //////////////////////////////////////////////////////////////////////////////////
 
@@ -688,13 +686,17 @@ $(document).ready(function () {
         }
     });
 
-    //<------------------------------------------------------------- Documnenation Update on click function ------------------------------------------------------------------>
+    //<----------------------------------------------------------- Update - Documnenation on click function --------------------------------------------------------------->
+
+    $(document).on('click', '#documentation', function (event) {
+        event.preventDefault();
+        let cus_id = $('#cus_id').val();
+        OnLoadFunctions(cus_id)
+    })
 
     $(document).on('click', '.doc-update', function () {
         let id = $(this).attr('value'); //Customer Profile id From List page.
         $('#loan_entry_id').val(id);
-        let cusID = $(this).attr('data-id'); //Cus id From List Page.
-        $('#doc_cus_id').val(cusID);
         $('#document_type_div').show();
         $('#document_type').val('');
         $('#cheque_info_card').hide();
@@ -777,7 +779,7 @@ $(document).ready(function () {
 
     $('#submit_cheque_info').click(function (event) {
         event.preventDefault();
-        let cus_id = $('#doc_cus_id').val();
+        let cus_id = $('#cus_id').val();
         let cq_holder_type = $('#cq_holder_type').val();
         let cq_holder_name = $("#cq_holder_name").val();
         let cq_holder_id = $("#cq_holder_name").attr('data-id');
@@ -941,7 +943,7 @@ $(document).ready(function () {
         let doc_upload = $('#doc_upload')[0].files[0];
         let doc_upload_edit = $('#doc_upload_edit').val();
         let doc_info_id = $('#doc_info_id').val();
-        let cus_id = $('#doc_cus_id').val();
+        let cus_id = $('#cus_id').val();
         let customer_profile_id = $('#loan_entry_id').val();
         var data = ['doc_name', 'doc_type', 'doc_holder_name', 'doc_relationship', 'doc_upload']
 
@@ -1038,7 +1040,7 @@ $(document).ready(function () {
         let reg_office = $('#reg_office').val();
         let mortgage_value = $('#mortgage_value').val();
         let mortgage_info_id = $('#mortgage_info_id').val();
-        let cus_id = $('#doc_cus_id').val();
+        let cus_id = $('#cus_id').val();
         let customer_profile_id = $('#loan_entry_id').val();
         let mort_upload = $('#mort_upload')[0].files[0];
         let mort_upload_edit = $('#mort_upload_edit').val();
@@ -1145,7 +1147,7 @@ $(document).ready(function () {
         let endorsement_upload = $('#endorsement_upload')[0].files[0];
         let endorsement_upload_edit = $('#endorsement_upload_edit').val();
         let endorsement_info_id = $('#endorsement_info_id').val();
-        let cus_id = $('#doc_cus_id').val();
+        let cus_id = $('#cus_id').val();
         let customer_profile_id = $('#loan_entry_id').val();
 
         var data = ['owner_name', 'owner_relationship', 'vehicle_details', 'endorsement_name', 'key_original', 'rc_original', 'endorsement_upload']
@@ -1228,7 +1230,7 @@ $(document).ready(function () {
     $('#submit_gold_info').click(function (event) {
         event.preventDefault();
         let goldInfo = {
-            'cus_id': $('#doc_cus_id').val(),
+            'cus_id': $('#cus_id').val(),
             'customer_profile_id': $('#loan_entry_id').val(),
             'gold_type': $('#gold_type').val(),
             'purity': $('#gold_purity').val(),
@@ -1916,7 +1918,7 @@ function emptyholderFields() {
 
 function getFamilyMember(optn, selector) {
     return new Promise((resolve, reject) => {
-        let cus_id = $('#doc_cus_id').val();
+        let cus_id = $('#cus_id').val();
 
         $.post('api/loan_issue_files/get_family_name.php', { cus_id }, function (response) {
             let appendOption = "<option value=''>" + optn + "</option>"; // Default option 

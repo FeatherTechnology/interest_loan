@@ -46,7 +46,6 @@
 
     <form id="update_customer_profile" name="update_customer_profile">
         <input type="hidden" id="customer_profile_id">
-        <input type="hidden" id="doc_cus_id">
         <div class="row gutters">
             <div class="col-12">
                 <div class="card">
