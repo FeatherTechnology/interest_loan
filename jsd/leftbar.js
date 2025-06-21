@@ -19,6 +19,8 @@ $(document).ready(function () {
         'accounts':'accounts',
         'balance_sheet':'accounts',
         'update_customer':'update',
+        'customer_data':'customer_data',
+        'search':'search',
     };
 
     const current_page = localStorage.getItem('currentPage');
