@@ -44,8 +44,8 @@
                                         </div>
                                     </div>
                                     <div class="col-12 mt-3 text-right">
-                                        <button name="submit_search" id="submit_search" class="btn btn-primary" tabindex="5"><span class="icon-check"></span>&nbsp;Search</button>
-                                        <button type="reset" class="btn btn-outline-secondary" tabindex="6">Clear</button>
+                                        <button name="submit_search" id="submit_search" class="btn btn-primary" tabindex="6"><span class="icon-check"></span>&nbsp;Search</button>
+                                        <button type="reset" class="btn btn-outline-secondary" tabindex="7">Clear</button>
                                     </div>
                                 </div>
                             </div>
