@@ -21,6 +21,7 @@ $(document).ready(function () {
         'update_customer':'update',
         'customer_data':'customer_data',
         'search':'search',
+        'loan_issue_report':'loan_issue_report',
     };
 
     const current_page = localStorage.getItem('currentPage');
