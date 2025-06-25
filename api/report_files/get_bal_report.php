@@ -55,7 +55,7 @@ LEFT JOIN agent_creation ac ON le.agent_id_calc = ac.id
             loan_entry_id
     ) c ON li.loan_entry_id = c.loan_entry_id
 JOIN customer_status cs ON li.loan_entry_id = cs.loan_entry_id
-WHERE cs.status >=7 AND cs.status <=10 AND date(li.issue_date) <= date('$to_date') ";
+WHERE cs.status BETWEEN 7 AND 10 AND DATE(li.issue_date) <= DATE('$to_date')";
 
 if (isset($_POST['search']) && $_POST['search'] != "") {
     $search = $_POST['search'];

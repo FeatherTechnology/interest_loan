@@ -7,7 +7,7 @@ $(document).ready(function () {
         let to_date = $('#to_date').val();
 
         if (!to_date) {
-            swalError('Please Fill Date!', 'date are required.');
+            swalError('Please Fill Date!', 'Date is required.');
             return; // Stop execution if validation fails
         }
 
