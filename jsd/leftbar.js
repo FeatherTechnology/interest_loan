@@ -21,6 +21,11 @@ $(document).ready(function () {
         'update_customer':'update',
         'customer_data':'customer_data',
         'search':'search',
+        'loan_issue_report':'reports',
+        'collection_report':'reports',
+        'balance_report':'reports',
+        'closed_report':'reports',
+        'ledger_view_report':'reports',
     };
 
     const current_page = localStorage.getItem('currentPage');
