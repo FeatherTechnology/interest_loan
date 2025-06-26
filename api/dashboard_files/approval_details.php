@@ -6,7 +6,7 @@ $line_id = $_POST['lineId'];
 $response = array();
 
 //Total Approval
-$tot_le = "SELECT COALESCE(count(le.id),0) AS total_approval FROM `loan_entry` le JOIN customer_creation cc ON cc.cus_id = le.cus_id JOIN customer_status cs ON le.id = cs.loan_entry_id WHERE cs.status >= 4  AND cs.status != 5 AND cs.status != 6 AND cs.status != 8 AND cs.status != 9 ";
+$tot_le = "SELECT COALESCE(count(le.id),0) AS total_approval FROM `loan_entry` le JOIN customer_creation cc ON cc.cus_id = le.cus_id JOIN customer_status cs ON le.id = cs.loan_entry_id WHERE cs.status >= 4  AND cs.status NOT IN (5, 6, 8, 9) ";
 
 //Total Loan Issued
 $tot_li = "SELECT COALESCE(count(le.id),0) AS total_issued FROM `loan_entry` le JOIN customer_creation cc ON cc.cus_id = le.cus_id JOIN customer_status cs ON le.id = cs.loan_entry_id JOIN loan_issue li ON li.loan_entry_id = le.id WHERE cs.status >= 7 AND li.balance_amount = 0 ";
