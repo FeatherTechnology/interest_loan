@@ -3,7 +3,7 @@ require "../../ajaxconfig.php";
 
 $id = $_POST['id'];
 try {
-    $qry = $pdo->query("SELECT * FROM users u JOIN area_creation ac ON FIND_IN_SET(u.line, ac.line_id) WHERE ac.id = '$id' ");
+    $qry = $pdo->query("SELECT * FROM users u JOIN area_creation ac ON FIND_IN_SET(ac.line_id, u.line) WHERE ac.id = '$id' ");
     if ($qry->rowCount() > 0) {
         $result = 2; // Already used in User Creation Table. 
     } else {
