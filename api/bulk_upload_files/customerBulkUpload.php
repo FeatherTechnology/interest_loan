@@ -24,24 +24,17 @@ if (in_array($_FILES["excelFile"]["type"], $allowedFileType)) {
 
                 $data = $obj->fetchAllRowData($Row);
 
-                $data['loan_id'] = isset($data['loan_id']) ? $data['loan_id'] : '';
-                if (isset($data['loan_id'])) {
-                    $data['loan_id'] = $obj->getLoanCode($pdo, $data['loan_id']);
-                }
+                $data['loan_id'] = $obj->getLoanCode($pdo);
 
                 $data['cus_id'] = $obj->getCustomerCode($pdo, $data['aadhar_number']);
 
-                $loan_cat_id = $obj->getLoanCategoryId($pdo, $data['loan_category']);
-                $data['loan_category_id'] = $loan_cat_id;
+                $data['loan_category_id'] = $obj->getLoanCategoryId($pdo, $data['loan_category']);
 
-                $agent_id = $obj->checkAgent($pdo, $data['agent_id_calc']);
-                $data['agent_id'] = $agent_id;
+                $data['agent_id'] = $obj->checkAgent($pdo, $data['agent_id_calc']);
 
-                $area_id = $obj->getAreaId($pdo, $data['area']);
-                $data['area_id'] = $area_id;
+                $data['area_id'] = $obj->getAreaId($pdo, $data['area']);
 
-                $areaLine = $obj->getAreaLine($pdo, $data['area_id']);
-                $data['line_id'] = $areaLine;
+                $data['line_id'] = $obj->getAreaLine($pdo, $data['area_id']);
 
                 $data['bank_id'] = $obj->getBankId($pdo, $data['bank_name']);
 
@@ -49,8 +42,7 @@ if (in_array($_FILES["excelFile"]["type"], $allowedFileType)) {
                 if (empty($err_columns)) {
                     // Call LoanEntryTables function
                     $obj->FamilyTable($pdo, $data);
-                    $family_info_id = $obj->guarantorName($pdo, $data['guarantor_aadhar']);
-                    $data['family_info_id'] = $family_info_id;
+                    $data['family_info_id'] = $obj->guarantorName($pdo, $data['guarantor_aadhar']);
                     $loan_entry_id = $obj->LoanEntryTables($pdo, $data);
                 } else {
                     $errtxt = "Please Check the input given in Serial No: " . ($rowChange) . " on below. <br><br>";
@@ -74,4 +66,3 @@ if (in_array($_FILES["excelFile"]["type"], $allowedFileType)) {
 }
 
 echo $message;
-$pdo = null; // Close connection.

@@ -162,29 +162,17 @@ class bulkUploadClass
 
     // <------------------------------------------------------------------ Loan ID Function ---------------------------------------------------------------->
 
-    function getLoanCode($pdo, $id)
+    function getLoanCode($pdo)
     {
-        if (!isset($id) || $id == '') {
-            $qry = $pdo->query("SELECT loan_id FROM loan_entry WHERE loan_id != '' ORDER BY id DESC LIMIT 1");
+        $qry = $pdo->query("SELECT loan_id FROM loan_entry WHERE loan_id != '' ORDER BY id DESC LIMIT 1");
 
-            if ($qry->rowCount() > 0) {
-                $qry_info = $qry->fetch();
-                $l_no = ltrim(strstr($qry_info['loan_id'], '-'), '-');
-                $l_no = $l_no + 1;
-                $loan_ID_final = "LID-" . "$l_no";
-            } else {
-                $loan_ID_final = "LID-101";
-            }
+        if ($qry->rowCount() > 0) {
+            $qry_info = $qry->fetch();
+            $l_no = ltrim(strstr($qry_info['loan_id'], '-'), '-');
+            $l_no = $l_no + 1;
+            $loan_ID_final = "LID-" . "$l_no";
         } else {
-            $stmt = $pdo->prepare("SELECT loan_id FROM loan_entry WHERE id = :id");
-            $stmt->execute(['id' => $id]);
-
-            if ($stmt->rowCount() > 0) {
-                $qry_info = $stmt->fetch();
-                $loan_ID_final = $qry_info['loan_id'];
-            } else {
-                $loan_ID_final = "LID-101"; // Default value if not found
-            }
+            $loan_ID_final = "LID-101";
         }
 
         return $loan_ID_final;
@@ -569,5 +557,3 @@ class bulkUploadClass
         return $errcolumns;
     }
 }
-
-$pdo = null; // Close connection.
