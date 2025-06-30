@@ -3,7 +3,8 @@ require "../../ajaxconfig.php";
 
 $id = $_POST['id'];
 
-$checkQry = $pdo->query("SELECT * FROM area_creation where FIND_IN_SET($id,area_id)");
+$checkQry = $pdo->query("SELECT * FROM area_creation_area_name WHERE area_id = '$id'");
+
 if ($checkQry->rowCount() > 0) {
     $result = 0; //Already added in Area Creation.
 } else {

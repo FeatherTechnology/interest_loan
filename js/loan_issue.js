@@ -729,6 +729,8 @@ $(document).ready(function () {
                 $('.cash_issue').show();
                 $('#bank_container').hide();
                 $('#balance_amount').val('');
+                $('#chequeRemark').val('');
+                $('#transaction_remark').val('');
 
             } else if (type == '2') {
                 $('#cash').val('');
@@ -741,11 +743,14 @@ $(document).ready(function () {
                 $('#bank_container').show();
                 $('.balance_remark_container').show();
                 $('#balance_amount').val('');
+                $('#chequeRemark').val('');
+                $('#transaction_remark').val('');
 
             } else if (type == '3') {
                 $('#transaction_value').val('');
                 $('#cash').val('');
                 $('#chequeValue').val('');
+                $('#chequeRemark').val('');
                 getBankName();
                 $('.transaction').hide();
                 $('.checque').show();
@@ -753,6 +758,7 @@ $(document).ready(function () {
                 $('#bank_container').show();
                 $('.balance_remark_container').show();
                 $('#balance_amount').val('');
+                $('#transaction_remark').val('');
             }
             else {
                 $('.transaction').hide();
@@ -777,6 +783,8 @@ $(document).ready(function () {
                 $('.checque').hide();
                 $('.cash_issue').show();
                 $('#bank_container').hide();
+                $('#chequeRemark').val('');
+                $('#transaction_remark').val('');
 
             } else if (type == '2') {
                 $('#cash').val('');
@@ -787,6 +795,8 @@ $(document).ready(function () {
                 $('.checque').hide();
                 $('.cash_issue').hide();
                 $('#bank_container').show();
+                $('#chequeRemark').val('');
+                $('#transaction_remark').val('');
 
             } else if (type == '3') {
                 $('#transaction_value').val('');
@@ -797,6 +807,8 @@ $(document).ready(function () {
                 $('.checque').show();
                 $('.cash_issue').hide();
                 $('#bank_container').show();
+                $('#chequeRemark').val('');
+                $('#transaction_remark').val('');
             }
             else {
                 $('.transaction').hide();

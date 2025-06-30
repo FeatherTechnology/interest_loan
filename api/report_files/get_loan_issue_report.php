@@ -32,7 +32,7 @@ $column = array(
     'li.relationship'
 );
 
-$query = "SELECT le.loan_id, cc.cus_id, cc.aadhar_number, CONCAT(cc.first_name, ' ', COALESCE(cc.last_name, '')) AS cus_name,  GROUP_CONCAT(fi.fam_name SEPARATOR ' , ') AS gaurantor, anc.areaname, lnc.linename, bc.branch_name , cc.mobile1, lc.loan_category, agc.agent_name, li.issue_date, le.loan_amount, le.interest_amnt_calc, le.doc_charge_calculate, le.processing_fees_calculate, li.net_cash, li.issue_person, li.relationship 
+$query = "SELECT le.loan_id, cc.cus_id, cc.aadhar_number, CONCAT(cc.first_name, ' ', COALESCE(cc.last_name, '')) AS cus_name,  GROUP_CONCAT(DISTINCT fi.fam_name SEPARATOR ' , ') AS gaurantor, anc.areaname, lnc.linename, bc.branch_name , cc.mobile1, lc.loan_category, agc.agent_name, li.issue_date, le.loan_amount, le.interest_amnt_calc, le.doc_charge_calculate, le.processing_fees_calculate, li.net_cash, li.issue_person, li.relationship 
 FROM loan_issue li 
 JOIN customer_creation cc ON li.cus_id = cc.cus_id
 JOIN loan_entry le ON li.loan_entry_id = le.id
