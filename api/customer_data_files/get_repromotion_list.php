@@ -49,8 +49,7 @@ LEFT JOIN area_name_creation anc ON cc.area = anc.id
 LEFT JOIN area_creation ac ON cc.line = ac.line_id
 LEFT JOIN branch_creation bc ON ac.branch_id = bc.id
 
-WHERE (cs.status = 5 OR cs.status = 6 OR cs.status = 8 OR cs.status = 9) 
-$whereCondition
+WHERE cs.status IN (5, 6, 8, 9) $whereCondition
 
 ORDER BY cc.id DESC");
 
