@@ -1172,6 +1172,8 @@
 
 <!-------------------------------------------------------------------------- NOC Summary End -------------------------------------------------------------------------->
 
+<div id="printcollection" style="display: none"></div>
+
 <!----------------------------------------------------------------------- Due Chart Modal Start ----------------------------------------------------------------------->
 
 <div class="modal fade bd-example-modal-lg" id="due_chart_model" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">

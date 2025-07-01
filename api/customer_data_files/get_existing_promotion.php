@@ -24,17 +24,39 @@ if (isset($_POST['existing_details']) && !empty($_POST['existing_details'])) {
 }
 
 // Prepare the query to fetch customers with status >= 11
-$query = "SELECT le.id as loan_entry_id , cc.id, cc.cus_id, cc.aadhar_number, CONCAT(cc.first_name, ' ', COALESCE(cc.last_name, '')) AS cus_name, anc.areaname AS area, lnc.linename, bc.branch_name, cc.mobile1, cs.status as c_sts, cs.sub_status as c_substs, ec.created_on as created, ec.existing_detail, cc.created_on as cus_created
-    FROM customer_creation cc
-    LEFT JOIN line_name_creation lnc ON cc.line = lnc.id
-    LEFT JOIN area_name_creation anc ON cc.area = anc.id
-    LEFT JOIN area_creation ac ON cc.line = ac.line_id
-    LEFT JOIN branch_creation bc ON ac.branch_id = bc.id
-    LEFT JOIN loan_entry le ON le.cus_id = cc.cus_id 
-    LEFT JOIN customer_status cs ON le.id = cs.loan_entry_id  
-    LEFT JOIN existing_customer ec ON le.id = ec.loan_entry_id
-    WHERE cs.status >= 11  $whereCondition
-    ORDER BY cc.id DESC";
+$query = " SELECT 
+    le.id AS loan_entry_id,
+    cc.id,
+    cc.cus_id,
+    cc.aadhar_number,
+    CONCAT(cc.first_name, ' ', COALESCE(cc.last_name, '')) AS cus_name,
+    anc.areaname AS area,
+    lnc.linename,
+    bc.branch_name,
+    cc.mobile1,
+    cs.status AS c_sts,
+    cs.sub_status AS c_substs,
+    ec.created_on AS created,
+    ec.existing_detail,
+    cc.created_on AS cus_created
+FROM customer_creation cc
+
+LEFT JOIN (
+    SELECT MAX(id) AS max_loan_id, cus_id
+    FROM loan_entry
+    GROUP BY cus_id
+) latest_loan ON cc.cus_id = latest_loan.cus_id
+
+LEFT JOIN loan_entry le ON le.id = latest_loan.max_loan_id
+LEFT JOIN customer_status cs ON le.id = cs.loan_entry_id
+LEFT JOIN existing_customer ec ON le.id = ec.loan_entry_id
+LEFT JOIN line_name_creation lnc ON cc.line = lnc.id
+LEFT JOIN area_name_creation anc ON cc.area = anc.id
+LEFT JOIN area_creation ac ON cc.line = ac.line_id
+LEFT JOIN branch_creation bc ON ac.branch_id = bc.id
+
+WHERE cs.status >= 11 $whereCondition
+ORDER BY cc.id DESC";
 
 $customerQry = $pdo->query($query);
 
