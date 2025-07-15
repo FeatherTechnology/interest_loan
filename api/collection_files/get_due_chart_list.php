@@ -8,13 +8,14 @@ require_once '../../include/views/money_format_india.php';
     $le_id = $_POST['le_id'];
     $curDateChecker = true;
 
-    $loanStart = $pdo->query("SELECT due_startdate_calc, maturity_date_calc , interest_rate_calc , interest_calculate , loan_date FROM loan_entry  WHERE id = '$le_id' ");
+    $loanStart = $pdo->query("SELECT due_startdate_calc, maturity_date_calc , interest_rate_calc , interest_calculate , loan_date , interest_amnt_calc , loan_category FROM loan_entry  WHERE id = '$le_id' ");
     $loanFrom = $loanStart->fetch();
     //If Due method is Monthly, Calculate penalty by checking the month has ended or not
     $due_startdate_calc = $loanFrom['due_startdate_calc'];
     $maturity_date_calc = $loanFrom['maturity_date_calc'];
     $interest_rate_calc = $loanFrom['interest_rate_calc'];
     $interest_calculate = $loanFrom['interest_calculate'];
+    $interest_amount = $loanFrom['interest_amnt_calc'];
     $loan_date = $loanFrom['loan_date'];
     $start_date_obj = DateTime::createFromFormat('Y-m-d', $due_startdate_calc);
     $end_date_obj = DateTime::createFromFormat('Y-m-d', $maturity_date_calc);
@@ -606,101 +607,40 @@ function getTillDateInterest($loanFrom, $curInterest, $pdo, $data, $le_id)
     return $curInterest;
 }
 
-function dueAmtCalculation($pdo, $start_date, $end_date, $interest_amount, $loanFrom, $status, $le_id)
+function payableCalculation($loanFrom, $interest_amount, $pdo, $le_id)
 {
-    $start = $start_date->format('Y-m-d');
-    $start = new DateTime($start);
-    $end = $end_date->format('Y-m-d');
-    $end = new DateTime($end);
-
-    $interest_rate_calc = $loanFrom['interest_rate_calc'];
-    $interest_calculate = $loanFrom['interest_calculate'];
-
+    $issued_date = new DateTime(date('Y-m-d', strtotime($loanFrom['loan_date'])));
+    $cur_date = new DateTime(date('Y-m-d'));
     $result = 0;
-    $qry = $pdo->query("SELECT principal_amount_track FROM `collection` WHERE loan_entry_id = '" . $le_id . "' and principal_amount_track != '' ORDER BY collection_date ASC ");
-    if ($qry->rowCount() > 0) {
 
-        while ($start->format('m') <= $end->format('m')) {
-            $qry = $pdo->query("SELECT principal_amount_track as princ,balance_amount, collection_date FROM `collection` WHERE loan_entry_id = '" . $le_id . "' and principal_amount_track != '' and month(collection_date) = month('" . $start->format('Y-m-d') . "') and year(collection_date) = year('" . $start->format('Y-m-d') . "') ORDER BY collection_date ASC ");
-            if ($qry->rowCount() > 0) {
+    if ($loanFrom['interest_calculate'] == "Month") {
+        $last_month = clone $cur_date;
+        $last_month->modify('-1 month'); // Last month same date
+        $st_date = clone $issued_date;
 
-                while ($row = $qry->fetch()) {
-                    $princ = $row['princ'];
-                    $balance_amount = $row['balance_amount'];
-                    $collection_date = new DateTime($row['collection_date']);
+        while ($st_date->format('Y-m') <= $last_month->format('Y-m')) {
+            $end_date = clone $st_date;
+            $end_date->modify('last day of this month');
+            $start = clone $st_date; // Due to mutation in function
 
-                    $interest_amount = calculateNewInterestAmt($interest_rate_calc, $balance_amount, $interest_calculate);
-                    $balance_amount = $balance_amount - $princ;
-                    $dueperday = $interest_amount / intval($start->format('t'));
-                    $cur_result = (($start->diff($collection_date))->days) * $dueperday;
-                    $result += $cur_result;
+            $result += dueAmtCalculation($pdo, $start, $end_date,  $interest_amount, $loanFrom, 'payable', $le_id);
 
-                    unset($start); //unset to remove as obj // so can reinitialize
-                    $start = new DateTime($collection_date->format('Y-m-d'));
-                    unset($collection_date); //unset to remove as obj // so can reinitialize
-                }
-            } else {
-                $qry = $pdo->query("SELECT principal_amount_track as princ,balance_amount, collection_date FROM `collection` WHERE loan_entry_id = '" . $le_id . "' and principal_amount_track != '' and month(collection_date) < month('" . $start->format('Y-m-d') . "') and year(collection_date) <= year('" . $start->format('Y-m-d') . "') ORDER BY collection_date ASC LIMIT 1");
-                if ($qry->rowCount() > 0) {
-                    $row = $qry->fetch();
-                    $princ = $row['princ'];
-                    $balance_amount = $row['balance_amount'];
-                    $balance_amount = $balance_amount - $princ;
-                } else {
-                    $qry = $pdo->query("SELECT loan_amnt_calc from loan_entry where id = '" . $le_id . "' ");
-                    $row = $qry->fetch();
-                    $balance_amount = $row['loan_amnt_calc'];
-                }
-            }
-
-            $interest_amount = calculateNewInterestAmt($interest_rate_calc, $balance_amount, $interest_calculate);
-            $dueperday = $interest_amount / intval($start->format('t'));
-
-            if ($start->format('m') != $end->format('m')) {
-                $new_end = new DateTime($start->format("Y-m-t"));
-                $cur_result = (($start->diff($new_end))->days + 1) * $dueperday;
-                $result += $cur_result;
-                $start->modify("+1 month");
-                $start->modify("first day of this month");
-            } else {
-
-                if ($status == 'payable' or $status == 'pending') {
-                    $cur_result = (($start->diff($end))->days + 1) * $dueperday;
-                    $result += $cur_result;
-                } else {
-                    $cur_result = (($start->diff($end))->days) * $dueperday;
-                    $result += $cur_result;
-                }
-                $start->modify("+1 month");
-                $start->modify("first day of this month");
-            }
+            $st_date->modify('+1 month');
+            $st_date->modify('first day of this month');
         }
-    } else {
-        while ($start->format('m') <= $end->format('m')) {
+    } elseif ($loanFrom['interest_calculate'] == "Days") {
+        $last_date = clone $cur_date;
+        $last_date->modify('-1 month'); // Last month same date
+        $st_date = clone $issued_date;
 
-            $dueperday = $interest_amount / intval($start->format('t'));
-            if ($status != 'pending') {
-                if ($start->format('m') != $end->format('m')) {
-                    $new_end_date = clone $start;
-                    $new_end_date->modify('last day of this month');
-                    $cur_result = (($start->diff($new_end_date))->days + 1) * $dueperday;
-                    $result += $cur_result;
-                } elseif ($end->format('Y-m-d') != date('Y-m-d')) {
-                    $cur_result = (($start->diff($end))->days + 1) * $dueperday;
-                    $result += $cur_result;
-                } else {
-                    $cur_result = (($start->diff($end))->days) * $dueperday;
-                    $result += $cur_result;
-                }
-            } else {
-                $new_end = clone $start;
-                $new_end = $new_end->modify("last day of this month");
-                $cur_result = (($start->diff($new_end))->days + 1) * $dueperday;
-                $result += $cur_result;
-            }
+        while ($st_date->format('Y-m') <= $last_date->format('Y-m')) {
+            $end_date = clone $st_date;
+            $end_date->modify('last day of this month');
+            $start = clone $st_date;
 
-            $start->modify('+1 month');
-            $start->modify('first day of this month');
+            $result += dueAmtCalculation($pdo, $start, $end_date, $interest_amount, $loanFrom, 'payable', $le_id);
+            $st_date->modify('+1 month');
+            $st_date->modify('first day of this month');
         }
     }
     return $result;
@@ -724,23 +664,101 @@ function calculateNewInterestAmt($interest_rate_calc, $balance_amount, $interest
     return $response;
 }
 
-function payableCalculation($loanFrom, $curInterest, $pdo, $le_id)
+function dueAmtCalculation($pdo, $start_date, $end_date, $interest_amount, $loanFrom, $status, $le_id)
 {
-    $issued_date = new DateTime(date('Y-m-d', strtotime($loanFrom['loan_date'])));
-    $cur_date = new DateTime(date('Y-m-d'));
-    $last_month = clone $cur_date;
-    $last_month->modify('-1 month'); // last month same date 
+    $start = new DateTime($start_date->format('Y-m-d'));
+    $end = new DateTime($end_date->format('Y-m-d'));
+
+    $interest_calculate = $loanFrom['interest_calculate'];
+    $interest_rate_calc = $loanFrom['interest_rate_calc'];
+    $loan_category = $loanFrom['loan_category'];
     $result = 0;
-    $st_date = clone $issued_date;
-    while ($st_date->format('m') <= $last_month->format('m')) {
-        $end_date = clone $st_date;
-        $end_date->modify('last day of this month');
-        $start = clone $st_date; //because the function calling below will change the root of starting date
+    $monthly_interest_data = [];
 
-        $result += dueAmtCalculation($pdo, $start, $end_date, $curInterest, $loanFrom, 'payable', $le_id);
+    $loanRow = $pdo->query("SELECT loan_amnt_calc FROM loan_entry WHERE id = '$le_id'")->fetch(PDO::FETCH_ASSOC);
+    $default_balance = $loanRow['loan_amnt_calc'];
 
-        $st_date->modify('+1 month');
-        $st_date->modify('first day of this month');
+    $collections = $pdo->query("SELECT principal_amount_track, collection_date FROM collection 
+        WHERE loan_entry_id = '$le_id' AND principal_amount_track != '' ORDER BY collection_date ASC")->fetchAll();
+
+    if (!empty($collections)) {
+
+        // <---------------------------------------------------------------- IF COLLECTIONS EXIST ------------------------------------------------------------>
+
+        $collection_index = 0;
+        $current_balance = $default_balance;
+
+        while ($start <= $end) {
+            $today_str = $start->format('Y-m-d');
+            $month_key = $start->format('Y-m-01');
+            $paid_principal_today = 0;
+
+            while ($collection_index < count($collections)) {
+                $collection = $collections[$collection_index];
+                $collection_date = (new DateTime($collection['collection_date']))->format('Y-m-d');
+                if ($collection_date == $today_str) {
+                    $paid_principal_today += (float)$collection['principal_amount_track'];
+                    $collection_index++;
+                } else {
+                    break;
+                }
+            }
+
+            $current_balance -= $paid_principal_today;
+
+            $interest_today = calculateNewInterestAmt($interest_rate_calc, $current_balance, $interest_calculate);
+
+            if ($interest_calculate === 'Days') {
+                $result += $interest_today;
+                $monthly_interest_data[$month_key] = ($monthly_interest_data[$month_key] ?? 0) + $interest_today;
+            } else {
+                $days_in_month = (int)$start->format('t');
+                $daily_interest = $interest_today / $days_in_month;
+                $result += $daily_interest;
+                $monthly_interest_data[$month_key] = ($monthly_interest_data[$month_key] ?? 0) + $daily_interest;
+            }
+
+            $start->modify('+1 day');
+        }
+    } else {
+        $monthly_interest_data = [];
+
+        if ($interest_calculate === 'Month') {
+            while ($start->format('Y-m') <= $end->format('Y-m')) {
+                $month_key = $start->format('Y-m-d');
+                $dueperday = $interest_amount / intval($start->format('t'));
+
+                if ($status != 'pending') {
+                    if ($start->format('m') != $end->format('m')) {
+                        $new_end_date = clone $start;
+                        $new_end_date->modify('last day of this month');
+                        $cur_result = (($start->diff($new_end_date))->days + 1) * $dueperday;
+                    } elseif ($end->format('Y-m-d') != date('Y-m-d')) {
+                        $cur_result = (($start->diff($end))->days + 1) * $dueperday;
+                    } else {
+                        $cur_result = (($start->diff($end))->days) * $dueperday;
+                    }
+                } else {
+                    $new_end = clone $start;
+                    $new_end->modify("last day of this month");
+                    $cur_result = (($start->diff($new_end))->days + 1) * $dueperday;
+                }
+
+                $result += $cur_result;
+                $monthly_interest_data[$month_key] = ($monthly_interest_data[$month_key] ?? 0) + $cur_result;
+                $start->modify('+1 month');
+                $start->modify('first day of this month');
+            }
+        } elseif ($interest_calculate === 'Days') {
+            while ($start->format('Y-m-d') <= $end->format('Y-m-d')) {
+                $month_key = $start->format('Y-m-d');
+                $dueperday = $interest_amount;
+                $result += $dueperday;
+                $monthly_interest_data[$month_key] = ($monthly_interest_data[$month_key] ?? 0) + $dueperday;
+
+                $start->modify('+1 day');
+            }
+        }
     }
 
     return $result;

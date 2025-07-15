@@ -1161,7 +1161,7 @@ function dueChartList(le_id, cus_id) {
 
                 // Now get the method name
                 $.post('api/collection_files/get_due_method_name.php', { le_id }, function (res) {
-                    $('#dueChartTitle').text('Due Chart ( ' + res['due_method'] + ' - ' + res['loan_type'] + ' )');
+                    $('#dueChartTitle').text('Due Chart ( ' + res['cus_name'] + ' - ' + res['cus_id'] + ' - ' + res['loan_id'] + ' - ' + res['due_method'] + ' - ' + res['loan_type'] + ' )');
                     resolve();
                 }, 'json').fail(reject);
             },

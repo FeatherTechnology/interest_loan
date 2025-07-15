@@ -34,7 +34,7 @@ $column = [
 ];
 
 $query = "SELECT li.id, lnc.linename, le.loan_id, li.issue_date, le.maturity_date_calc, cc.cus_id, cc.aadhar_number, CONCAT(cc.first_name, ' ', COALESCE(cc.last_name, '')) AS cus_name, anc.areaname, bc.branch_name, cc.mobile1, lc.loan_category, ac.agent_name, le.loan_amount, le.due_period_calc, c.principal_amount_track, c.interest_amount_track , 
-cs.status , le.interest_calculate , le.interest_rate_calc
+cs.status , le.interest_calculate , le.interest_rate_calc , le.due_startdate_calc
 FROM loan_issue li  
 JOIN loan_entry le ON li.loan_entry_id = le.id
 JOIN customer_creation cc ON le.cus_id = cc.cus_id
@@ -45,17 +45,19 @@ JOIN loan_category_creation lcc ON le.loan_category = lcc.id
 JOIN loan_category lc ON lcc.loan_category = lc.id
 LEFT JOIN agent_creation ac ON le.agent_id_calc = ac.id
     LEFT JOIN (
-        SELECT 
-            loan_entry_id, 
-            SUM(principal_amount_track) AS principal_amount_track, 
-            SUM(interest_amount_track) AS interest_amount_track 
-        FROM 
-            collection 
-        GROUP BY 
-            loan_entry_id
-    ) c ON li.loan_entry_id = c.loan_entry_id
+    SELECT 
+        loan_entry_id, 
+        SUM(principal_amount_track) AS principal_amount_track, 
+        SUM(interest_amount_track) AS interest_amount_track 
+    FROM 
+        collection 
+    WHERE 
+        DATE(collection_date) <= DATE('$to_date')
+    GROUP BY 
+        loan_entry_id
+) c ON li.loan_entry_id = c.loan_entry_id
 JOIN customer_status cs ON li.loan_entry_id = cs.loan_entry_id
-WHERE cs.status BETWEEN 7 AND 10 AND DATE(li.issue_date) <= DATE('$to_date')";
+WHERE cs.status = 7 AND DATE(li.issue_date) <= DATE('$to_date')";
 
 if (isset($_POST['search']) && $_POST['search'] != "") {
     $search = $_POST['search'];
@@ -101,7 +103,6 @@ $statement->execute();
 
 $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-
 $data = [];
 $sno = 1;
 
@@ -109,7 +110,11 @@ foreach ($result as $row) {
     $sub_array = [];
 
     // Balance Amount 
-    $balance_amount = intval($row['loan_amount']) - intval($row['principal_amount_track']);
+    if ($row['principal_amount_track'] != '') {
+        $balance_amount = intval($row['loan_amount']) - intval($row['principal_amount_track']);
+    } else {
+        $balance_amount = intval($row['loan_amount']);
+    }
 
     // Get interest calculation method and rate
     $interest_rate_calc = isset($row['interest_rate_calc']) ? floatval($row['interest_rate_calc']) : 0;
@@ -132,6 +137,45 @@ foreach ($result as $row) {
 
     $due_amount = $curInterest;
 
+    if ($interest_calculate == 'Month') {
+
+        $start = new DateTime($row['due_startdate_calc']);
+        $end = new DateTime($to_date);
+        $days_diff = $start->diff($end)->days; // This gives total number of days difference
+
+        // Total interest = prorated for days, assuming each month = 30 days
+        $total_interest = ($due_amount / 30) * $days_diff;
+        $total = ceil($total_interest / 5) * 5;
+        if ($total < $total_interest) {
+            $total += 5;
+        }
+
+        // Interest already paid
+        $interest_paid = isset($row['interest_amount_track']) ? intval($row['interest_amount_track']) : 0;
+
+        // Pending interest
+        $pending_interest = $total - $interest_paid;
+    } else if ($interest_calculate == 'Days') {
+
+        // Calculate difference in days between due_startdate_calc and to_date
+        $start = new DateTime($row['due_startdate_calc']);
+        $end = new DateTime($to_date);
+        $days_diff = $start->diff($end)->days; // This gives total number of days difference
+
+        // Total interest up to to_date (daily)
+        $total_interest = $days_diff * $due_amount; // due_amount must be per-day interest
+        $total = ceil($total_interest / 5) * 5;
+        if ($total < $total_interest) {
+            $total += 5;
+        }
+
+        // Interest already paid
+        $interest_paid = isset($row['interest_amount_track']) ? intval($row['interest_amount_track']) : 0;
+
+        // Pending interest = total - paid
+        $pending_interest = $total - $interest_paid;
+    }
+
     $sub_array[] = $sno;
     $sub_array[] = $row['linename'];
     $sub_array[] = $row['loan_id'];
@@ -149,8 +193,8 @@ foreach ($result as $row) {
     $sub_array[] = moneyFormatIndia($due_amount);
     $sub_array[] = $row['due_period_calc'];
     $sub_array[] = moneyFormatIndia($balance_amount);
-    $sub_array[] = moneyFormatIndia($row['principal_amount_track']);
-    $sub_array[] = moneyFormatIndia($row['interest_amount_track']);
+    $sub_array[] = moneyFormatIndia($balance_amount);
+    $sub_array[] = moneyFormatIndia($pending_interest);
     $sub_array[] = 'Present';
     $sub_array[] = $status[$row['status']];
     $data[] = $sub_array;

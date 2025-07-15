@@ -49,10 +49,6 @@ if (isset($_POST['search'])) {
     }
 }
 
-if (isset($_POST['params']['collection_status']) && $_POST['params']['collection_status'] != '') {
-    $query .= " and  cs.collection_status = 'Due Nil' ";
-}
-
 $query .= "GROUP BY cc.cus_id ";
 
 if (isset($_POST['order'])) {
@@ -93,11 +89,7 @@ foreach ($result as $row) {
     $sub_array[] = isset($row['branch_name']) ? $row['branch_name'] : '';
     $sub_array[] = isset($row['mobile1']) ? $row['mobile1'] : '';
 
-    if ($_POST['params']['collection_status'] != '') {
-        $action = "<a href='#' class='collection-details' value='" . $row['cus_id'] . "' sts='Due_Nil'><button class='btn btn-primary'>View</button></a>";
-    } else {
-        $action = "<a href='#' class='collection-details' value='" . $row['cus_id'] . "'><button class='btn btn-primary'>View</button></a>";
-    }
+    $action = "<a href='#' class='collection-details' value='" . $row['cus_id'] . "'><button class='btn btn-primary'>View</button></a>";
 
     $sub_array[] = $action;
     $data[] = $sub_array;

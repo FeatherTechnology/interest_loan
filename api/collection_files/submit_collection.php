@@ -15,6 +15,7 @@ $pending_amount = $_POST['pending_amount'];
 $payable_amount = $_POST['payable_amount'];
 $penalty = $_POST['penalty'];
 $fine_charge = $_POST['fine_charge'];
+$till_now_payable = $_POST['till_now_payable'];
 $interest_amount_track = $_POST['interest_amount_track'];
 $penalty_track = $_POST['penalty_track'];
 $fine_charge_track = $_POST['fine_charge_track'];
@@ -50,7 +51,7 @@ try {
         $collection_id = $myStr . "-101";
     }
 
-    $qry = $pdo->query("INSERT INTO `collection`( `loan_entry_id`, `cus_id`, `collection_status`, `coll_sub_status`, `loan_amount`, `paid_amount`, `balance_amount`, `interest_amount`, `pending_amount`, `payable_amount`, `penalty`, `fine_charge`, `interest_amount_track`, `penalty_track`, `fine_charge_track`, `principal_amount_track`, `total_paid_track`, `interest_waiver`, `penalty_waiver`, `fine_charge_waiver`, `principal_waiver`, `total_waiver`, `collection_date`, `collection_id`, `collection_mode`, `bank_id`, `transaction_id`, `insert_login_id`, `created_date`) VALUES ('$le_id','$cus_id','$status','$sub_status','$loan_amount','$paid_amount','$balance_amount','$interest_amount','$pending_amount','$payable_amount','$penalty','$fine_charge','$interest_amount_track','$penalty_track','$fine_charge_track','$principal_amount_track','$total_paid_track','$interest_waiver','$penalty_waiver','$fine_charge_waiver','$principal_waiver','$total_waiver','" . $collection_date . ' ' . date('H:i:s') . "','$collection_id','$collection_mode','$bank_id','$trans_id',
+    $qry = $pdo->query("INSERT INTO `collection`( `loan_entry_id`, `cus_id`, `collection_status`, `coll_sub_status`, `loan_amount`, `paid_amount`, `balance_amount`, `interest_amount`, `pending_amount`, `payable_amount`, `penalty`, `fine_charge`, `till_now_payable`, `interest_amount_track`, `penalty_track`, `fine_charge_track`, `principal_amount_track`, `total_paid_track`, `interest_waiver`, `penalty_waiver`, `fine_charge_waiver`, `principal_waiver`, `total_waiver`, `collection_date`, `collection_id`, `collection_mode`, `bank_id`, `transaction_id`, `insert_login_id`, `created_date`) VALUES ('$le_id','$cus_id','$status','$sub_status','$loan_amount','$paid_amount','$balance_amount','$interest_amount','$pending_amount','$payable_amount','$penalty','$fine_charge', '$till_now_payable', '$interest_amount_track','$penalty_track','$fine_charge_track','$principal_amount_track','$total_paid_track','$interest_waiver','$penalty_waiver','$fine_charge_waiver','$principal_waiver','$total_waiver','" . $collection_date . ' ' . date('H:i:s') . "','$collection_id','$collection_mode','$bank_id','$trans_id',
     '$user_id',current_timestamp )");
 
     if ($qry) {

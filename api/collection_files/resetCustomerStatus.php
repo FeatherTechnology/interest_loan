@@ -297,19 +297,37 @@ function payableCalculation($loan_arr, $response, $pdo, $le_id)
 {
     $issued_date = new DateTime(date('Y-m-d', strtotime($loan_arr['loan_date'])));
     $cur_date = new DateTime(date('Y-m-d'));
-    $last_month = clone $cur_date;
-    $last_month->modify('-1 month'); // last month same date 
     $result = 0;
-    $st_date = clone $issued_date;
-    while ($st_date->format('m') <= $last_month->format('m')) {
-        $end_date = clone $st_date;
-        $end_date->modify('last day of this month');
-        $start = clone $st_date; //because the function calling below will change the root of starting date
 
-        $result += dueAmtCalculation($pdo, $start, $end_date, $response['interest_amount'], $loan_arr, 'payable', $le_id);
+    if ($response['interest_calculate'] == "Month") {
+        $last_month = clone $cur_date;
+        $last_month->modify('-1 month'); // Last month same date
+        $st_date = clone $issued_date;
 
-        $st_date->modify('+1 month');
-        $st_date->modify('first day of this month');
+        while ($st_date->format('Y-m') <= $last_month->format('Y-m')) {
+            $end_date = clone $st_date;
+            $end_date->modify('last day of this month');
+            $start = clone $st_date; // Due to mutation in function
+
+            $result += dueAmtCalculation($pdo, $start, $end_date, $response['interest_amount'], $loan_arr, 'payable', $le_id);
+
+            $st_date->modify('+1 month');
+            $st_date->modify('first day of this month');
+        }
+    } elseif ($response['interest_calculate'] == "Days") {
+        $last_date = clone $cur_date;
+        $last_date->modify('-1 month'); // Last month same date
+        $st_date = clone $issued_date;
+
+        while ($st_date->format('Y-m') <= $last_date->format('Y-m')) {
+            $end_date = clone $st_date;
+            $end_date->modify('last day of this month');
+            $start = clone $st_date;
+
+            $result += dueAmtCalculation($pdo, $start, $end_date, $response['interest_amount'], $loan_arr, 'payable', $le_id);
+            $st_date->modify('+1 month');
+            $st_date->modify('first day of this month');
+        }
     }
 
     return $result;
@@ -422,178 +440,118 @@ function calculateNewInterestAmt($interest_rate_calc, $balance_amount, $interest
 
 function dueAmtCalculation($pdo, $start_date, $end_date, $interest_amount, $loan_arr, $status, $le_id)
 {
-    $start = $start_date->format('Y-m-d');
-    $start = new DateTime($start);
-    $end = $end_date->format('Y-m-d');
-    $end = new DateTime($end);
+    $start = new DateTime($start_date->format('Y-m-d'));
+    $end = new DateTime($end_date->format('Y-m-d'));
 
     $interest_calculate = $loan_arr['interest_calculate'];
     $interest_rate_calc = $loan_arr['interest_rate_calc'];
     $loan_category = $loan_arr['loan_category'];
-
     $result = 0;
-    $qry = $pdo->query("SELECT principal_amount_track FROM `collection` WHERE loan_entry_id = '" . $le_id . "' and principal_amount_track != '' ORDER BY collection_date ASC ");
-    if ($qry->rowCount() > 0) {
+    $monthly_interest_data = [];
 
-        while ($start->format('m') <= $end->format('m')) {
+    $loanRow = $pdo->query("SELECT loan_amnt_calc FROM loan_entry WHERE id = '$le_id'")->fetch(PDO::FETCH_ASSOC);
+    $default_balance = $loanRow['loan_amnt_calc'];
 
-            $penalty = 0;
-            $start_for_penalty = $start->format('Y-m-d');
+    $collections = $pdo->query("SELECT principal_amount_track, collection_date FROM collection 
+        WHERE loan_entry_id = '$le_id' AND principal_amount_track != '' ORDER BY collection_date ASC")->fetchAll();
 
-            $qry = $pdo->query("SELECT principal_amount_track as princ,balance_amount, collection_date FROM `collection` WHERE loan_entry_id = '" . $le_id . "' and principal_amount_track != '' and month(collection_date) = month('" . $start->format('Y-m-d') . "') and year(collection_date) = year('" . $start->format('Y-m-d') . "') ORDER BY collection_date ASC ");
-            if ($qry->rowCount() > 0) {
+    if (!empty($collections)) {
 
-                while ($row = $qry->fetch()) {
-                    $princ = $row['princ'];
-                    $balance_amount = $row['balance_amount'];
-                    $collection_date = new DateTime($row['collection_date']);
+        // <---------------------------------------------------------------- IF COLLECTIONS EXIST ------------------------------------------------------------>
 
-                    $interest_amount = calculateNewInterestAmt($interest_rate_calc, $balance_amount, $interest_calculate);
-                    $balance_amount = $balance_amount - $princ;
-                    $dueperday = $interest_amount / intval($start->format('t'));
-                    $cur_result = (($start->diff($collection_date))->days) * $dueperday;
-                    $result += $cur_result;
+        $collection_index = 0;
+        $current_balance = $default_balance;
 
-                    unset($start); //unset to remove as obj // so can reinitialize
-                    $start = new DateTime($collection_date->format('Y-m-d'));
-                    unset($collection_date); //unset to remove as obj // so can reinitialize
-                }
-            } else {
-                $qry = $pdo->query("SELECT principal_amount_track as princ,balance_amount, collection_date FROM `collection` WHERE loan_entry_id = '" . $le_id . "' and principal_amount_track != '' and month(collection_date) < month('" . $start->format('Y-m-d') . "') and year(collection_date) <= year('" . $start->format('Y-m-d') . "') ORDER BY collection_date ASC LIMIT 1");
-                if ($qry->rowCount() > 0) {
-                    $row = $qry->fetch();
-                    $princ = $row['princ'];
-                    $balance_amount = $row['balance_amount'];
-                    $balance_amount = $balance_amount - $princ;
+        while ($start <= $end) {
+            $today_str = $start->format('Y-m-d');
+            $month_key = $start->format('Y-m-01');
+            $paid_principal_today = 0;
+
+            while ($collection_index < count($collections)) {
+                $collection = $collections[$collection_index];
+                $collection_date = (new DateTime($collection['collection_date']))->format('Y-m-d');
+                if ($collection_date == $today_str) {
+                    $paid_principal_today += (float)$collection['principal_amount_track'];
+                    $collection_index++;
                 } else {
-                    $qry = $pdo->query("SELECT loan_amnt_calc from loan_entry where id = '" . $le_id . "' ");
-                    $row = $qry->fetch();
-                    $balance_amount = $row['loan_amnt_calc'];
+                    break;
                 }
             }
 
-            $interest_amount = calculateNewInterestAmt($interest_rate_calc, $balance_amount, $interest_calculate);
-            $dueperday = $interest_amount / intval($start->format('t'));
+            $current_balance -= $paid_principal_today;
 
-            if ($start->format('m') != $end->format('m')) {
-                $new_end = new DateTime($start->format("Y-m-t"));
-                $cur_result = (($start->diff($new_end))->days + 1) * $dueperday;
-                $result += $cur_result;
-                $start->modify("+1 month");
-                $start->modify("first day of this month");
+            $interest_today = calculateNewInterestAmt($interest_rate_calc, $current_balance, $interest_calculate);
+
+            if ($interest_calculate === 'Days') {
+                $result += $interest_today;
+                $monthly_interest_data[$month_key] = ($monthly_interest_data[$month_key] ?? 0) + $interest_today;
             } else {
-
-                if ($status == 'payable' or $status == 'pending') {
-                    $cur_result = (($start->diff($end))->days + 1) * $dueperday;
-                    $result += $cur_result;
-                } else {
-                    $cur_result = (($start->diff($end))->days) * $dueperday;
-                    $result += $cur_result;
-                }
-                $start->modify("+1 month");
-                $start->modify("first day of this month");
+                $days_in_month = (int)$start->format('t');
+                $daily_interest = $interest_today / $days_in_month;
+                $result += $daily_interest;
+                $monthly_interest_data[$month_key] = ($monthly_interest_data[$month_key] ?? 0) + $daily_interest;
             }
 
-            if ($status == 'pending') {
-                // Fetch penalty percentage or rupee amount from loan_category_creation
-                $ovqry = $pdo->query("SELECT overdue_penalty AS overdue, overdue_type FROM `loan_category_creation` WHERE loan_category = '$loan_category'");
-                $row = $ovqry->fetch();
-
-                $penalty_val = $row['overdue'] ?? 0;
-                $penalty_type = strtolower(trim($row['overdue_type'] ?? 'percentage')); // Default to 'percentage' if not set
-
-                // Calculate paid interest for the month
-                $paid_interest = getPaidInterest($pdo, $le_id);
-
-                if ($paid_interest > 0) {
-                    $cur_result =  $cur_result - $paid_interest;
-                    if ($cur_result < 0) {
-                        $cur_result = 0;
-                    }
-                }
-
-                // Check if penalty already exists for the month
-                $penalty_date = date('Y-m', strtotime($start_for_penalty));
-                $checkPenalty = $pdo->query("SELECT 1 FROM penalty_charges WHERE penalty_date = '$penalty_date' AND loan_entry_id = '$le_id'");
-
-                if ($checkPenalty->rowCount() == 0 && $cur_result > 0 && $penalty_val > 0) {
-                    // Calculate penalty based on type
-                    if ($penalty_type === 'rupee') {
-                        $penalty = round($penalty_val);
-                    } else { // Assume percentage by default
-                        $penalty = round(($cur_result * $penalty_val) / 100);
-                        echo $penalty;
-                    }
-
-                    // Insert new penalty record
-                    $insertQry = $pdo->prepare("INSERT INTO penalty_charges (`loan_entry_id`, `penalty_date`, `penalty`, `created_date`) VALUES (?, ?, ?, NOW())");
-                    $insertQry->execute([$le_id, $penalty_date, $penalty]);
-                }
-            }
+            $start->modify('+1 day');
         }
     } else {
-        while ($start->format('m') <= $end->format('m')) {
+        $monthly_interest_data = [];
 
-            $penalty = 0;
-            $start_for_penalty = $start->format('Y-m');
+        if ($interest_calculate === 'Month') {
+            while ($start->format('Y-m') <= $end->format('Y-m')) {
+                $month_key = $start->format('Y-m-d');
+                $dueperday = $interest_amount / intval($start->format('t'));
 
-            $dueperday = $interest_amount / intval($start->format('t'));
-            if ($status != 'pending') {
-                if ($start->format('m') != $end->format('m')) {
-                    $new_end_date = clone $start;
-                    $new_end_date->modify('last day of this month');
-                    $cur_result = (($start->diff($new_end_date))->days + 1) * $dueperday;
-                    $result += $cur_result;
-                } elseif ($end->format('Y-m-d') != date('Y-m-d')) {
-                    $cur_result = (($start->diff($end))->days + 1) * $dueperday;
-                    $result += $cur_result;
+                if ($status != 'pending') {
+                    if ($start->format('m') != $end->format('m')) {
+                        $new_end_date = clone $start;
+                        $new_end_date->modify('last day of this month');
+                        $cur_result = (($start->diff($new_end_date))->days + 1) * $dueperday;
+                    } elseif ($end->format('Y-m-d') != date('Y-m-d')) {
+                        $cur_result = (($start->diff($end))->days + 1) * $dueperday;
+                    } else {
+                        $cur_result = (($start->diff($end))->days + 1) * $dueperday;
+                    }
                 } else {
-                    $cur_result = (($start->diff($end))->days) * $dueperday;
-                    $result += $cur_result;
+                    $new_end = clone $start;
+                    $new_end->modify("last day of this month");
+                    $cur_result = (($start->diff($new_end))->days + 1) * $dueperday;
                 }
-            } else {
-                $new_end = clone $start;
-                $new_end = $new_end->modify("last day of this month");
-                $cur_result = (($start->diff($new_end))->days + 1) * $dueperday;
+
                 $result += $cur_result;
+                $monthly_interest_data[$month_key] = ($monthly_interest_data[$month_key] ?? 0) + $cur_result;
+                $start->modify('+1 month');
+                $start->modify('first day of this month');
             }
+        } elseif ($interest_calculate === 'Days') {
+            while ($start->format('Y-m-d') <= $end->format('Y-m-d')) {
+                $month_key = $start->format('Y-m-d');
+                $dueperday = $interest_amount;
+                $result += $dueperday;
+                $monthly_interest_data[$month_key] = ($monthly_interest_data[$month_key] ?? 0) + $dueperday;
 
-            $start->modify('+1 month');
+                $start->modify('+1 day');
+            }
+        }
+    }
 
-            $start->modify('first day of this month');
+    // <------------------------------------------------------------------- Penalty Logic ----------------------------------------------------------------->
 
-            if ($status == 'pending') {
-                // Fetch penalty percentage or rupee amount from loan_category_creation
-                $ovqry = $pdo->query("SELECT overdue_penalty AS overdue, overdue_type FROM `loan_category_creation` WHERE loan_category = '$loan_category'");
-                $row = $ovqry->fetch();
+    if ($status === 'pending') {
+        $penaltyRow = $pdo->query("SELECT overdue_penalty AS overdue, overdue_type FROM loan_category_creation WHERE loan_category = '$loan_category'")->fetch(PDO::FETCH_ASSOC);
+        $penalty_val = $penaltyRow['overdue'] ?? 0;
+        $penalty_type = strtolower(trim($penaltyRow['overdue_type'] ?? 'percentage'));
 
-                $penalty_val = $row['overdue'] ?? 0;
-                $penalty_type = strtolower(trim($row['overdue_type'] ?? 'percentage')); // Default to 'percentage' if not set
+        foreach ($monthly_interest_data as $penalty_date => $cur_result) {
+            $paid_interest = getPaidInterest($pdo, $le_id, $penalty_date);
+            $unpaid_interest = max(0, $cur_result - $paid_interest);
 
-                // Calculate paid interest for the month
-                $paid_interest = getPaidInterest($pdo, $le_id);
+            if ($unpaid_interest > 0 && $penalty_val > 0) {
+                $penalty = ($penalty_type === 'rupee') ? round($penalty_val) : round(($unpaid_interest * $penalty_val) / 100);
 
-                if ($paid_interest > 0) {
-                    $cur_result =  $cur_result - $paid_interest;
-                    if ($cur_result < 0) {
-                        $cur_result = 0;
-                    }
-                }
-
-                // Check if penalty already exists for the month
-                $penalty_date = date('Y-m', strtotime($start_for_penalty));
                 $checkPenalty = $pdo->query("SELECT 1 FROM penalty_charges WHERE penalty_date = '$penalty_date' AND loan_entry_id = '$le_id'");
-
-                if ($checkPenalty->rowCount() == 0 && $cur_result > 0 && $penalty_val > 0) {
-                    // Calculate penalty based on type
-                    if ($penalty_type === 'rupee') {
-                        $penalty = round($penalty_val);
-                    } else { // Assume percentage by default
-                        $penalty = round(($cur_result * $penalty_val) / 100);
-                    }
-
-                    // Insert new penalty record
-                    $insertQry = $pdo->prepare("INSERT INTO penalty_charges (`loan_entry_id`, `penalty_date`, `penalty`, `created_date`) VALUES (?, ?, ?, NOW())");
+                if ($checkPenalty->rowCount() == 0) {
+                    $insertQry = $pdo->prepare("INSERT INTO penalty_charges (loan_entry_id, penalty_date, penalty, created_date) VALUES (?, ?, ?, NOW())");
                     $insertQry->execute([$le_id, $penalty_date, $penalty]);
                 }
             }

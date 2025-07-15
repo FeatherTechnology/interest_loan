@@ -683,7 +683,7 @@ $(document).ready(function () {
 
     {
         // Get today's date
-        var today = new Date().toISOString().split('T')[0]; 
+        var today = new Date().toISOString().split('T')[0];
         //Due start date -- set min date = current date.
         $('#due_startdate_calc').attr('min', today);
     }
@@ -1489,13 +1489,13 @@ function isFormDataValid(formData) {
 
 /////////////////////////////////////////////////////////////////// Loan Calculation Start ////////////////////////////////////////////////////////////////////////////
 
-function callLoanCaculationFunctions() {
+async function callLoanCaculationFunctions() {
     getLoanCategoryName();
     let cus_profile_id = $('#customer_profile_id').val();
     getDocNeedTable(cus_profile_id);
     let loanCalcId = $('#customer_profile_id').val();
-    loanCalculationEdit(loanCalcId);
-    if (!cus_profile_id) {
+    await loanCalculationEdit(loanCalcId);
+    if ($('#loan_id_calc').val() == '') {
         getAutoGenLoanId()
     }
 }
@@ -1653,10 +1653,10 @@ async function loanCalculationEdit(id) {
             $('#loan_id_calc').val(data.loan_id);
             $('#loan_category_calc').val(data.loan_category);
             $('#loan_category_calc2').val(data.loan_category);
-            $('#loan_amount_calc').val(moneyFormatIndia(data.loan_amount));
+            $('#loan_amount_calc').val(moneyFormatIndia(data.loan_amount || ''));
             $('#benefit_method').val(data.benefit_method);
             $('#due_method').val(data.due_method);
-            $('#due_period').val(data.due_period);
+            $('#due_period').val(data.due_period || 'Month');
             $('#interest_calculate').val(data.interest_calculate);
             $('#due_calculate').val(data.due_calculate);
             $('#interest_rate_calc').val(data.interest_rate_calc);
