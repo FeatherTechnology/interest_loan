@@ -4,13 +4,6 @@
             <div class="card-header">
                 <h5 class="card-title">Collection List</h5>
             </div>
-            <div class="col-12 sub_status" style="display: flex; align-items: center; justify-content: center; margin-top:13px">
-                <h4>Customer Status</h4>
-            </div>
-            <div class="col-12 sub_status" style="display: flex; align-items: center; justify-content: center; margin-top: 13px;">
-                <button type="button" class="btn btn-primary" id="due_nill_btn" value="Due Nil">Due Nill</button>
-                <button type="button" class="btn btn-primary" id="all_btn" value="All" style="display: none;">All</button>
-            </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-12">
@@ -219,12 +212,17 @@
                                     </div>
                                 </div>
                                 <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1" style="margin-top: 20px;">
-                                    <button type="submit" name="till_now" id="till_now" class="btn btn-primary" value="Submit" tabindex='33'> &nbsp; &nbsp; &nbsp; Till Now &nbsp; &nbsp; &nbsp;</button>
+                                    <button type="submit" name="till_now" id="till_now" class="btn btn-primary" value="Submit" tabindex='33'> &nbsp;  Till Now &nbsp; </button>
                                 </div>
-                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12 till_now_pay" style="display: none;">
+                                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 till_now_pay" style="display: none;margin-left: -20px;">
                                     <div class="form-group">
-                                        <label for="disabledInput">Till Now Payable</label>&nbsp;<span class="text-danger ">*</span>
-                                        <input type="text" class="form-control" readonly id="till_now_payable" name="till_now_payable" value='' tabindex='15'>
+                                        <label for="till_now_payable">Till Now Payable <span class="text-danger">*</span></label>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <input type="text" class="form-control" readonly id="till_now_payable" name="till_now_payable" tabindex="15" />
+                                            <div class="form-check mt-1">
+                                                <input type="checkbox" class="form-check-input" id="till_now_pay_checkbox" style=" width: 20px;height: 20px;">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -338,7 +336,7 @@
                                         <select class='form-control clearFields' id='collection_mode' name='collection_mode' tabindex='28'>
                                             <option value=''>Select Collection Mode</option>
                                             <option value='1'>Cash</option>
-                                            <option value='2'>Bank</option>
+                                            <option value='2'>Bank Transfer</option>
                                         </select>
                                     </div>
                                 </div>

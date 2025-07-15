@@ -5,6 +5,7 @@ $(document).ready(function () {
         $("#cus_id").val("");
 
         await swapTableAndCreation(); // Ensure swap is complete first
+        await getAutoGenCusId("");
         await getAreaName(); // Optional to await if it's async
         await getFamilyInfoTable();
         await getKycInfoTable();
@@ -137,7 +138,7 @@ $(document).ready(function () {
         let proof_detail = $('#proof_detail').val();
         let kyc_id = $('#kyc_id').val();
 
-        var data = ['proof_of', 'kyc_relationship', 'proof', 'proof_detail']
+        var data = ['proof_of', 'kyc_relationship', 'proof']
         var isValid = true;
         data.forEach(function (entry) {
             var fieldIsValid = validateField($('#' + entry).val(), entry);
@@ -486,6 +487,7 @@ $(document).ready(function () {
 
         // Validation
         let kycInfoRowCount = $('#kyc_info').DataTable().rows().count();
+        let familyInfoRowCount = $('#fam_info_table').DataTable().rows().count();
 
         let cus_id = $("#cus_id").val();
         let aadhar_number = $("#aadhar_number").val().replace(/\s/g, "");
@@ -554,6 +556,11 @@ $(document).ready(function () {
 
             if (kycInfoRowCount === 0) {
                 swalError('Warning', 'Please Fill out KYC Info!');
+                return false;
+            }
+
+            if (familyInfoRowCount === 0) {
+                swalError('Warning', 'Please Fill out Family Info!');
                 return false;
             }
 
@@ -730,7 +737,6 @@ async function swapTableAndCreation() {
         $("#add_customer").hide();
         $("#customer_creation_content").show();
         $("#back_btn").show();
-        await getAutoGenCusId(""); // wait for this to complete
     } else {
         $(".customer_table_content").show();
         $("#add_customer").show();
@@ -886,7 +892,6 @@ async function existingCustmerProfile(aadhar_number) {
             await getKycInfoTable();
             getBankInfoTable();
             getPropertyInfoTable();
-            await getAutoGenCusId("");
             await getAreaName();
 
             $("#per_pic").val("");
@@ -1021,7 +1026,7 @@ function getFamilyDelete(id) {
                 swalSuccess("Success", "Family Info Deleted Successfully!");
                 getFamilyTable();
             } else if (response == "3") {
-                swalError("Warning","Used in Loan Entry");
+                swalError("Warning", "Used in Loan Entry");
             } else {
                 swalError("Warning", "Error occur While Delete Family Info.");
             }

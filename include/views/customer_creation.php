@@ -17,7 +17,6 @@
                         <th>Mobile No</th>
                         <th>Area</th>
                         <th>Line</th>
-                        <th>Customer Data</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -170,7 +169,7 @@
                 <!-------------------------------------------------------------------- Family Info start -------------------------------------------------------------------->
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title">Family Info
+                        <div class="card-title">Family Info <span class="text-danger">*</span>
                             <button type="button" class="btn btn-primary" id="add_group" name="add_group" data-toggle="modal" data-target="#add_fam_info_modal" onclick="getFamilyTable()" style="padding: 5px 35px; float: right;" tabindex='21'><span class="icon-add"></span></button>
                         </div>
                     </div>
@@ -494,7 +493,7 @@
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
-                                    <label for="proof_detail">Proof Number</label><span class="text-danger">*</span>
+                                    <label for="proof_detail">Proof Number</label>
                                     <input class="form-control" name="proof_detail" id="proof_detail" tabindex="1" placeholder="Enter Proof Number">
                                 </div>
                             </div>

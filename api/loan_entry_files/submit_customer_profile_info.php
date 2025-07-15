@@ -13,6 +13,7 @@ $about_cus = $_POST['about_cus'];
 $qry = $pdo->query("SELECT cs.status 
                     FROM loan_entry le
                     JOIN customer_status cs ON le.cus_id = cs.cus_id
+                    JOIN loan_issue li ON le.id = li.loan_entry_id
                     WHERE le.aadhar_number = '$aadhar_number' 
                     AND le.id != '$loan_entry_id'");
 
@@ -45,8 +46,6 @@ if ($loan_entry_id != '') {
     $status = 0;
     $last_id = $pdo->lastInsertId();
     $qry = $pdo->query("INSERT INTO `customer_status`( `cus_id`, `loan_entry_id`, `status`, `insert_login_id`, `created_on`) VALUES ('$cus_id', '$last_id', '1', '$user_id',CURRENT_TIMESTAMP() )");
-
-    $qry = $pdo->query("UPDATE `customer_creation` SET `customer_data`='2', `update_login_id`='$user_id',updated_on = now() WHERE `cus_id`='$cus_id'");
 }
 
 if (isset($_POST['guarantorMappingData'])) {

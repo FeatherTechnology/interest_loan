@@ -11,12 +11,10 @@ $column = array(
     'cc.mobile1',
     'anc.areaname',
     'lnc.linename',
-    'cc.customer_data',
     'cc.id'
 );
 
-$query = "SELECT cc.id, cc.cus_id, CONCAT(cc.first_name, ' ', COALESCE(cc.last_name, '')) AS cus_name, cc.aadhar_number, cc.mobile1, anc.areaname , lnc.linename ,
-cc.customer_data FROM customer_creation cc  LEFT JOIN line_name_creation lnc ON cc.line = lnc.id LEFT JOIN area_name_creation anc ON cc.area = anc.id 
+$query = "SELECT cc.id, cc.cus_id, CONCAT(cc.first_name, ' ', COALESCE(cc.last_name, '')) AS cus_name, cc.aadhar_number, cc.mobile1, anc.areaname , lnc.linename  FROM customer_creation cc  LEFT JOIN line_name_creation lnc ON cc.line = lnc.id LEFT JOIN area_name_creation anc ON cc.area = anc.id 
 LEFT JOIN area_creation ac ON cc.line = ac.line_id  WHERE 1";
 
 if (isset($_POST['search'])) {
@@ -74,7 +72,6 @@ foreach ($result as $row) {
     $sub_array[] = isset($row['mobile1']) ? $row['mobile1'] : '';
     $sub_array[] = isset($row['areaname']) ? $row['areaname'] : '';
     $sub_array[] = isset($row['linename']) ? $row['linename'] : '';
-    $sub_array[] = isset($row['customer_data']) ? $customer_data_arr[$row['customer_data']] : '';
     $action = "<span class='icon-border_color customerActionBtn' value='" . $row['id'] . "' cus_id='" . $row['cus_id'] . "'></span>&nbsp;&nbsp;&nbsp;";
     $action .= "<span class='icon-delete customerDeleteBtn' value='" . $row['id'] . "' cus_id='" . $row['cus_id'] . "'></span>";
     $sub_array[] = $action;

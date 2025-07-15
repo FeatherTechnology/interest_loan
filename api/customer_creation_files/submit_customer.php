@@ -40,18 +40,6 @@ $user_id = $_SESSION['user_id'];
 
 $result = 0;
 
-// Query to get customer profile along with customer status
-
-$qry = $pdo->query("SELECT cus_id FROM customer_status  where cus_id='$cus_id' AND status >= 1");
-
-if ($qry->rowCount() > 0) {
-    $result = $qry->fetch();
-
-    $cus_data = '2';  // Since we found a matching record, it's considered 'Existing'
-} else {
-    $cus_data = '1';        // No matching record found, it's considered 'New'     
-}
-
 try {
     // Begin transaction
     $pdo->beginTransaction();
@@ -65,7 +53,7 @@ try {
     if ($check_query->rowCount() > 0) {
         $row = $check_query->fetch();
         $customer_profile_id = $row['id']; // Get the existing customer's ID
-        $qry = $pdo->query("UPDATE `customer_creation` SET `cus_id`='$cus_id', `aadhar_number`='$aadhar_number', `first_name`='$first_name', `last_name`='$last_name', `dob`='$dob',`age`='$age',`area`='$area', `line`='$line', `customer_data`='$cus_data', `mobile1`='$mobile1', `mobile2`='$mobile2', `whatsapp`='$whatsapp', `occupation`='$occupation',`occ_detail`='$occ_detail',`address`='$address', `native_address`='$native_address', `cus_limit`='$cus_limit', `about_cus`='$about_cus', `pic`='$picture', `update_login_id`='$user_id', updated_on = now() WHERE `id`='$customer_profile_id'");
+        $qry = $pdo->query("UPDATE `customer_creation` SET `cus_id`='$cus_id', `aadhar_number`='$aadhar_number', `first_name`='$first_name', `last_name`='$last_name', `dob`='$dob',`age`='$age',`area`='$area', `line`='$line', `mobile1`='$mobile1', `mobile2`='$mobile2', `whatsapp`='$whatsapp', `occupation`='$occupation',`occ_detail`='$occ_detail',`address`='$address', `native_address`='$native_address', `cus_limit`='$cus_limit', `about_cus`='$about_cus', `pic`='$picture', `update_login_id`='$user_id', updated_on = now() WHERE `id`='$customer_profile_id'");
 
         if ($qry) {
             $result = 1; // Update successfull
@@ -81,7 +69,7 @@ try {
             $cus_id = "C-101"; // If no previous customer ID exists, start with C-1
         }
 
-        $qry = $pdo->query("INSERT INTO `customer_creation`(`cus_id`,`aadhar_number`, `first_name`, `last_name`,`dob`,`age`,`area`, `line`, `customer_data`, `mobile1`, `mobile2`, `whatsapp`,`occupation`,`occ_detail`, `address`, `native_address`, `cus_limit`, `about_cus`, `pic`, `insert_login_id`, `created_on`) VALUES ('$cus_id','$aadhar_number','$first_name', '$last_name','$dob','$age','$area', '$line', '$cus_data', '$mobile1', '$mobile2', '$whatsapp','$occupation','$occ_detail', '$address', '$native_address', '$cus_limit', '$about_cus', '$picture','$user_id', now())");
+        $qry = $pdo->query("INSERT INTO `customer_creation`(`cus_id`,`aadhar_number`, `first_name`, `last_name`,`dob`,`age`,`area`, `line`, `mobile1`, `mobile2`, `whatsapp`,`occupation`,`occ_detail`, `address`, `native_address`, `cus_limit`, `about_cus`, `pic`, `insert_login_id`, `created_on`) VALUES ('$cus_id','$aadhar_number','$first_name', '$last_name','$dob','$age','$area', '$line', '$mobile1', '$mobile2', '$whatsapp','$occupation','$occ_detail', '$address', '$native_address', '$cus_limit', '$about_cus', '$picture','$user_id', now())");
 
         if ($qry) {
             $result = 2; // Insert successfull

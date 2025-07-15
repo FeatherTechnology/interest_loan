@@ -1,23 +1,5 @@
 $(document).ready(function () {
 
-    // <-------------------------------------------------------------- Due Nill Button Click ---------------------------------------------------------->
-    $('#due_nill_btn').click(function (event) {
-        event.preventDefault();
-        let Customer_Status = $(this).val();
-        getCollectionListTable(Customer_Status);
-        $('#all_btn').show();
-        $('#due_nill_btn').hide();
-    })
-
-    // <-------------------------------------------------------------- All Button Click -------------------------------------------------------------->
-    $('#all_btn').click(function (event) {
-        event.preventDefault();
-        getCollectionListTable('');
-        $('#all_btn').hide();
-        $('#due_nill_btn').show();
-        $("#coll_sts").val('');
-    })
-
     // <-------------------------------------------------------------- Back Button Click -------------------------------------------------------------->
     $('#back_to_coll_list').click(function () {
         swapTableAndCreation();
@@ -129,12 +111,30 @@ $(document).ready(function () {
         $('.pendingspan').text('*')
         $('.payablespan').text('*')
 
+        let validateInterest = true; // default is ON
+
+        // Toggle validation when checkbox is clicked
+        $('#till_now_pay_checkbox').on('change', function () {
+            validateInterest = !$(this).is(':checked');
+
+            // If checkbox is UNCHECKED, clear the input fields
+            if (!$(this).is(':checked')) {
+                $('#interest_amount_track').val("");
+                $('#total_paid_track').val("");
+            }
+        });
+
         // Interest Amount Track Validation
         $('#interest_amount_track').on('blur', function () {
-            let index = customerStatusResponse['le_id']?.map(String).indexOf(String($('#le_id').val()));
-            let payable = parseFloat(customerStatusResponse['payable_as_req'][index]);
+            const enteredValue = parseFloat($(this).val());
+            const leId = String($('#le_id').val());
+            const index = customerStatusResponse['le_id']?.map(String).indexOf(leId);
+            // Use till_Date_Int if checkbox is checked, else use payable_as_req
+            let payable = validateInterest
+                ? parseFloat(customerStatusResponse['payable_as_req'][index])
+                : parseFloat(customerStatusResponse['till_Date_Int'][index]);
 
-            if (parseFloat($(this).val()) > payable) {
+            if (enteredValue > payable) {
                 alert("Enter a Lesser Value");
                 $(this).val("");
                 $('#total_paid_track').val("");
@@ -386,6 +386,7 @@ $(document).ready(function () {
             $('.till_now_pay').hide(); // Hide if already visible
         } else {
             $('.till_now_pay').show(); // Show if hidden
+            $('#till_now_pay_checkbox').prop('checked', false); // Uncheck the checkbox
         }
     });
 
@@ -442,6 +443,7 @@ $(document).ready(function () {
             'payable_amount': $('#payable_amount').val().replace(/,/g, ''),
             'penalty': $('#penalty').val().replace(/,/g, ''),
             'fine_charge': $('#fine_charge').val().replace(/,/g, ''),
+            'till_now_payable': $('#till_now_payable').val().replace(/,/g, ''),
             'interest_amount_track': $('#interest_amount_track').val().replace(/,/g, ''),
             'penalty_track': $('#penalty_track').val().replace(/,/g, ''),
             'fine_charge_track': $('#fine_charge_track').val().replace(/,/g, ''),
@@ -665,7 +667,7 @@ function dueChartList(le_id, cus_id) {
 
                 // Now get the method name
                 $.post('api/collection_files/get_due_method_name.php', { le_id }, function (res) {
-                    $('#dueChartTitle').text('Due Chart ( ' + res['due_method'] + ' - ' + res['loan_type'] + ' )');
+                    $('#dueChartTitle').text('Due Chart ( ' + res['cus_name'] + ' - ' + res['cus_id'] + ' - ' + res['loan_id'] + ' - ' + res['due_method'] + ' - ' + res['loan_type'] + ' )');
                     resolve();
                 }, 'json').fail(reject);
             },

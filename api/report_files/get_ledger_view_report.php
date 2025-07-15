@@ -2,6 +2,7 @@
 include '../../ajaxconfig.php';
 require_once '../../include/views/money_format_india.php';
 $inputDate = $_POST['toDate'];
+$loan_category = $_POST['loan_category'];
 $to_date = date('Y-m-d', strtotime($inputDate)) . ' 23:59:59';
 
 ?>
@@ -99,6 +100,7 @@ $to_date = date('Y-m-d', strtotime($inputDate)) . ' 23:59:59';
             )
         )
     )
+    AND le.loan_category = '$loan_category'
     GROUP BY li.loan_entry_id 
     ORDER BY li.id ASC";
 

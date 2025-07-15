@@ -3,13 +3,11 @@ $(document).ready(function () {
     //Closed Report Table
     $('#ledger_view_report_btn').click(function () {
         let toDate = $('#to_date').val();
+        let loan_category = $('#loan_category').val();
 
-        //Validation
-        let to_date = $('#to_date').val();
-
-        if (!to_date) {
-            swalError('Please Fill Date!', 'Date is required.');
-            return; // Stop execution if validation fails
+        if (!toDate || !loan_category) {
+            swalError('Missing Fields', 'Both Date and Loan Category are required.');
+            return;
         }
 
         url = 'api/report_files/get_ledger_view_report.php';
@@ -17,7 +15,7 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: url,
-            data: { toDate: toDate },
+            data: { toDate: toDate, loan_category: loan_category },
             success: function (data) {
                 $('.reportDiv').empty().html(data);
             }
@@ -94,7 +92,7 @@ function dueChartList(le_id, cus_id) {
 
                 // Now get the method name
                 $.post('api/collection_files/get_due_method_name.php', { le_id }, function (res) {
-                    $('#dueChartTitle').text('Due Chart ( ' + res['due_method'] + ' - ' + res['loan_type'] + ' )');
+                    $('#dueChartTitle').text('Due Chart ( ' + res['cus_name'] + ' - ' + res['cus_id'] + ' - ' + res['loan_id'] + ' - ' + res['due_method'] + ' - ' + res['loan_type'] + ' )');
                     resolve();
                 }, 'json').fail(reject);
             },
@@ -105,4 +103,30 @@ function dueChartList(le_id, cus_id) {
 
 function closeChartsModal() {
     $('#due_chart_model').modal('hide');
+}
+
+// <------------------------------------------------------------------------ Loan Category Function Start --------------------------------------------------------------->
+
+$(function () {
+    getLoanCategoryDropdown();
+});
+
+function getLoanCategoryDropdown() {
+    return new Promise((resolve, reject) => {
+        $.post('api/loan_category_files/get_loan_category_list.php', function (response) {
+            let appendLineNameOption = '';
+            let loan_category2 = $('#loan_category2').val();
+            appendLineNameOption += '<option value="">Select Loan Category</option>';
+
+            $.each(response, function (index, val) {
+                let selected = (val.id == loan_category2) ? 'selected' : '';
+                appendLineNameOption += `<option value="${val.id}" ${selected}>${val.loan_category}</option>`;
+            });
+
+            $('#loan_category').empty().append(appendLineNameOption);
+            resolve(); // Resolve once done
+        }, 'json').fail(function (err) {
+            reject(err); // Reject on error
+        });
+    });
 }
