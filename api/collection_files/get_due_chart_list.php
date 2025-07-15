@@ -736,7 +736,7 @@ function dueAmtCalculation($pdo, $start_date, $end_date, $interest_amount, $loan
                     } elseif ($end->format('Y-m-d') != date('Y-m-d')) {
                         $cur_result = (($start->diff($end))->days + 1) * $dueperday;
                     } else {
-                        $cur_result = (($start->diff($end))->days) * $dueperday;
+                        $cur_result = (($start->diff($end))->days + 1) * $dueperday;
                     }
                 } else {
                     $new_end = clone $start;
