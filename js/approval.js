@@ -490,6 +490,7 @@ $(document).ready(function () {
         let customer_profile_id = $('#customer_profile_id').val();
         let cus_limit = $('#cus_limit').val().replace(/,/g, '');
         let about_cus = $('#about_cus').val();
+        let guarantorRowCount = $('#guarantor_info tbody tr').length;
 
         let isValid = true;
 
@@ -500,6 +501,11 @@ $(document).ready(function () {
 
         if (!cus_id) {
             validateField(cus_id, 'cus_id');
+            isValid = false;
+        }
+
+        if (guarantorRowCount === 0) {
+            swalError('Warning', 'Please fill out Guarantor Info!');
             isValid = false;
         }
 
@@ -758,7 +764,7 @@ $(document).ready(function () {
             $('#agent_name_calc').val('');
             getAgentID();
         } else {
-
+            $('#agent_id_calc').css('border', '1px solid #cecece');
             $('#agent_id_calc').prop('disabled', true).val('');
             $('#agent_name_calc').prop('readonly', true).val('');
         }
@@ -1018,7 +1024,7 @@ async function editCustmerProfile(id) {
 
         if (data.cus_data == 'Existing') {
             $('#loan_count_div').show();
-            let cus_id = $('#cus_id').val(); 
+            let cus_id = $('#cus_id').val();
             getLoanCount(cus_id);
         } else {
             $('#loan_count_div').hide();
@@ -1058,92 +1064,6 @@ async function editCustmerProfile(id) {
 }
 
 ///////////////////////////////////////////////////////////// Customer Profile edit End //////////////////////////////////////////////////////////////////////////////////
-
-///////////////////////////////////////////////////////// existing Customer creation data start ///////////////////////////////////////////////////////////////////////////
-
-async function existingCustmerProfile(aadhar_number) {
-    try {
-        const response = await $.post(
-            "api/customer_creation_files/customer_profile_existing.php",
-            { aadhar_number },
-            null,
-            "json"
-        );
-
-        $("#customer_profile_id").val("");
-
-        if (response == "New") {
-            $("#area_edit").val("");
-            $("#cus_id").val("");
-            $("#first_name").val("");
-            $("#last_name").val("");
-            $("#dob").val("");
-            $("#age").val("");
-            $("#area").val("");
-            $("#line").val("");
-            $("#mobile1").val("");
-            $("#mobile2").val("");
-            $("#whatsapp").val("");
-            $("#address").val("");
-            $("#native_address").val("");
-            $('#cus_limit').val("");
-            $('#about_cus').val("");
-            $("#occupation").val("");
-            $("#occ_detail").val("");
-            $("#relationship").val("");
-            $('#guarantor_info tbody').empty();
-
-            $("#per_pic").val("");
-            $("#imgshow").attr("src", "img/avatar.png");
-            $('#gur_pic').val('');
-            var img = $('#gur_imgshow');
-            img.attr('src', 'img/avatar.png');
-
-        } else {
-            $("#area_edit").val(response[0].area);
-            $("#cus_id").val(response[0].cus_id);
-            $("#first_name").val(response[0].first_name);
-            $("#last_name").val(response[0].last_name);
-            $("#dob").val(response[0].dob);
-            $("#age").val(response[0].age);
-            $("#line").val(response[0].line);
-            $("#mobile1").val(response[0].mobile1);
-            $("#mobile2").val(response[0].mobile2);
-            $("#whatsapp").val(response[0].whatsapp);
-            $("#address").val(response[0].address);
-            $("#native_address").val(response[0].native_address);
-            $('#cus_limit').val(response[0].cus_limit);
-            $('#about_cus').val(response[0].about_cus);
-            $("#occupation").val(response[0].occupation);
-            $("#occ_detail").val(response[0].occ_detail);
-
-            if (response[0].whatsapp === response[0].mobile1) {
-                $("#mobile1_radio").prop("checked", true);
-                $("#selected_mobile_radio").val("mobile1");
-            } else if (response[0].whatsapp === response[0].mobile2) {
-                $("#mobile2_radio").prop("checked", true);
-                $("#selected_mobile_radio").val("mobile2");
-            }
-
-            $("#area").trigger("change");
-
-            let path = "uploads/customer_creation/cus_pic/";
-            $("#per_pic").val(response[0].pic);
-            $("#imgshow").attr("src", path + response[0].pic);
-        }
-
-        await getAreaName();
-        await getKycInfoTable()
-        getBankInfoTable();
-        getPropertyInfoTable();
-        await getGuarantorName();
-
-    } catch (error) {
-        console.error("Error in existingCustmerProfile:", error);
-    }
-}
-
-/////////////////////////////////////////////////////////// Existing Customer creation data Emd ////////////////////////////////////////////////////////////////////////
 
 function getAreaName() {
     return new Promise((resolve, reject) => {
@@ -1534,16 +1454,24 @@ function getRelationshipName(propertyHolderId) {
 // Function to check if all values in an object are not empty
 function isFormDataValid(formData) {
     let isValid = true;
+
     const excludedFields = [
         'referred_calc', 'agent_id_calc', 'agent_name_calc', 'doc_need_calc'
     ];
 
-    // Validate all fields except the excluded ones
+    // Always validate all fields except excluded ones
     for (let key in formData) {
         if (!excludedFields.includes(key)) {
             if (!validateField(formData[key], key)) {
                 isValid = false;
             }
+        }
+    }
+
+    // Conditional validation for agent_id_calc
+    if (formData['referred_calc'] === '0') {
+        if (!validateField(formData['agent_id_calc'], 'agent_id_calc')) {
+            isValid = false;
         }
     }
 

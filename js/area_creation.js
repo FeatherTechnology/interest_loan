@@ -366,11 +366,13 @@ async function getAreaNameDropdown() {
 
         intance.clearStore();
 
+        const selectedIds = area_name2.split(',');
+
         const items = response.map(val => ({
             value: val.id,
             label: val.areaname,
-            selected: area_name2.includes(val.id),
-            disabled: val.disabled && !area_name2.includes(val.id)
+            selected: selectedIds.includes(val.id.toString()),
+            disabled: val.disabled && !selectedIds.includes(val.id.toString())
         }));
 
         intance.setChoices(items);
@@ -422,7 +424,7 @@ function deleteLineName(id) {
 function deleteAreaName(id) {
     $.post('api/area_creation_files/delete_area_name.php', { id }, function (response) {
         if (response == '1') {
-            swalSuccess('Success', 'Area Name Deleted Successfully');
+            swalSuccess('Success', 'Area Name Disable Successfully');
             getAreaNameTable();
         } else if (response == '0') {
             swalError('Access Denied', 'Used in Area Creation.');

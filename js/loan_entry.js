@@ -496,6 +496,7 @@ $(document).ready(function () {
         let customer_profile_id = $('#customer_profile_id').val();
         let cus_limit = $('#cus_limit').val().replace(/,/g, '');
         let about_cus = $('#about_cus').val();
+        let guarantorRowCount = $('#guarantor_info tbody tr').length;
 
         let isValid = true;
 
@@ -506,6 +507,11 @@ $(document).ready(function () {
 
         if (!cus_id) {
             validateField(cus_id, 'cus_id');
+            isValid = false;
+        }
+
+        if (guarantorRowCount === 0) {
+            swalError('Warning', 'Please fill out Guarantor Info!');
             isValid = false;
         }
 
@@ -720,7 +726,7 @@ $(document).ready(function () {
             $('#agent_name_calc').val('');
             getAgentID();
         } else {
-
+            $('#agent_id_calc').css('border', '1px solid #cecece');
             $('#agent_id_calc').prop('disabled', true).val('');
             $('#agent_name_calc').prop('readonly', true).val('');
         }
@@ -1052,7 +1058,7 @@ async function existingCustmerProfile(aadhar_number) {
                 $("#selected_mobile_radio").val("mobile2");
             }
 
-            if (response[0].customer_data == '2') {
+            if (response[0].cus_data === 'Existing') {
                 $('#loan_count_div').show();
                 let cus_id = $('#cus_id').val();
                 getLoanCount(cus_id);
@@ -1469,11 +1475,12 @@ function getRelationshipName(propertyHolderId) {
 // Function to check if all values in an object are not empty
 function isFormDataValid(formData) {
     let isValid = true;
+
     const excludedFields = [
         'referred_calc', 'agent_id_calc', 'agent_name_calc', 'doc_need_calc'
     ];
 
-    // Validate all fields except the excluded ones
+    // Always validate all fields except excluded ones
     for (let key in formData) {
         if (!excludedFields.includes(key)) {
             if (!validateField(formData[key], key)) {
@@ -1482,8 +1489,16 @@ function isFormDataValid(formData) {
         }
     }
 
+    // Conditional validation for agent_id_calc
+    if (formData['referred_calc'] === '0') {
+        if (!validateField(formData['agent_id_calc'], 'agent_id_calc')) {
+            isValid = false;
+        }
+    }
+
     return isValid;
 }
+
 
 /////////////////////////////////////////////////////////////////// CUSTOMER PROFILE END ////////////////////////////////////////////////////////////////////////////
 
