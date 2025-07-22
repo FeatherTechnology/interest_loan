@@ -870,8 +870,11 @@ async function existingCustmerProfile(aadhar_number) {
 
         $("#customer_profile_id").val("");
 
-        if (response == "New") {
+        const dataArr = response.data;
+        if (dataArr.length === 0 || dataArr === "New") {
+            // New customer
             $("#area_edit").val("");
+            $("#cus_id").val("");
             $("#first_name").val("");
             $("#last_name").val("");
             $("#dob").val("");
@@ -887,53 +890,54 @@ async function existingCustmerProfile(aadhar_number) {
             $('#about_cus').val("");
             $("#occupation").val("");
             $("#occ_detail").val("");
-
-            await getFamilyInfoTable();
-            await getKycInfoTable();
-            getBankInfoTable();
-            getPropertyInfoTable();
-            await getAreaName();
+            $("#relationship").val("");
 
             $("#per_pic").val("");
             $("#imgshow").attr("src", "img/avatar.png");
+            $('#gur_pic').val('');
+            var img = $('#gur_imgshow');
+            img.attr('src', 'img/avatar.png');
 
         } else {
-            $("#area_edit").val(response[0].area);
-            $("#cus_id").val(response[0].cus_id);
-            $("#first_name").val(response[0].first_name);
-            $("#last_name").val(response[0].last_name);
-            $("#dob").val(response[0].dob);
-            $("#age").val(response[0].age);
-            $("#line").val(response[0].line);
-            $("#mobile1").val(response[0].mobile1);
-            $("#mobile2").val(response[0].mobile2);
-            $("#whatsapp").val(response[0].whatsapp);
-            $("#address").val(response[0].address);
-            $("#native_address").val(response[0].native_address);
-            $('#cus_limit').val(response[0].cus_limit);
-            $('#about_cus').val(response[0].about_cus);
-            $("#occupation").val(response[0].occupation);
-            $("#occ_detail").val(response[0].occ_detail);
+            const data = dataArr[0]; // Get the first customer record
 
-            if (response[0].whatsapp === response[0].mobile1) {
+            $("#area_edit").val(data.area);
+            $("#cus_id").val(data.cus_id);
+            $("#first_name").val(data.first_name);
+            $("#last_name").val(data.last_name);
+            $("#dob").val(data.dob);
+            $("#age").val(data.age);
+            $("#line").val(data.line);
+            $("#mobile1").val(data.mobile1);
+            $("#mobile2").val(data.mobile2);
+            $("#whatsapp").val(data.whatsapp);
+            $("#address").val(data.address);
+            $("#native_address").val(data.native_address);
+            $('#cus_limit').val(data.cus_limit);
+            $('#about_cus').val(data.about_cus);
+            $("#occupation").val(data.occupation);
+            $("#occ_detail").val(data.occ_detail);
+
+            if (data.whatsapp === data.mobile1) {
                 $("#mobile1_radio").prop("checked", true);
                 $("#selected_mobile_radio").val("mobile1");
-            } else if (response[0].whatsapp === response[0].mobile2) {
+            } else if (data.whatsapp === data.mobile2) {
                 $("#mobile2_radio").prop("checked", true);
                 $("#selected_mobile_radio").val("mobile2");
             }
 
-            await getAreaName();
-            await getFamilyInfoTable();
-            await getKycInfoTable()
-            getBankInfoTable();
-            getPropertyInfoTable();
-            $("#area").trigger("change");
-
             let path = "uploads/customer_creation/cus_pic/";
-            $("#per_pic").val(response[0].pic);
-            $("#imgshow").attr("src", path + response[0].pic);
+            $("#per_pic").val(data.pic || "");
+            $("#imgshow").attr("src", data.pic ? path + data.pic : "img/avatar.png");
         }
+
+        await getAreaName();
+        $("#area").trigger("change");
+        await getFamilyInfoTable();
+        await getKycInfoTable();
+        getBankInfoTable();
+        getPropertyInfoTable();
+
     } catch (error) {
         console.error("Error in existingCustmerProfile:", error);
     }
