@@ -13,7 +13,6 @@ $qry = $pdo->query("SELECT cc.*, cs.cus_id AS existing_cus_id
 
 if ($qry->rowCount() > 0) {
     $row = $qry->fetch(PDO::FETCH_ASSOC); // Fetch single row
-
     $row['cus_data'] = $row['existing_cus_id'] ? 'Existing' : 'New'; // Safe check
     $result[] = $row; // Add to result array for JSON encoding
 }
@@ -21,4 +20,3 @@ if ($qry->rowCount() > 0) {
 $pdo = null; // Close connection
 
 echo json_encode($result);
-?>

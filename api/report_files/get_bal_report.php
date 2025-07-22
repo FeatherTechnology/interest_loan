@@ -99,8 +99,6 @@ if ($orderColumn !== null) {
 
 $statement = $pdo->prepare($query);
 
-// echo $query;
-
 $statement->execute();
 
 $number_filter_row = $statement->rowCount();
