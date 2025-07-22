@@ -61,7 +61,7 @@ try {
         $result = '2';
     }
 
-    if (($penalty_track != '' AND $penalty_track > 0) or ($penalty_waiver != '' AND $penalty_waiver > 0)) {
+    if (($penalty_track != '' and $penalty_track > 0) or ($penalty_waiver != '' and $penalty_waiver > 0)) {
         $qry1 = $pdo->query("INSERT INTO `penalty_charges`(`loan_entry_id`, `paid_date`, `paid_amnt`, `waiver_amnt`, `created_date`) VALUES ('$le_id','$collection_date','$penalty_track','$penalty_waiver', current_timestamp) ");
     }
 
@@ -69,16 +69,12 @@ try {
         $qry2 = $pdo->query("INSERT INTO `fine_charges`(`loan_entry_id`, `paid_date`, `paid_amnt`, `waiver_amnt`) VALUES ('$le_id','$collection_date','$fine_charge_track','$fine_charge_waiver')");
     }
 
-    $check = intval($principal_waiver) - intval($balance_amount);
-
-    if (($principal_amount_track != '' or $interest_amount_track != '')) {
-        $check = intVal($principal_amount_track) + intVal($principal_waiver) - intval($balance_amount);
-    }
-
+    $principal_check = intVal($principal_amount_track) + intVal($principal_waiver) - intval($balance_amount);
     $penalty_check = intval($penalty_track) + intval($penalty_waiver) - intval($penalty);
     $fine_charge_check = intval($fine_charge_track) + intval($fine_charge_waiver) - intval($fine_charge);
+    $till_now_payable_check = intval($interest_amount_track) + intval($interest_waiver) - intval($till_now_payable);
 
-    if ($check == 0 && $penalty_check == 0 && $fine_charge_check == 0) {
+    if ($principal_check == 0 && $penalty_check == 0 && $fine_charge_check == 0 && $till_now_payable_check == 0) {
         $closedQry = $pdo->query("UPDATE `customer_status` SET `collection_status`='Closed', `status`='10',`update_login_id`='$user_id',`updated_on`=now() WHERE `loan_entry_id`='$le_id' "); //balance is zero change the customer status as 10, moved to closed.
         if ($closedQry) {
             $result = '3';
