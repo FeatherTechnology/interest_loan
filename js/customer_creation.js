@@ -871,10 +871,9 @@ async function existingCustmerProfile(aadhar_number) {
         $("#customer_profile_id").val("");
 
         const dataArr = response.data;
-        if (dataArr.length === 0 || dataArr === "New") {
+        if (dataArr.length === 0) {
             // New customer
             $("#area_edit").val("");
-            $("#cus_id").val("");
             $("#first_name").val("");
             $("#last_name").val("");
             $("#dob").val("");
@@ -894,7 +893,6 @@ async function existingCustmerProfile(aadhar_number) {
 
             $("#per_pic").val("");
             $("#imgshow").attr("src", "img/avatar.png");
-            $('#gur_pic').val('');
             var img = $('#gur_imgshow');
             img.attr('src', 'img/avatar.png');
 

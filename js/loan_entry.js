@@ -1005,7 +1005,7 @@ async function existingCustmerProfile(aadhar_number) {
         $("#customer_profile_id").val("");
 
         const dataArr = response.data;
-        if (dataArr.length === 0 || dataArr === "New") {
+        if (dataArr.length === 0) {
             // New customer
             $("#area_edit").val("");
             $("#cus_id").val("");
