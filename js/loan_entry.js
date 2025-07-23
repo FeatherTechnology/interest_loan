@@ -1004,7 +1004,9 @@ async function existingCustmerProfile(aadhar_number) {
 
         $("#customer_profile_id").val("");
 
-        if (response == "New") {
+        const dataArr = response.data;
+        if (dataArr.length === 0) {
+            // New customer
             $("#area_edit").val("");
             $("#cus_id").val("");
             $("#first_name").val("");
@@ -1033,48 +1035,76 @@ async function existingCustmerProfile(aadhar_number) {
             img.attr('src', 'img/avatar.png');
 
         } else {
-            $("#area_edit").val(response[0].area);
-            $("#cus_id").val(response[0].cus_id);
-            $("#first_name").val(response[0].first_name);
-            $("#last_name").val(response[0].last_name);
-            $("#dob").val(response[0].dob);
-            $("#age").val(response[0].age);
-            $("#line").val(response[0].line);
-            $("#mobile1").val(response[0].mobile1);
-            $("#mobile2").val(response[0].mobile2);
-            $("#whatsapp").val(response[0].whatsapp);
-            $("#address").val(response[0].address);
-            $("#native_address").val(response[0].native_address);
-            $('#cus_limit').val(response[0].cus_limit);
-            $('#about_cus').val(response[0].about_cus);
-            $("#occupation").val(response[0].occupation);
-            $("#occ_detail").val(response[0].occ_detail);
+            const data = dataArr[0]; // Get the first customer record
 
-            if (response[0].whatsapp === response[0].mobile1) {
+            $("#area_edit").val(data.area);
+            $("#cus_id").val(data.cus_id);
+            $("#first_name").val(data.first_name);
+            $("#last_name").val(data.last_name);
+            $("#dob").val(data.dob);
+            $("#age").val(data.age);
+            $("#line").val(data.line);
+            $("#mobile1").val(data.mobile1);
+            $("#mobile2").val(data.mobile2);
+            $("#whatsapp").val(data.whatsapp);
+            $("#address").val(data.address);
+            $("#native_address").val(data.native_address);
+            $('#cus_limit').val(data.cus_limit);
+            $('#about_cus').val(data.about_cus);
+            $("#occupation").val(data.occupation);
+            $("#occ_detail").val(data.occ_detail);
+
+            if (data.whatsapp === data.mobile1) {
                 $("#mobile1_radio").prop("checked", true);
                 $("#selected_mobile_radio").val("mobile1");
-            } else if (response[0].whatsapp === response[0].mobile2) {
+            } else if (data.whatsapp === data.mobile2) {
                 $("#mobile2_radio").prop("checked", true);
                 $("#selected_mobile_radio").val("mobile2");
             }
 
-            if (response[0].cus_data === 'Existing') {
+            if (data.cus_data === 'Existing') {
                 $('#loan_count_div').show();
-                let cus_id = $('#cus_id').val();
-                getLoanCount(cus_id);
+                getLoanCount(data.cus_id);
             } else {
                 $('#loan_count_div').hide();
             }
 
-            $("#area").trigger("change");
-
             let path = "uploads/customer_creation/cus_pic/";
-            $("#per_pic").val(response[0].pic);
-            $("#imgshow").attr("src", path + response[0].pic);
+            $("#per_pic").val(data.pic || "");
+            $("#imgshow").attr("src", data.pic ? path + data.pic : "img/avatar.png");
+
+            // Show guarantors
+            $('#guarantor_info tbody').empty();
+
+            if (data.guarantor_info && data.guarantor_info.length > 0) {
+                data.guarantor_info.forEach((g, index) => {
+                    const newRow = $(` 
+                        <tr data-id="${g.id}">
+                            <td>${index + 1}</td>
+                            <td>${g.fam_name}</td>
+                            <td>${g.fam_relationship}</td>
+                            <td>${g.relation_type || ''}</td>
+                            <td>${g.fam_aadhar}</td>
+                            <td>${g.fam_mobile}</td>
+                            <td style="display:none" class="hidden-guarantor-pics" 
+                                data-gur-pic="${g.gur_pic || ''}">
+                            </td>
+                            <td style="display:none">
+                                <input type="file" class="guarantor-pic-input" name="gu_pic_hidden[]" />
+                            </td>
+                            <td>
+                                <span class="icon-trash-2 guaMapDeleteBtn" style="cursor:pointer;"></span>
+                            </td>
+                        </tr>
+                    `);
+                    $('#guarantor_info tbody').append(newRow);
+                });
+            }
         }
 
         await getAreaName();
-        await getKycInfoTable()
+        $("#area").trigger("change");
+        await getKycInfoTable();
         getBankInfoTable();
         getPropertyInfoTable();
         await getGuarantorName();
