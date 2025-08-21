@@ -324,12 +324,13 @@ require_once '../../include/views/money_format_india.php';
 
                         <!-- Balance Interest Amount (Payable - Paid) For After Due Start Date -->
                         <td>
-                            <?php $balanceInterestAmount = $payableMinusCollection - $paidInterestMinusCollection;
-                            if ($paidInterestMinusCollection != '') {
-                                echo moneyFormatIndia($balanceInterestAmount);
-                            } else {
-                                echo 0;
-                            } ?>
+                            <?php
+                            $balanceInterestAmount = $payableMinusCollection - $paidInterestMinusCollection;
+                            if ($balanceInterestAmount < 0) {
+                                $balanceInterestAmount = 0;
+                            }
+                            echo moneyFormatIndia($balanceInterestAmount);
+                            ?>
                         </td>
 
                         <!-- Paid Principal Amount For After Due Start Date -->

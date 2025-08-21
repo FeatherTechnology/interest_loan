@@ -91,15 +91,15 @@ $(document).ready(function () {
 
     // <------------------------------------------------------- Radio Button Loan Issue click Function --------------------------------------------------->
 
-        $('input[name=loan_issue_type]').click(function () {
-            let loanIssueType = $(this).val();
-            if (loanIssueType == 'loandoc') {
-                $('#documentation_form').show(); $('#loan_issue_form').hide();
-            } else if (loanIssueType == 'loanissue') {
-                $('#documentation_form').hide(); $('#loan_issue_form').show();
-                callLoanCaculationFunctions();
-            }
-        })
+    $('input[name=loan_issue_type]').click(function () {
+        let loanIssueType = $(this).val();
+        if (loanIssueType == 'loandoc') {
+            $('#documentation_form').show(); $('#loan_issue_form').hide();
+        } else if (loanIssueType == 'loanissue') {
+            $('#documentation_form').hide(); $('#loan_issue_form').show();
+            callLoanCaculationFunctions();
+        }
+    })
 
     /////////////////////////////////////////////////////////////////// Cheque info START ////////////////////////////////////////////////////////////////////////////
 
@@ -1377,8 +1377,7 @@ function refreshGoldModal() {
 
 /////////////////////////////////////////////////////////////////////// Loan Issue Start /////////////////////////////////////////////////////////////////////////
 
-async function callLoanCaculationFunctions() {
-    await checkBalance(); // Wait for balance check to complete
+function callLoanCaculationFunctions() {
     personalInfo(); // If personalInfo is synchronous, keep it as is
 }
 
@@ -1437,6 +1436,8 @@ function personalInfo() {
             $('#loan_date').val(today);
         }
 
+        checkBalance();
+
     }, 'json');
 }
 
@@ -1483,7 +1484,7 @@ function checkBalance() {
                     let balanceAmount = response.balance_amount;
 
                     if (balanceAmount === 'null' || balanceAmount === null) {
-                        let netCash = $('#net_cash_calc').val() || 0; 
+                        let netCash = $('#net_cash_calc').val() || 0;
                         $('#balance_net_cash').val(netCash);
                         $('#due_startdate_calc').attr('readonly', false);
                     } else {
