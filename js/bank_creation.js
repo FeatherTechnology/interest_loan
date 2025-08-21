@@ -27,40 +27,46 @@ $(document).ready(function () {
 
         let isMultiSelectValid = validateMultiSelectField('under_branch', underBranchChoices);
         if (isValid && isMultiSelectValid) {
-            let bankDetail = new FormData();
-            bankDetail.append('bank_name', bank_name)
-            bankDetail.append('bank_short_name', bank_short_name)
-            bankDetail.append('account_number', account_number)
-            bankDetail.append('ifsc_code', ifsc_code)
-            bankDetail.append('branch_name', branch_name)
-            bankDetail.append('qr_code', qr_code)
-            bankDetail.append('inserted_qr_code', inserted_qr_code)
-            bankDetail.append('gpay', gpay)
-            bankDetail.append('under_branch', under_branch)
-            bankDetail.append('status', status)
-            bankDetail.append('bank_id', bank_id)
-            $.ajax({
-                url: 'api/bank_creation_files/submit_bank_creation.php',
-                type: 'post',
-                data: bankDetail,
-                contentType: false,
-                processData: false,
-                cache: false,
-                success: function (response) {
-                    if (response === '2') {
-                        swalSuccess('Success', 'Bank Added Successfully!');
-                    } else if (response === '1') {
-                        swalSuccess('Success', 'Bank Updated Successfully!');
-                    } else {
-                        swalError('Error', 'Error Occurred!');
-                    }
-                    $('#bank_id').val('');
-                    $('#branch_name2').val('');
-                    $('#bank_creation').trigger('reset');
-                    getBankTable();
-                    swapTableAndCreation();//to change to div to table content.
+            swalConfirm(
+                'Are you sure?',
+                'Do you want to submit this bank creation?',
+                function () {
+                    let bankDetail = new FormData();
+                    bankDetail.append('bank_name', bank_name)
+                    bankDetail.append('bank_short_name', bank_short_name)
+                    bankDetail.append('account_number', account_number)
+                    bankDetail.append('ifsc_code', ifsc_code)
+                    bankDetail.append('branch_name', branch_name)
+                    bankDetail.append('qr_code', qr_code)
+                    bankDetail.append('inserted_qr_code', inserted_qr_code)
+                    bankDetail.append('gpay', gpay)
+                    bankDetail.append('under_branch', under_branch)
+                    bankDetail.append('status', status)
+                    bankDetail.append('bank_id', bank_id)
+                    $.ajax({
+                        url: 'api/bank_creation_files/submit_bank_creation.php',
+                        type: 'post',
+                        data: bankDetail,
+                        contentType: false,
+                        processData: false,
+                        cache: false,
+                        success: function (response) {
+                            if (response === '2') {
+                                swalSuccess('Success', 'Bank Added Successfully!');
+                            } else if (response === '1') {
+                                swalSuccess('Success', 'Bank Updated Successfully!');
+                            } else {
+                                swalError('Error', 'Error Occurred!');
+                            }
+                            $('#bank_id').val('');
+                            $('#branch_name2').val('');
+                            $('#bank_creation').trigger('reset');
+                            getBankTable();
+                            swapTableAndCreation();//to change to div to table content.
+                        }
+                    });
                 }
-            });
+            );
         }
     });
 

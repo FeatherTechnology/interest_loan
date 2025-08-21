@@ -359,13 +359,13 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="fam_name">Name</label><span class="text-danger">*</span>
-                                    <input class="form-control" name="fam_name" id="fam_name" tabindex="3" placeholder="Enter Name">
+                                    <input class="form-control" name="fam_name" id="fam_name" tabindex="1" placeholder="Enter Name">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="fam_relationship">Relationship</label><span class="text-danger">*</span>
-                                    <select type="text" class="form-control" id="fam_relationship" name="fam_relationship" tabindex="4">
+                                    <select type="text" class="form-control" id="fam_relationship" name="fam_relationship" tabindex="1">
                                         <option value=""> Select Relationship </option>
                                         <option value="Father"> Father </option>
                                         <option value="Mother"> Mother </option>
@@ -381,39 +381,39 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 other" style="display: none;">
                                 <div class="form-group">
                                     <label for="relation_type">Relation Type</label>
-                                    <input class="form-control" name="relation_type" id="relation_type" tabindex="5" placeholder="Enter Relation Type">
+                                    <input class="form-control" name="relation_type" id="relation_type" tabindex="1" placeholder="Enter Relation Type">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="fam_age">Age</label>
-                                    <input type="number" class="form-control" name="fam_age" id="fam_age" tabindex="6" placeholder="Enter Age">
+                                    <input type="number" class="form-control" name="fam_age" id="fam_age" tabindex="1" placeholder="Enter Age">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="fam_occupation">Occupation</label>
-                                    <input class="form-control" name="fam_occupation" id="fam_occupation" tabindex="7" placeholder="Enter Occupation">
+                                    <input class="form-control" name="fam_occupation" id="fam_occupation" tabindex="1" placeholder="Enter Occupation">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="fam_aadhar">Aadhar No</label>
-                                    <input type="text" class="form-control" name="fam_aadhar" id="fam_aadhar" tabindex="8" maxlength="14" data-type="adhaar-number" placeholder="Enter Aadhar Number">
+                                    <input type="text" class="form-control" name="fam_aadhar" id="fam_aadhar" tabindex="1" maxlength="14" data-type="adhaar-number" placeholder="Enter Aadhar Number">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="fam_mobile">Mobile No</label>
-                                    <input type="number" class="form-control" name="fam_mobile" id="fam_mobile" onKeyPress="if(this.value.length==10) return false;" tabindex="6" placeholder="Enter Mobile Number">
+                                    <input type="number" class="form-control" name="fam_mobile" id="fam_mobile" onKeyPress="if(this.value.length==10) return false;" tabindex="1" placeholder="Enter Mobile Number">
                                 </div>
                             </div>
 
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="" style="visibility:hidden"></label><br>
-                                    <button name="submit_family" id="submit_family" class="btn btn-primary" tabindex="9"><span class="icon-check"></span>&nbsp;Submit</button>
-                                    <button type="reset" id="clear_fam_form" class="btn btn-outline-secondary" tabindex="10">Clear</button>
+                                    <button name="submit_family" id="submit_family" class="btn btn-primary" tabindex="1"><span class="icon-check"></span>&nbsp;Submit</button>
+                                    <button type="reset" id="clear_fam_form" class="btn btn-outline-secondary" tabindex="1">Clear</button>
                                 </div>
                             </div>
                         </div>
@@ -440,7 +440,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal" tabindex="11" onclick="getFamilyInfoTable()">Close</button>
+                <button class="btn btn-secondary" data-dismiss="modal" tabindex="1" onclick="getFamilyInfoTable()">Close</button>
             </div>
         </div>
     </div>
@@ -455,7 +455,7 @@
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Add KYC Info</h5>
-                <button type="button" class="close kycmodal_close" data-dismiss="modal" tabindex="2" onclick="getKycInfoTable()" aria-label="Close">
+                <button type="button" class="close kycmodal_close" data-dismiss="modal" tabindex="1" onclick="getKycInfoTable()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -467,7 +467,7 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="proof_of">Proof Of</label><span class="text-danger">*</span>
-                                    <select type="text" class="form-control" id="proof_of" name="proof_of" tabindex="3">
+                                    <select type="text" class="form-control" id="proof_of" name="proof_of" tabindex="1">
                                         <option value="">Select Proof Of</option>
                                         <option value="1">Customer</option>
                                         <option value="2">Family Member</option>
@@ -477,13 +477,13 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 kyc_name_div" style="display:none">
                                 <div class="form-group">
                                     <label for="kyc_name">Name</label><span class="text-danger">*</span>
-                                    <input class="form-control" name="kyc_name" id="kyc_name" tabindex="4" disabled placeholder="Enter Name">
+                                    <input class="form-control" name="kyc_name" id="kyc_name" tabindex="1" disabled placeholder="Enter Name">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 fam_mem_div" style="display:none">
                                 <div class="form-group">
                                     <label for="fam_mem"> Family Member </label><span class="text-danger">*</span>
-                                    <select type="text" class="form-control" id="fam_mem" name="fam_mem">
+                                    <select type="text" class="form-control" id="fam_mem" name="fam_mem" tabindex="1">
                                         <option value=""> Select Family Member </option>
                                     </select>
                                 </div>
@@ -491,39 +491,39 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="kyc_relationship">Relationship</label><span class="text-danger">*</span>
-                                    <input class="form-control" name="kyc_relationship" id="kyc_relationship" tabindex="5" disabled placeholder="Enter Relationship">
+                                    <input class="form-control" name="kyc_relationship" id="kyc_relationship" tabindex="1" disabled placeholder="Enter Relationship">
                                 </div>
                             </div>
                             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
                                 <div class="form-group">
                                     <label for="proof">Proof</label><span class="text-danger">*</span>
-                                    <select type="text" class="form-control" id="proof" name="proof" tabindex="6">
+                                    <select type="text" class="form-control" id="proof" name="proof" tabindex="1">
                                         <option value="">Select proof</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12" style="margin-top: 18px; padding-left: 0px !important">
                                 <div class="form-group">
-                                    <button type="button" class="btn btn-primary modalBtnCss" id="proof_modal_btn" data-toggle="modal" data-target="#add_proof_info_modal" onclick="getProofTable()" tabindex="7">+</button>
+                                    <button type="button" class="btn btn-primary modalBtnCss" id="proof_modal_btn" data-toggle="modal" data-target="#add_proof_info_modal" onclick="getProofTable()" tabindex="1">+</button>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
-                                    <label for="proof_detail">Proof Number</label><span class="text-danger">*</span>
-                                    <input class="form-control" name="proof_detail" id="proof_detail" tabindex="8" placeholder="Enter Proof Number">
+                                    <label for="proof_detail">Proof Number</label>
+                                    <input class="form-control" name="proof_detail" id="proof_detail" tabindex="1" placeholder="Enter Proof Number">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="upload"> Upload</label>
-                                    <input type="file" class="form-control" id="upload" name="upload" tabindex="9">
+                                    <input type="file" class="form-control" id="upload" name="upload" tabindex="1">
                                     <input type="hidden" id="kyc_upload">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
-                                    <button name="submit_kyc" id="submit_kyc" class="btn btn-primary" tabindex="10" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
-                                    <button type="reset" id="clear_kyc_form" class="btn btn-outline-secondary" style="margin-top: 18px;" tabindex="11">Clear</button>
+                                    <button name="submit_kyc" id="submit_kyc" class="btn btn-primary" tabindex="1" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
+                                    <button type="reset" id="clear_kyc_form" class="btn btn-outline-secondary" style="margin-top: 18px;" tabindex="1">Clear</button>
                                 </div>
                             </div>
                         </div>
@@ -552,7 +552,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary kycmodal_close" data-dismiss="modal" onclick="getKycInfoTable()" tabindex="12">Close</button>
+                <button class="btn btn-secondary kycmodal_close" data-dismiss="modal" onclick="getKycInfoTable()" tabindex="1">Close</button>
             </div>
         </div>
     </div>
@@ -566,7 +566,7 @@
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Add Proof</h5>
-                <button type="button" class="close kyc_proof_close" data-dismiss="modal" onclick="fetchProofList()" tabindex="2">
+                <button type="button" class="close kyc_proof_close" data-dismiss="modal" onclick="fetchProofList()" tabindex="1">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -579,14 +579,14 @@
                             <div class="col-sm-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label for="addProof_name">Proof</label><span class="text-danger">*</span>
-                                    <input class="form-control" name="addProof_name" id="addProof_name" tabindex="3" placeholder="Enter Proof">
+                                    <input class="form-control" name="addProof_name" id="addProof_name" tabindex="1" placeholder="Enter Proof">
                                     <input type="hidden" id="addline_name_id" value='0'>
                                 </div>
                             </div>
                             <div class="col-sm-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <button name="submit_proof" id="submit_proof" class="btn btn-primary" tabindex="4" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
-                                    <button type="reset" id="clear_proof_form" class="btn btn-outline-secondary" style="margin-top: 18px;" tabindex="5">Clear</button>
+                                    <button name="submit_proof" id="submit_proof" class="btn btn-primary" tabindex="1" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
+                                    <button type="reset" id="clear_proof_form" class="btn btn-outline-secondary" style="margin-top: 18px;" tabindex="1">Clear</button>
                                 </div>
                             </div>
                         </div>
@@ -608,7 +608,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary kyc_proof_close" data-dismiss="modal" onclick="fetchProofList()" tabindex="6">Close</button>
+                <button class="btn btn-secondary kyc_proof_close" data-dismiss="modal" onclick="fetchProofList()" tabindex="1">Close</button>
             </div>
         </div>
     </div>
@@ -623,7 +623,7 @@
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Add Bank Info</h5>
-                <button type="button" class="close" data-dismiss="modal" tabindex="2" onclick="getBankInfoTable()" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" tabindex="1" onclick="getBankInfoTable()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -635,37 +635,37 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="bank_name">Bank Name</label><span class="text-danger">*</span>
-                                    <input class="form-control" name="bank_name" id="bank_name" tabindex="3" placeholder="Enter Bank Name">
+                                    <input class="form-control" name="bank_name" id="bank_name" tabindex="1" placeholder="Enter Bank Name">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="branch_name">Branch Name</label><span class="text-danger">*</span>
-                                    <input class="form-control" name="branch_name" id="branch_name" tabindex="4" placeholder="Enter Branch Name">
+                                    <input class="form-control" name="branch_name" id="branch_name" tabindex="1" placeholder="Enter Branch Name">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="acc_holder_name">Account Holder Name</label><span class="text-danger">*</span>
-                                    <input class="form-control" name="acc_holder_name" id="acc_holder_name" tabindex="5" placeholder="Enter Account Holder Name">
+                                    <input class="form-control" name="acc_holder_name" id="acc_holder_name" tabindex="1" placeholder="Enter Account Holder Name">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="acc_number">Account Number</label><span class="text-danger">*</span>
-                                    <input type="number" class="form-control" name="acc_number" id="acc_number" tabindex="6" placeholder="Enter Account Number">
+                                    <input type="number" class="form-control" name="acc_number" id="acc_number" tabindex="1" placeholder="Enter Account Number">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="ifsc_code">IFSC Code</label><span class="text-danger">*</span>
-                                    <input class="form-control" name="ifsc_code" id="ifsc_code" tabindex="7" placeholder="Enter IFSC Code">
+                                    <input class="form-control" name="ifsc_code" id="ifsc_code" tabindex="1" placeholder="Enter IFSC Code">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
-                                    <button name="submit_bank" id="submit_bank" class="btn btn-primary" tabindex="8" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
-                                    <button type="reset" id="clear_bank_form" class="btn btn-outline-secondary" style="margin-top: 18px;" tabindex="9">Clear</button>
+                                    <button name="submit_bank" id="submit_bank" class="btn btn-primary" tabindex="1" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
+                                    <button type="reset" id="clear_bank_form" class="btn btn-outline-secondary" style="margin-top: 18px;" tabindex="1">Clear</button>
                                 </div>
                             </div>
                         </div>
@@ -691,7 +691,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal" onclick=" getBankInfoTable()" tabindex="10">Close</button>
+                <button class="btn btn-secondary" data-dismiss="modal" onclick=" getBankInfoTable()" tabindex="1">Close</button>
             </div>
         </div>
     </div>
@@ -706,7 +706,7 @@
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Add Property Info</h5>
-                <button type="button" class="close" data-dismiss="modal" tabindex="2" onclick="getPropertyInfoTable()" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" tabindex="1" onclick="getPropertyInfoTable()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -718,19 +718,19 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="property">Property</label><span class="text-danger">*</span>
-                                    <input class="form-control" name="property" id="property" tabindex="3" placeholder="Enter Property">
+                                    <input class="form-control" name="property" id="property" tabindex="1" placeholder="Enter Property">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="property_detail">Property Detail</label><span class="text-danger">*</span>
-                                    <textarea class="form-control" name="property_detail" id="property_detail" tabindex="4"></textarea>
+                                    <textarea class="form-control" name="property_detail" id="property_detail" tabindex="1"></textarea>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="property_holder">Property Holder</label><span class="text-danger">*</span>
-                                    <select type="text" class="form-control" id="property_holder" name="property_holder" tabindex="5">
+                                    <select type="text" class="form-control" id="property_holder" name="property_holder" tabindex="1">
                                         <option value="">Select Property Holder</option>
                                     </select>
                                 </div>
@@ -738,13 +738,13 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="prop_relationship">Relationship</label><span class="text-danger">*</span>
-                                    <input class="form-control" name="prop_relationship" id="prop_relationship" disabled tabindex="6" placeholder="Enter Relationship">
+                                    <input class="form-control" name="prop_relationship" id="prop_relationship" disabled tabindex="1" placeholder="Enter Relationship">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
-                                    <button name="submit_property" id="submit_property" class="btn btn-primary" tabindex="7" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
-                                    <button type="reset" id="clear_prop_form" class="btn btn-outline-secondary" style="margin-top: 18px;" tabindex="8">Clear</button>
+                                    <button name="submit_property" id="submit_property" class="btn btn-primary" tabindex="1" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
+                                    <button type="reset" id="clear_prop_form" class="btn btn-outline-secondary" style="margin-top: 18px;" tabindex="1">Clear</button>
                                 </div>
                             </div>
                         </div>
@@ -770,7 +770,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal" onclick="getPropertyInfoTable()" tabindex="9">Close</button>
+                <button class="btn btn-secondary" data-dismiss="modal" onclick="getPropertyInfoTable()" tabindex="1">Close</button>
             </div>
         </div>
     </div>
@@ -859,6 +859,7 @@
                                             <th>Relationship</th>
                                             <th>Bank Name</th>
                                             <th>Cheque Count</th>
+                                            <th>Cheque Number</th>
                                             <th>Upload</th>
                                         </tr>
                                     </thead>
@@ -1015,7 +1016,7 @@
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Add Cheque Info</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" tabindex="2" onclick="getChequeInfoTable(); refreshChequeModal();">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" tabindex="1" onclick="getChequeInfoTable(); refreshChequeModal();">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -1027,7 +1028,7 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="cq_holder_type">Holder Type</label><span class="text-danger">*</span>
-                                    <select class="form-control" name="cq_holder_type" id="cq_holder_type" tabindex="3">
+                                    <select class="form-control" name="cq_holder_type" id="cq_holder_type" tabindex="1">
                                         <option value="">Select Holder Type</option>
                                         <option value="1">Customer</option>
                                         <option value="2">Guarantor</option>
@@ -1038,7 +1039,7 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 cq_fam_member" style="display:none">
                                 <div class="form-group">
                                     <label for="cq_fam_mem"> Family Member </label><span class="text-danger">*</span>
-                                    <select type="text" class="form-control" id="cq_fam_mem" name="cq_fam_mem" tabindex="4">
+                                    <select type="text" class="form-control" id="cq_fam_mem" name="cq_fam_mem" tabindex="1">
                                         <option value=""> Select Family Member </option>
                                     </select>
                                 </div>
@@ -1046,31 +1047,31 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="cq_holder_name">Holder Name</label><span class="text-danger">*</span>
-                                    <input type="text" class="form-control" id="cq_holder_name" name="cq_holder_name" tabindex="5" placeholder="Holder Name" readonly>
+                                    <input type="text" class="form-control" id="cq_holder_name" name="cq_holder_name" tabindex="1" placeholder="Holder Name" readonly>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="cq_relationship">Relationship</label>
-                                    <input type="text" class="form-control" name="cq_relationship" id="cq_relationship" tabindex="6" placeholder="Relationship" readonly>
+                                    <input type="text" class="form-control" name="cq_relationship" id="cq_relationship" tabindex="1" placeholder="Relationship" readonly>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="cq_bank_name">Bank Name</label><span class="text-danger">*</span>
-                                    <input type="text" class="form-control" id="cq_bank_name" name="cq_bank_name" tabindex="7" placeholder="Enter Bank Name">
+                                    <input type="text" class="form-control" id="cq_bank_name" name="cq_bank_name" tabindex="1" placeholder="Enter Bank Name">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="cheque_count">Cheque Count</label><span class="text-danger">*</span>
-                                    <input type="number" class="form-control" name="cheque_count" id="cheque_count" tabindex="8" placeholder="Enter Cheque Count">
+                                    <input type="number" class="form-control" name="cheque_count" id="cheque_count" tabindex="1" placeholder="Enter Cheque Count">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="cq_upload">Upload</label><span class="text-danger">*</span>
-                                    <input type="file" class="form-control cq_upload" name="cq_upload[]" id="cq_upload" tabindex="9" multiple>
+                                    <input type="file" class="form-control cq_upload" name="cq_upload[]" id="cq_upload" tabindex="1" multiple>
                                     <input type="hidden" id="cq_upload_edit">
                                 </div>
                             </div>
@@ -1082,8 +1083,8 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="" style="visibility:hidden"></label><br>
-                                    <button name="submit_cheque_info" id="submit_cheque_info" class="btn btn-primary" tabindex="10"><span class="icon-check"></span>&nbsp;Submit</button>
-                                    <button type="reset" id="clear_cheque_form" class="btn btn-outline-secondary" tabindex="11">Clear</button>
+                                    <button name="submit_cheque_info" id="submit_cheque_info" class="btn btn-primary" tabindex="1"><span class="icon-check"></span>&nbsp;Submit</button>
+                                    <button type="reset" id="clear_cheque_form" class="btn btn-outline-secondary" tabindex="1">Clear</button>
                                 </div>
                             </div>
                         </div>
@@ -1100,6 +1101,7 @@
                                     <th>Relationship</th>
                                     <th>Bank Name</th>
                                     <th>Cheque Count</th>
+                                    <th>Cheque Number</th>
                                     <th>Upload</th>
                                     <th>Action</th>
                                 </tr>
@@ -1110,7 +1112,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal" tabindex="12" onclick="getChequeInfoTable();refreshChequeModal();">Close</button>
+                <button class="btn btn-secondary" data-dismiss="modal" tabindex="1" onclick="getChequeInfoTable();refreshChequeModal();">Close</button>
             </div>
         </div>
     </div>
@@ -1125,7 +1127,7 @@
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Add Document Info</h5>
-                <button type="button" class="close" data-dismiss="modal" tabindex="2" aria-label="Close" onclick="getDocInfoTable();refreshDocModal();">
+                <button type="button" class="close" data-dismiss="modal" tabindex="1" aria-label="Close" onclick="getDocInfoTable();refreshDocModal();">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -1137,13 +1139,13 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="doc_name">Document Name</label><span class="text-danger">*</span>
-                                    <input type="text" class="form-control" name="doc_name" id="doc_name" tabindex="3" placeholder="Enter Document Name">
+                                    <input type="text" class="form-control" name="doc_name" id="doc_name" tabindex="1" placeholder="Enter Document Name">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="doc_type">Document Type</label><span class="text-danger">*</span>
-                                    <select class="form-control" name="doc_type" id="doc_type" tabindex="4">
+                                    <select class="form-control" name="doc_type" id="doc_type" tabindex="1">
                                         <option value="">Select Document Type</option>
                                         <option value="1">Original</option>
                                         <option value="2">Xerox</option>
@@ -1153,7 +1155,7 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="doc_holder_name">Holder Name</label><span class="text-danger">*</span>
-                                    <select type="text" class="form-control" id="doc_holder_name" name="doc_holder_name" tabindex="5">
+                                    <select type="text" class="form-control" id="doc_holder_name" name="doc_holder_name" tabindex="1">
                                         <option value="">Select Holder Name</option>
                                     </select>
                                 </div>
@@ -1161,20 +1163,20 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="doc_relationship">Relationship</label><span class="text-danger">*</span>
-                                    <input type="text" class="form-control" name="doc_relationship" id="doc_relationship" tabindex="6" placeholder="Relationship" readonly>
+                                    <input type="text" class="form-control" name="doc_relationship" id="doc_relationship" tabindex="1" placeholder="Relationship" readonly>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="doc_upload">Upload</label><span class="text-danger">*</span>
-                                    <input type="file" class="form-control" name="doc_upload" id="doc_upload" tabindex="7">
+                                    <input type="file" class="form-control" name="doc_upload" id="doc_upload" tabindex="1">
                                     <input type="hidden" name="doc_upload_edit" id="doc_upload_edit">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
-                                    <button name="submit_doc_info" id="submit_doc_info" class="btn btn-primary" tabindex="8" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
-                                    <button type="reset" id="clear_doc_form" class="btn btn-outline-secondary" style="margin-top: 18px;" tabindex="9">Clear</button>
+                                    <button name="submit_doc_info" id="submit_doc_info" class="btn btn-primary" tabindex="1" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
+                                    <button type="reset" id="clear_doc_form" class="btn btn-outline-secondary" style="margin-top: 18px;" tabindex="1">Clear</button>
                                 </div>
                             </div>
                         </div>
@@ -1201,7 +1203,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal" onclick="getDocInfoTable();refreshDocModal()" tabindex="10">Close</button>
+                <button class="btn btn-secondary" data-dismiss="modal" onclick="getDocInfoTable();refreshDocModal()" tabindex="1">Close</button>
             </div>
         </div>
     </div>
@@ -1216,7 +1218,7 @@
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Add Mortgage Info</h5>
-                <button type="button" class="close" data-dismiss="modal" tabindex="2" aria-label="Close" onclick="getMortInfoTable();refreshMortModal();">
+                <button type="button" class="close" data-dismiss="modal" tabindex="1" aria-label="Close" onclick="getMortInfoTable();refreshMortModal();">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -1228,7 +1230,7 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="property_holder_name">Property Holder Name</label><span class="text-danger">*</span>
-                                    <select class="form-control" name="property_holder_name" id="property_holder_name" tabindex="3">
+                                    <select class="form-control" name="property_holder_name" id="property_holder_name" tabindex="1">
                                         <option value="">Select Property Holder Name </option>
                                     </select>
                                 </div>
@@ -1236,56 +1238,56 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="mort_relationship">Relationship</label><span class="text-danger">*</span>
-                                    <input type="text" class="form-control" name="mort_relationship" id="mort_relationship" tabindex="4" placeholder="Relationship" readonly>
+                                    <input type="text" class="form-control" name="mort_relationship" id="mort_relationship" tabindex="1" placeholder="Relationship" readonly>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="mort_property_details">Property Details</label><span class="text-danger">*</span>
-                                    <textarea class="form-control" name="mort_property_details" id="mort_property_details" tabindex="5"></textarea>
+                                    <textarea class="form-control" name="mort_property_details" id="mort_property_details" tabindex="1"></textarea>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="mortgage_name">Mortgage Name</label><span class="text-danger">*</span>
-                                    <input type="text" class="form-control" name="mortgage_name" id="mortgage_name" tabindex="6" placeholder="Enter Mortgage Name">
+                                    <input type="text" class="form-control" name="mortgage_name" id="mortgage_name" tabindex="1" placeholder="Enter Mortgage Name">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="mort_designation">Designation</label><span class="text-danger">*</span>
-                                    <input type="text" class="form-control" name="mort_designation" id="mort_designation" tabindex="7" placeholder="Enter Designation">
+                                    <input type="text" class="form-control" name="mort_designation" id="mort_designation" tabindex="1" placeholder="Enter Designation">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="mortgage_no">Mortgage Number</label><span class="text-danger">*</span>
-                                    <input type="number" class="form-control" name="mortgage_no" id="mortgage_no" tabindex="8" placeholder="Mortgage Number">
+                                    <input type="text" class="form-control" name="mortgage_no" id="mortgage_no" tabindex="1" placeholder="Mortgage Number">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="reg_office">Reg Office</label><span class="text-danger">*</span>
-                                    <input type="text" class="form-control" name="reg_office" id="reg_office" tabindex="9" placeholder="Reg Office">
+                                    <input type="text" class="form-control" name="reg_office" id="reg_office" tabindex="1" placeholder="Reg Office">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="mortgage_value">Mortgage Value</label><span class="text-danger">*</span>
-                                    <input type="number" class="form-control" name="mortgage_value" id="mortgage_value" tabindex="10" placeholder="Mortgage value">
+                                    <input type="text" class="form-control" name="mortgage_value" id="mortgage_value" tabindex="1" placeholder="Mortgage value">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="mort_upload">Upload</label><span class="text-danger">*</span>
-                                    <input type="file" class="form-control" name="mort_upload" id="mort_upload" tabindex="11">
+                                    <input type="file" class="form-control" name="mort_upload" id="mort_upload" tabindex="1">
                                     <input type="hidden" name="mort_upload_edit" id="mort_upload_edit">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
-                                    <button name="submit_mortgage_info" id="submit_mortgage_info" class="btn btn-primary" tabindex="12" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
-                                    <button type="reset" id="clear_mortgage_form" class="btn btn-outline-secondary" style="margin-top: 18px;" tabindex="13">Clear</button>
+                                    <button name="submit_mortgage_info" id="submit_mortgage_info" class="btn btn-primary" tabindex="1" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
+                                    <button type="reset" id="clear_mortgage_form" class="btn btn-outline-secondary" style="margin-top: 18px;" tabindex="1">Clear</button>
                                 </div>
                             </div>
                         </div>
@@ -1315,7 +1317,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal" tabindex="14" onclick="getMortInfoTable();refreshMortModal();">Close</button>
+                <button class="btn btn-secondary" data-dismiss="modal" tabindex="1" onclick="getMortInfoTable();refreshMortModal();">Close</button>
             </div>
         </div>
     </div>
@@ -1330,7 +1332,7 @@
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Add Endorsement Info</h5>
-                <button type="button" class="close" data-dismiss="modal" tabindex="2" aria-label="Close" onclick="getEndorsementInfoTable();refreshEndorsementModal();">
+                <button type="button" class="close" data-dismiss="modal" tabindex="1" aria-label="Close" onclick="getEndorsementInfoTable();refreshEndorsementModal();">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -1342,7 +1344,7 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="owner_name">Owner</label><span class="text-danger">*</span>
-                                    <select type="text" class="form-control" id="owner_name" name="owner_name" tabindex="3">
+                                    <select type="text" class="form-control" id="owner_name" name="owner_name" tabindex="1">
                                         <option value="">Select Proof Of</option>
                                     </select>
                                 </div>
@@ -1350,25 +1352,25 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="owner_relationship">Relationship</label><span class="text-danger">*</span>
-                                    <input type="text" class="form-control" name="owner_relationship" id="owner_relationship" tabindex="4" placeholder="Relationship" readonly>
+                                    <input type="text" class="form-control" name="owner_relationship" id="owner_relationship" tabindex="1" placeholder="Relationship" readonly>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="vehicle_details">Vehicle Details</label><span class="text-danger">*</span>
-                                    <textarea class="form-control" id="vehicle_details" name="vehicle_details" tabindex="5"></textarea>
+                                    <textarea class="form-control" id="vehicle_details" name="vehicle_details" tabindex="1"></textarea>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="endorsement_name">Endorsement Name</label><span class="text-danger">*</span>
-                                    <input type="text" class="form-control" name="endorsement_name" id="endorsement_name" tabindex="6" placeholder="Enter Endorsement Name">
+                                    <input type="text" class="form-control" name="endorsement_name" id="endorsement_name" tabindex="1" placeholder="Enter Endorsement Name">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="key_original">Key Original</label><span class="text-danger">*</span>
-                                    <select class="form-control" name="key_original" id="key_original" tabindex="7">
+                                    <select class="form-control" name="key_original" id="key_original" tabindex="1">
                                         <option value="">Select Key Original</option>
                                         <option value="YES">YES</option>
                                         <option value="NO">NO</option>
@@ -1378,7 +1380,7 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="rc_original">RC Original</label><span class="text-danger">*</span>
-                                    <select class="form-control" name="rc_original" id="rc_original" tabindex="8">
+                                    <select class="form-control" name="rc_original" id="rc_original" tabindex="1">
                                         <option value="">Select RC Original</option>
                                         <option value="YES">YES</option>
                                         <option value="NO">NO</option>
@@ -1388,14 +1390,14 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="endorsement_upload"> Upload</label><span class="text-danger">*</span>
-                                    <input type="file" class="form-control" id="endorsement_upload" name="endorsement_upload" tabindex="9">
+                                    <input type="file" class="form-control" id="endorsement_upload" name="endorsement_upload" tabindex="1">
                                     <input type="hidden" id="endorsement_upload_edit">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
-                                    <button name="submit_endorsement" id="submit_endorsement" class="btn btn-primary" tabindex="10" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
-                                    <button type="reset" id="clear_endorsement_form" class="btn btn-outline-secondary" style="margin-top: 18px;" tabindex="11">Clear</button>
+                                    <button name="submit_endorsement" id="submit_endorsement" class="btn btn-primary" tabindex="1" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
+                                    <button type="reset" id="clear_endorsement_form" class="btn btn-outline-secondary" style="margin-top: 18px;" tabindex="1">Clear</button>
                                 </div>
                             </div>
                         </div>
@@ -1423,7 +1425,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal" tabindex="12" onclick="getEndorsementInfoTable();refreshEndorsementModal();">Close</button>
+                <button class="btn btn-secondary" data-dismiss="modal" tabindex="1" onclick="getEndorsementInfoTable();refreshEndorsementModal();">Close</button>
             </div>
         </div>
     </div>
@@ -1438,7 +1440,7 @@
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Add Gold</h5>
-                <button type="button" class="close" data-dismiss="modal" tabindex="2" onclick="getGoldInfoTable();refreshGoldModal()">
+                <button type="button" class="close" data-dismiss="modal" tabindex="1" onclick="getGoldInfoTable();refreshGoldModal()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -1449,32 +1451,32 @@
                         <div class="row">
                             <div class="col-sm-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <label for="gold_type">Gold Type</label><span class="text-danger">*</span>
-                                    <input type="text" class="form-control" name="gold_type" id="gold_type" tabindex="3" placeholder="Enter Gold Type">
+                                    <label for="gold_type">Gold Type</label><span class="text-danger">*&nbsp;&nbsp;(Ornament's Name)</span>
+                                    <input type="text" class="form-control" name="gold_type" id="gold_type" tabindex="1" placeholder="Enter Gold Type">
                                 </div>
                             </div>
                             <div class="col-sm-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <label for="gold_purity">Purity</label><span class="text-danger">*</span>
-                                    <input type="text" class="form-control" name="gold_purity" id="gold_purity" tabindex="4" placeholder="Enter Purity">
+                                    <label for="gold_purity">Purity</label><span class="text-danger">*&nbsp;&nbsp;(Carat)</span>
+                                    <input type="text" class="form-control" name="gold_purity" id="gold_purity" tabindex="1" placeholder="Enter Purity">
                                 </div>
                             </div>
                             <div class="col-sm-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <label for="gold_weight">Weight</label><span class="text-danger">*</span>
-                                    <input type="number" class="form-control" name="gold_weight" id="gold_weight" tabindex="5" placeholder="Enter Weight">
+                                    <label for="gold_weight">Weight</label><span class="text-danger">*&nbsp;&nbsp;(Grams)</span>
+                                    <input type="number" class="form-control" name="gold_weight" id="gold_weight" tabindex="1" placeholder="Enter Weight">
                                 </div>
                             </div>
                             <div class="col-sm-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <label for="gold_value">Value</label><span class="text-danger">*</span>
-                                    <input type="number" class="form-control" name="gold_value" id="gold_value" tabindex="6" placeholder="Enter Value">
+                                    <label for="gold_value">Value</label><span class="text-danger">*&nbsp;&nbsp;(Rupees)</span>
+                                    <input type="number" class="form-control" name="gold_value" id="gold_value" tabindex="1" placeholder="Enter Value">
                                 </div>
                             </div>
                             <div class="col-sm-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <button name="submit_gold_info" id="submit_gold_info" class="btn btn-primary" tabindex="7" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
-                                    <button type="reset" id="clear_gold_form" class="btn btn-outline-secondary" style="margin-top: 18px;" tabindex="8">Clear</button>
+                                    <button name="submit_gold_info" id="submit_gold_info" class="btn btn-primary" tabindex="1" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
+                                    <button type="reset" id="clear_gold_form" class="btn btn-outline-secondary" style="margin-top: 18px;" tabindex="1">Clear</button>
                                 </div>
                             </div>
                         </div>
@@ -1499,7 +1501,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal" tabindex="9" onclick="getGoldInfoTable();refreshGoldModal();">Close</button>
+                <button class="btn btn-secondary" data-dismiss="modal" tabindex="1" onclick="getGoldInfoTable();refreshGoldModal();">Close</button>
             </div>
         </div>
     </div>

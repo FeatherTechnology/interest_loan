@@ -34,7 +34,7 @@
         <!--------------------------------------------------- CARD END NOC TABLE--------------------------------------------------------------------->
 
         <div class="col-12 text-right back_to_noc_list" style="margin-bottom:10px">
-            <button class="btn btn-primary back_to_noc_list" id="back_to_noc_list" style="display: none;"><span class="icon-arrow-left"></span> Back</button>
+            <button class="btn btn-primary back_to_noc_list" id="back_to_noc_list" tabindex="10" style="display: none;"><span class="icon-arrow-left"></span> Back</button>
         </div>
         <div id="noc_main_container" style="display:none">
             <!-- Row start -->
@@ -83,19 +83,19 @@
                                             <div class="form-group">
                                                 <label for="area">Area</label>
                                                 <input type="hidden" id="area_edit">
-                                                <input type="text" class="form-control" id="area" name="area" tabindex="7" disabled>
+                                                <input type="text" class="form-control" id="area" name="area" tabindex="6" disabled>
                                             </div>
                                         </div>
                                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                             <div class="form-group">
                                                 <label for="line"> Line </label>
-                                                <input type="text" class="form-control" id="line" name="line" disabled placeholder="Line" tabindex="8">
+                                                <input type="text" class="form-control" id="line" name="line" disabled placeholder="Line" tabindex="7">
                                             </div>
                                         </div>
                                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                             <div class="form-group">
                                                 <label for="mobile1"> Mobile Number </label>
-                                                <input type="number" class="form-control" id="mobile1" name="mobile1" placeholder="Enter Mobile Number 1" onKeyPress="if(this.value.length==10) return false;" tabindex="9" readonly>
+                                                <input type="number" class="form-control" id="mobile1" name="mobile1" placeholder="Enter Mobile Number 1" onKeyPress="if(this.value.length==10) return false;" tabindex="8" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -105,7 +105,7 @@
                                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                             <div class="form-group">
                                                 <label for="pic"> Photo</label><br>
-                                                <img id='imgshow' class="img_show" src='img\avatar.png' />
+                                                <img id='imgshow' class="img_show" tabindex="9" src='img\avatar.png' />
                                                 <input type="hidden" class="personal_info_disble" id="per_pic">
                                             </div>
                                         </div>
@@ -142,7 +142,7 @@
                 </div>
             </div>
             <div class="col-12 text-right back_to_loan_list" style="margin-bottom:10px">
-                <button class="btn btn-primary back_to_loan_list" id="back_to_loan_list" style="display: none;"><span class="icon-arrow-left"></span> Back</button>
+                <button class="btn btn-primary back_to_loan_list" id="back_to_loan_list" tabindex="5" style="display: none;"><span class="icon-arrow-left"></span> Back</button>
             </div>
             <div class="row gutters" id="noc_summary" style="display:none">
                 <input type="hidden" id="le_id">
@@ -296,7 +296,7 @@
 
 <!-- /////////////////////////////////////////////////////////////////// Closed Remark Modal Start ////////////////////////////////////////////////////////////////////// -->
 
-<div class="modal fade" id="closed_remark_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="closed_remark_model" tabindex="1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
@@ -312,13 +312,13 @@
                         <div class="col-sm-4 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label for="sub_status">Sub Status</label>
-                                <input class="form-control" name="sub_status" id="sub_status" tabindex="2" disabled>
+                                <input class="form-control" name="sub_status" id="sub_status" tabindex="1" disabled>
                             </div>
                         </div>
                         <div class="col-sm-4 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label for="remark">Remark</label>
-                                <textarea class="form-control" name="remark" id="remark" tabindex="3" disabled></textarea>
+                                <textarea class="form-control" name="remark" id="remark" tabindex="1" disabled></textarea>
                             </div>
                         </div>
                     </div>
@@ -326,7 +326,7 @@
 
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal" tabindex="4">Close</button>
+                <button class="btn btn-secondary" data-dismiss="modal" tabindex="1">Close</button>
             </div>
         </div>
     </div>

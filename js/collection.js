@@ -461,42 +461,49 @@ $(document).ready(function () {
             'trans_id': $('#trans_id').val()
         };
 
-        try {
-            // Check if form data is valid before proceeding
-            if (!isFormDataValid(collData)) {
-                $('#submit_collection').attr('disabled', false);
-                return; // Exit if invalid
+        swalConfirm(
+            'Are you sure?',
+            'Do you want to submit this collection?',
+            async function () {
+
+                try {
+                    // Check if form data is valid before proceeding
+                    if (!isFormDataValid(collData)) {
+                        $('#submit_collection').attr('disabled', false);
+                        return; // Exit if invalid
+                    }
+
+                    const response = await new Promise((resolve, reject) => {
+                        $.post('api/collection_files/submit_collection.php', collData, function (res) {
+                            resolve(res);
+                        }, 'json').fail(reject);
+                    });
+
+                    $('#submit_collection').attr('disabled', false);
+
+                    if (response.result == '1') {
+                        swalSuccess('Success', 'Collection Added Successfully.');
+                    } else if (response.result == '2') {
+                        swalError('Error', 'Failed to Insert Collection');
+                        return;
+                    } else if (response.result == '3') {
+                        swalSuccess('Success', 'Moved to Closed Successfully.');
+                    }
+
+                    $('#back_to_loan_list').trigger('click');
+
+                    if (response.collection_id) {
+                        await printCollection(response.collection_id);
+                    }
+
+                    await getSubStatus(LoanEntryId);
+
+                } catch (error) {
+                    console.error("Collection submit failed:", error);
+                    $('#submit_collection').attr('disabled', false);
+                }
             }
-
-            const response = await new Promise((resolve, reject) => {
-                $.post('api/collection_files/submit_collection.php', collData, function (res) {
-                    resolve(res);
-                }, 'json').fail(reject);
-            });
-
-            $('#submit_collection').attr('disabled', false);
-
-            if (response.result == '1') {
-                swalSuccess('Success', 'Collection Added Successfully.');
-            } else if (response.result == '2') {
-                swalError('Error', 'Failed to Insert Collection');
-                return;
-            } else if (response.result == '3') {
-                swalSuccess('Success', 'Moved to Closed Successfully.');
-            }
-
-            $('#back_to_loan_list').trigger('click');
-
-            if (response.collection_id) {
-                await printCollection(response.collection_id);
-            }
-
-            await getSubStatus(LoanEntryId);
-
-        } catch (error) {
-            console.error("Collection submit failed:", error);
-            $('#submit_collection').attr('disabled', false);
-        }
+        );
     });
 
     // <------------------------------------------------------------------ Submit Collection End ---------------------------------------------------------------->

@@ -36,6 +36,7 @@ if (isset($_POST['search'])) {
         $search = $_POST['search'];
         $query .= " AND (
             cc.cus_id LIKE '" . $search . "%'
+            OR DATE_FORMAT(le.loan_date, '%d-%m-%Y') LIKE '%" . $search . "%'
             OR le.loan_date LIKE '%" . $search . "%'
             OR cc.aadhar_number LIKE '%" . $search . "%'
             OR CONCAT(cc.first_name, ' ', COALESCE(cc.last_name, '')) LIKE '%" . $search . "%'

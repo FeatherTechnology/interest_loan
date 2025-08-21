@@ -8,6 +8,7 @@ $user_id = $_SESSION['user_id'];
 $loan_entry_id = $_POST['customer_profile_id'];
 $cus_limit = $_POST['cus_limit'];
 $about_cus = $_POST['about_cus'];
+$cus_status = $_POST['cus_status'];
 
 // Query to get customer profile along with customer status
 $qry = $pdo->query("SELECT cs.status 
@@ -35,7 +36,7 @@ if ($loan_entry_id != '') {
         $result = 1; // Update successfull
     }
 } else {
-    $qry = $pdo->query("INSERT INTO `loan_entry` (`aadhar_number`, `cus_id`, `cus_data`, `insert_login_id`, `created_on` ) VALUES ('$aadhar_number', '$cus_id', '$cus_data','$user_id',CURRENT_TIMESTAMP())");
+    $qry = $pdo->query("INSERT INTO `loan_entry` (`aadhar_number`, `cus_id`, `cus_data`, `customer_status`, `insert_login_id`, `created_on` ) VALUES ('$aadhar_number', '$cus_id', '$cus_data', '$cus_status','$user_id',CURRENT_TIMESTAMP())");
 
     if ($qry) {
         $result = 2; // Insert successfull

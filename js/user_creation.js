@@ -162,37 +162,43 @@ $(document).ready(function () {
                 isValid = false;
             }
         });
+
         let isBranchNameValid = validateMultiSelectField('branch_name', branch_name);
         let isLineNameValid = validateMultiSelectField('line_name', line_name);
         let isLoanCategoryValid = validateMultiSelectField('loan_category', loan_category);
 
         if (isValid && isBranchNameValid && isLineNameValid && isLoanCategoryValid) {
-            if (selectedSubmenuIds.length > 0) {
-                $.post('api/user_creation_files/submit_user_creation.php', userFormData, function (response) {
-                    if (response.status == '') {
-                        swalError('Error', 'Creation Failed.');
-                    } else if (response.status == '1') {
-                        swalSuccess('Success', 'User Updated Successfully!');
-                    } else if (response.status == '2') {
-                        swalSuccess('Success', 'User Added Successfully!');
-                    } else if (response.status == '3') {
-                        swalError('Warning', 'User Name Already Created.');
-                    }
+            swalConfirm(
+                'Are you sure?',
+                'Do you want to submit this user creation?',
+                function () {
+                    if (selectedSubmenuIds.length > 0) {
+                        $.post('api/user_creation_files/submit_user_creation.php', userFormData, function (response) {
+                            if (response.status == '') {
+                                swalError('Error', 'Creation Failed.');
+                            } else if (response.status == '1') {
+                                swalSuccess('Success', 'User Updated Successfully!');
+                            } else if (response.status == '2') {
+                                swalSuccess('Success', 'User Added Successfully!');
+                            } else if (response.status == '3') {
+                                swalError('Warning', 'User Name Already Created.');
+                            }
 
-                    if (response.status != '' && response.status != '3') {
-                        swapTableAndCreation();
+                            if (response.status != '' && response.status != '3') {
+                                swapTableAndCreation();
+                            }
+                            let sessionId = $('#session_user_id').val();
+                            if (response.last_id == sessionId) {
+                                getLeftbarMenuList(); //After Submit/Update Leftbar want to refresh to view the changes.
+                            }
+                        }, 'json');
                     }
-                    let sessionId = $('#session_user_id').val();
-                    if (response.last_id == sessionId) {
-                        getLeftbarMenuList(); //After Submit/Update Leftbar want to refresh to view the changes.
+                    else {
+                        swalError('Warning', 'Please fill out mandatory fields!');
                     }
-                }, 'json');
-            }
-            else {
-                swalError('Warning', 'Please fill out mandatory fields!');
-            }
+                }
+            );
         }
-        // }
     });
 
     /////////////////////////////////////////////////////////// User Creation EDIT START /////////////////////////////////////////////////////////////////////////////
@@ -412,7 +418,7 @@ function getMenuSubMenuList(userId) {
         });
 
         // Iterate over grouped data to generate HTML
-        var tabindex = 18;
+        var tabindex = 20;
         for (var mainMenuLink in grouped) {
             var menu = grouped[mainMenuLink];
             const menuHtml = `

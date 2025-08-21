@@ -116,16 +116,22 @@ $(document).ready(function () {
                 swalError('Warning', 'Mobile number already exists. Customer status: ' + statusMsg);
                 return false;
             } if (isValid) {
-                // Proceed with form submission
-                $.post('api/customer_data_files/submit_new.php', { cus_name, area, mobile, loan_category, loan_amount, new_promotion_id }, function (response) {
-                    if (response == 1) {
-                        swalSuccess('Success', 'Customer Data Added Successfully!');
-                        $('#new_form input').val('');
-                        $('#new_form input').css('border', '1px solid #cecece');
-                    } else {
-                        swalError('Error', 'Failed to add customer data.');
+                swalConfirm(
+                    'Are you sure?',
+                    'Do you want to submit this new promotion?',
+                    function () {
+                        // Proceed with form submission
+                        $.post('api/customer_data_files/submit_new.php', { cus_name, area, mobile, loan_category, loan_amount, new_promotion_id }, function (response) {
+                            if (response == 1) {
+                                swalSuccess('Success', 'Customer Data Added Successfully!');
+                                $('#new_form input').val('');
+                                $('#new_form input').css('border', '1px solid #cecece');
+                            } else {
+                                swalError('Error', 'Failed to add customer data.');
+                            }
+                        });
                     }
-                });
+                );
             }
         }, 'json');
     });
@@ -169,6 +175,12 @@ $(document).ready(function () {
 
     $(document).on('click', '#existing_detail_btn', function () {
         var existing_details = $("#existing_details").val();
+
+        if (!existing_details || existing_details.length === 0) {
+            swalError("Warning", "Please select at least one option before proceed.");
+            return; // stop execution
+        }
+
         getExistingPromotionTable(existing_details);
     });
 
@@ -188,6 +200,12 @@ $(document).ready(function () {
 
     $(document).on('click', '#repromotion_detail_btn', function () {
         var repromotion_details = $("#repromotion_details").val();
+
+        if (!repromotion_details || repromotion_details.length === 0) {
+            swalError("Warning", "Please select at least one option before proceed.");
+            return; // stop execution
+        }
+
         getRePromotionTable(repromotion_details);
     });
 

@@ -1,7 +1,7 @@
 <!--Agent Creation List Start-->
 <div class="text-right">
     <button type="button" class="btn btn-primary " id="add_agent"><span class="fa fa-plus"></span>&nbsp; Add Agent Creation</button>
-    <button type="button" class="btn btn-primary" id="back_btn" style="display: none;"><span class="icon-arrow-left"></span>&nbsp; Back </button>
+    <button type="button" class="btn btn-primary" id="back_btn" tabindex="9" style="display: none;"><span class="icon-arrow-left"></span>&nbsp; Back </button>
 </div>
 <br>
 <div class="card agent_table_content">
@@ -73,7 +73,7 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="occupation"> Occupation</label>
-                                    <input type="text" class="form-control" id="occupation" name="occupation" pattern="[a-zA-Z\s]+" placeholder="Enter occupation" tabindex="5">
+                                    <input type="text" class="form-control" id="occupation" name="occupation" pattern="[a-zA-Z\s]+" placeholder="Enter occupation" tabindex="6">
                                 </div>
                             </div>
                         </div>
@@ -83,8 +83,8 @@
             <div class="col-md-12 ">
                 <div class="text-right">
 
-                    <button type="submit" name="submit_agent_creation" id="submit_agent_creation" class="btn btn-primary" value="Submit" tabindex="6"><span class="icon-check"></span>&nbsp;Submit</button>
-                    <button type="reset" class="btn btn-outline-secondary" tabindex="7">Clear</button>
+                    <button type="submit" name="submit_agent_creation" id="submit_agent_creation" class="btn btn-primary" value="Submit" tabindex="7"><span class="icon-check"></span>&nbsp;Submit</button>
+                    <button type="reset" class="btn btn-outline-secondary" tabindex="8">Clear</button>
                 </div>
             </div>
         </div>

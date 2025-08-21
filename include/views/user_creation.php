@@ -2,7 +2,7 @@
     <div class="col-12">
         <div class="col-12 text-right">
             <button class="btn btn-primary add_user_btn"><span class="icon-add"></span>Add User Creation</button>
-            <button class="btn btn-primary back_to_userList_btn" style="display: none;"><span class="icon-arrow-left"></span>Back</button>
+            <button class="btn btn-primary back_to_userList_btn" tabindex="64" style="display: none;"><span class="icon-arrow-left"></span>Back</button>
         </div></br>
         <!----------------------------- CARD START  USER CREATION TABLE ------------------------------>
         <div class="card user_creation_table_content">
@@ -187,7 +187,7 @@
                                     <div class="col-sm-4 col-md-4 col-lg-4">
                                         <div class="form-group">
                                             <label for="collection_access">Collection Access</label><span class="text-danger">*</span>
-                                            <select class="form-control" id="collection_access" name="collection_access" tabindex="17" >
+                                            <select class="form-control" id="collection_access" name="collection_access" tabindex="18" >
                                                 <option value="">Select Collection Access</option>
                                                 <option value="1">YES</option>
                                                 <option value="2">NO</option>
@@ -197,7 +197,7 @@
                                     <div class="col-sm-4 col-md-4 col-lg-4">
                                         <div class="form-group">
                                             <label for="download_access">Download Access</label><span class="text-danger">*</span>
-                                            <select class="form-control" id="download_access" name="download_access" tabindex="18" >
+                                            <select class="form-control" id="download_access" name="download_access" tabindex="19" >
                                                 <option value="">Select Download Access</option>
                                                 <option value="1">YES</option>
                                                 <option value="2">NO</option>
@@ -221,8 +221,8 @@
                         <!--- ---------------------- Screen Mapping END  ----------------------------- -->
 
                         <div class="col-12 mt-3 text-right">
-                            <button name="submit_user_creation" id="submit_user_creation" class="btn btn-primary" tabindex="51"><span class="icon-check"></span>&nbsp;Submit</button>
-                            <button type="reset" class="btn btn-outline-secondary" id="reset_btn" tabindex="52">Clear</button>
+                            <button name="submit_user_creation" id="submit_user_creation" class="btn btn-primary" tabindex="62"><span class="icon-check"></span>&nbsp;Submit</button>
+                            <button type="reset" class="btn btn-outline-secondary" id="reset_btn" tabindex="63">Clear</button>
                         </div>
 
                     </div>
@@ -234,7 +234,7 @@
 </div>
 
 <!-- /////////////////////////////////////////////////////////////////// Role Modal Start ////////////////////////////////////////////////////////////////////// -->
-<div class="modal fade" id="add_role_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="add_role_modal" tabindex="1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
@@ -250,13 +250,13 @@
                         <div class="col-sm-4 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label for="add_role">Role</label><span class="text-danger">*</span>
-                                <input class="form-control" name="add_role" id="add_role" tabindex="2" placeholder="Enter Role">
+                                <input class="form-control" name="add_role" id="add_role" tabindex="1" placeholder="Enter Role">
                                 <input type="hidden" id="role_id">
                             </div>
                         </div>
                         <div class="col-sm-4 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <button name="submit_role" id="submit_role" class="btn btn-primary" tabindex="3" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
+                                <button name="submit_role" id="submit_role" class="btn btn-primary" tabindex="1" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
                             </div>
                         </div>
                     </div>
@@ -278,7 +278,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal" tabindex="4" onclick="getRoleDropdown()">Close</button>
+                <button class="btn btn-secondary" data-dismiss="modal" tabindex="1" onclick="getRoleDropdown()">Close</button>
             </div>
         </div>
     </div>
@@ -286,7 +286,7 @@
 <!-- /////////////////////////////////////////////////////////////////// Role Modal END ////////////////////////////////////////////////////////////////////// -->
 
 <!-- /////////////////////////////////////////////////////////////////// Designation Modal Start ////////////////////////////////////////////////////////////////////// -->
-<div class="modal fade" id="add_designation_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="add_designation_modal" tabindex="1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
@@ -302,13 +302,13 @@
                         <div class="col-sm-4 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label for="add_designation">Designation</label><span class="text-danger">*</span>
-                                <input class="form-control" name="add_designation" id="add_designation" tabindex="2" placeholder="Enter Designation">
+                                <input class="form-control" name="add_designation" id="add_designation" tabindex="1" placeholder="Enter Designation">
                                 <input type="hidden" id="add_designation_id" value='0'>
                             </div>
                         </div>
                         <div class="col-sm-4 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <button name="submit_deisgnation" id="submit_deisgnation" class="btn btn-primary" tabindex="3" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
+                                <button name="submit_deisgnation" id="submit_deisgnation" class="btn btn-primary" tabindex="1" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
                             </div>
                         </div>
                     </div>
@@ -330,7 +330,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal" tabindex="17" onclick="getDesignationDropdown()">Close</button>
+                <button class="btn btn-secondary" data-dismiss="modal" tabindex="1" onclick="getDesignationDropdown()">Close</button>
             </div>
         </div>
     </div>

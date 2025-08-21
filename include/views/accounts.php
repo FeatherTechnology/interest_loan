@@ -128,17 +128,17 @@ require_once '../../include/views/money_format_india.php';
                     <div class="col-sm-3 col-md-3 col-lg-3"></div>
                     <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12">
                         <div class="form-group">
-                            <input type="radio" id="coll_hand_cash" name="coll_cash_type" value='1' />&emsp;<label class='radio-style'>Hand Cash</label>&emsp;
+                            <input type="radio" id="coll_hand_cash" name="coll_cash_type" tabindex="1" value='1' />&emsp;<label class='radio-style'>Hand Cash</label>&emsp;
                         </div>
                     </div>
                     <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12">
                         <div class="form-group">
-                            <input type="radio" id="coll_bank_cash" name="coll_cash_type" value='2' />&emsp;<label class='radio-style'>Bank Cash</label>&emsp;
+                            <input type="radio" id="coll_bank_cash" name="coll_cash_type" tabindex="2" value='2' />&emsp;<label class='radio-style'>Bank Cash</label>&emsp;
                         </div>
                     </div>
                     <div class="col-sm-2 col-md-2 col-lg-2">
                         <div class="form-group">
-                            <select class="form-control" name="coll_bank_name" id="coll_bank_name" disabled>
+                            <select class="form-control" name="coll_bank_name" id="coll_bank_name" disabled tabindex="3">
                                 <option value="">Select Bank</option>
                             </select>
                         </div>
@@ -181,17 +181,17 @@ require_once '../../include/views/money_format_india.php';
                             <div class="col-sm-3 col-md-3 col-lg-3"></div>
                             <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12">
                                 <div class="form-group">
-                                    <input type="radio" id="loan_issue_hand_cash" name="issue_cash_type" value='1' />&emsp;<label class='radio-style'>Hand Cash</label>&emsp;
+                                    <input type="radio" id="loan_issue_hand_cash" name="issue_cash_type" tabindex="1" value='1' />&emsp;<label class='radio-style'>Hand Cash</label>&emsp;
                                 </div>
                             </div>
                             <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12">
                                 <div class="form-group">
-                                    <input type="radio" id="loan_issue_bank_cash" name="issue_cash_type" value='2' />&emsp;<label class='radio-style'>Bank Cash</label>&emsp;
+                                    <input type="radio" id="loan_issue_bank_cash" name="issue_cash_type" tabindex="2" value='2' />&emsp;<label class='radio-style'>Bank Cash</label>&emsp;
                                 </div>
                             </div>
                             <div class="col-sm-2 col-md-2 col-lg-2">
                                 <div class="form-group">
-                                    <select class="form-control" name="issue_bank_name" id="issue_bank_name">
+                                    <select class="form-control" name="issue_bank_name" id="issue_bank_name" tabindex="3">
                                         <option value="">Select Bank</option>
                                     </select>
                                 </div>
@@ -301,7 +301,7 @@ require_once '../../include/views/money_format_india.php';
 
 <!------------------------------------------------------------------------- Expenses Modal Start ------------------------------------------------------------------>
 
-<div class="modal fade" id="add_expenses_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="add_expenses_modal" tabindex="1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
@@ -318,17 +318,17 @@ require_once '../../include/views/money_format_india.php';
                             <div class="col-sm-1 col-md-1 col-lg-1"></div>
                             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
                                 <div class="form-group">
-                                    <input type="radio" id="expenses_hand_cash" name="expenses_cash_type" tabindex="2" value='1' />&emsp;<label class='radio-style'>Hand Cash</label>&emsp;
+                                    <input type="radio" id="expenses_hand_cash" name="expenses_cash_type" tabindex="1" value='1' />&emsp;<label class='radio-style'>Hand Cash</label>&emsp;
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
-                                    <input type="radio" id="expenses_bank_cash" name="expenses_cash_type" tabindex="3" value='2' />&emsp;<label class='radio-style'>Bank Cash</label>&emsp;
+                                    <input type="radio" id="expenses_bank_cash" name="expenses_cash_type" tabindex="1" value='2' />&emsp;<label class='radio-style'>Bank Cash</label>&emsp;
                                 </div>
                             </div>
                             <div class="col-sm-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <select class="form-control" name="expenses_bank_name" id="expenses_bank_name" tabindex="4" disabled>
+                                    <select class="form-control" name="expenses_bank_name" id="expenses_bank_name" tabindex="1" disabled>
                                         <option value="">Select Bank</option>
                                     </select>
                                 </div>
@@ -339,13 +339,13 @@ require_once '../../include/views/money_format_india.php';
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="invoice_id">Invoice ID</label><span class="text-danger">*</span>
-                                    <input type="text" class="form-control" name="invoice_id" id="invoice_id" tabindex="5" placeholder="Invoice ID" readonly>
+                                    <input type="text" class="form-control" name="invoice_id" id="invoice_id" tabindex="1" placeholder="Invoice ID" readonly>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="branch_name">Branch Name</label><span class="text-danger">*</span>
-                                    <select class="form-control" name="branch_name" id="branch_name" tabindex="6">
+                                    <select class="form-control" name="branch_name" id="branch_name" tabindex="1">
                                         <option value="">Select Branch Name</option>
                                     </select>
                                 </div>
@@ -353,7 +353,7 @@ require_once '../../include/views/money_format_india.php';
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="expenses_category">Expenses Category</label><span class="text-danger">*</span>
-                                    <select class="form-control" name="expenses_category" id="expenses_category" tabindex="7">
+                                    <select class="form-control" name="expenses_category" id="expenses_category" tabindex="1">
                                         <option value="">Select Expenses Category</option>
                                         <option value="1">Pooja</option>
                                         <option value="2">Vehicle</option>
@@ -377,7 +377,7 @@ require_once '../../include/views/money_format_india.php';
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 agentDiv" style="display: none;">
                                 <div class="form-group">
                                     <label for="agent_name">Agent Name</label><span class="text-danger">*</span>
-                                    <select class="form-control" name="agent_name" id="agent_name" tabindex="8">
+                                    <select class="form-control" name="agent_name" id="agent_name" tabindex="1">
                                         <option value="">Select Agent Name</option>
                                     </select>
                                 </div>
@@ -385,37 +385,37 @@ require_once '../../include/views/money_format_india.php';
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 agentDiv" style="display: none;">
                                 <div class="form-group">
                                     <label for="expenses_total_issued">Total Issued</label><span class="text-danger">*</span>
-                                    <input class="form-control" name="expenses_total_issued" id="expenses_total_issued" tabindex="9" readonly>
+                                    <input class="form-control" name="expenses_total_issued" id="expenses_total_issued" tabindex="1" readonly>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 agentDiv" style="display: none;">
                                 <div class="form-group">
                                     <label for="expenses_total_amnt">Total Amount</label><span class="text-danger">*</span>
-                                    <input class="form-control" name="expenses_total_amnt" id="expenses_total_amnt" tabindex="10" readonly>
+                                    <input class="form-control" name="expenses_total_amnt" id="expenses_total_amnt" tabindex="1" readonly>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="description">Description</label><span class="text-danger">*</span>
-                                    <textarea class="form-control" name="description" id="description" tabindex="11"></textarea>
+                                    <textarea class="form-control" name="description" id="description" tabindex="1"></textarea>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="expenses_amnt">Amount</label><span class="text-danger">*</span>
-                                    <input type="number" class="form-control" name="expenses_amnt" id="expenses_amnt" tabindex="12">
+                                    <input type="number" class="form-control" name="expenses_amnt" id="expenses_amnt" tabindex="1">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 exp_trans_div" style="display: none;">
                                 <div class="form-group">
                                     <label for="expenses_trans_id">Transaction ID</label><span class="text-danger">*</span>
-                                    <input type="number" class="form-control" name="expenses_trans_id" id="expenses_trans_id" tabindex="13">
+                                    <input type="number" class="form-control" name="expenses_trans_id" id="expenses_trans_id" tabindex="1">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
-                                    <button name="submit_expenses_creation" id="submit_expenses_creation" class="btn btn-primary" tabindex="14" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
-                                    <button type="reset" id="clear_expenses_form" class="btn btn-outline-secondary" style="margin-top: 18px;" tabindex="15">Clear</button>
+                                    <button name="submit_expenses_creation" id="submit_expenses_creation" class="btn btn-primary" tabindex="1" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
+                                    <button type="reset" id="clear_expenses_form" class="btn btn-outline-secondary" style="margin-top: 18px;" tabindex="1">Clear</button>
                                 </div>
                             </div>
                         </div>
@@ -448,7 +448,7 @@ require_once '../../include/views/money_format_india.php';
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary exp-clse" data-dismiss="modal" tabindex="15">Close</button>
+                <button class="btn btn-secondary exp-clse" data-dismiss="modal" tabindex="1">Close</button>
             </div>
         </div>
     </div>
@@ -458,7 +458,7 @@ require_once '../../include/views/money_format_india.php';
 
 <!------------------------------------------------------------ Other Transaction Modal Start ---------------------------------------------------------------------->
 
-<div class="modal fade" id="add_other_transaction_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="add_other_transaction_modal" tabindex="1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
@@ -475,17 +475,17 @@ require_once '../../include/views/money_format_india.php';
                             <div class="col-sm-1 col-md-1 col-lg-1"></div>
                             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
                                 <div class="form-group">
-                                    <input type="radio" id="othertransaction_hand_cash" name="othertransaction_cash_type" tabindex="2" value='1' />&emsp;<label class='radio-style'>Hand Cash</label>&emsp;
+                                    <input type="radio" id="othertransaction_hand_cash" name="othertransaction_cash_type" tabindex="1" value='1' />&emsp;<label class='radio-style'>Hand Cash</label>&emsp;
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
-                                    <input type="radio" id="othertransaction_bank_cash" name="othertransaction_cash_type" tabindex="3" value='2' />&emsp;<label class='radio-style'>Bank Cash</label>&emsp;
+                                    <input type="radio" id="othertransaction_bank_cash" name="othertransaction_cash_type" tabindex="1" value='2' />&emsp;<label class='radio-style'>Bank Cash</label>&emsp;
                                 </div>
                             </div>
                             <div class="col-sm-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <select class="form-control" name="othertransaction_bank_name" id="othertransaction_bank_name" tabindex="4" disabled>
+                                    <select class="form-control" name="othertransaction_bank_name" id="othertransaction_bank_name" tabindex="1" disabled>
                                         <option value="">Select Bank Name</option>
                                     </select>
                                 </div>
@@ -496,7 +496,7 @@ require_once '../../include/views/money_format_india.php';
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="trans_category">Transaction Category</label><span class="text-danger">*</span>
-                                    <select class="form-control" name="trans_category" id="trans_category" tabindex="5">
+                                    <select class="form-control" name="trans_category" id="trans_category" tabindex="1">
                                         <option value="">Select Transaction Category</option>
                                         <option value="1">Deposit</option>
                                         <option value="2">Investment</option>
@@ -512,20 +512,20 @@ require_once '../../include/views/money_format_india.php';
                             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
                                 <div class="form-group">
                                     <label for="other_trans_name">Name</label><span class="text-danger">*</span>
-                                    <select class="form-control" id="other_trans_name" name="other_trans_name" tabindex="6">
+                                    <select class="form-control" id="other_trans_name" name="other_trans_name" tabindex="1">
                                         <option value="">Select Name</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12" style="margin-top: 18px; padding-left: 0px !important">
                                 <div class="form-group">
-                                    <button type="button" class="btn btn-primary modalBtnCss" id="name_modal_btn" tabindex="7">+</button>
+                                    <button type="button" class="btn btn-primary modalBtnCss" id="name_modal_btn" tabindex="1">+</button>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="cat_type">Type</label><span class="text-danger">*</span>
-                                    <select class="form-control" name="cat_type" id="cat_type" tabindex="8">
+                                    <select class="form-control" name="cat_type" id="cat_type" tabindex="1">
                                         <option value="">Select Type</option>
                                     </select>
                                 </div>
@@ -533,31 +533,31 @@ require_once '../../include/views/money_format_india.php';
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="other_ref_id">Reference ID</label><span class="text-danger">*</span>
-                                    <input type="text" class="form-control" name="other_ref_id" id="other_ref_id" tabindex="9" readonly>
+                                    <input type="text" class="form-control" name="other_ref_id" id="other_ref_id" tabindex="1" readonly>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 other_trans_div" style="display: none;">
                                 <div class="form-group">
                                     <label for="other_trans_id">Transaction ID</label><span class="text-danger">*</span>
-                                    <input type="number" class="form-control" name="other_trans_id" id="other_trans_id" tabindex="10">
+                                    <input type="number" class="form-control" name="other_trans_id" id="other_trans_id" tabindex="1">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="other_amnt">Amount</label><span class="text-danger">*</span>
-                                    <input type="number" class="form-control" name="other_amnt" id="other_amnt" tabindex="12">
+                                    <input type="number" class="form-control" name="other_amnt" id="other_amnt" tabindex="1">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="other_remark">Remark</label><span class="text-danger">*</span>
-                                    <textarea class="form-control" name="other_remark" id="other_remark" tabindex="13"></textarea>
+                                    <textarea class="form-control" name="other_remark" id="other_remark" tabindex="1"></textarea>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
-                                    <button name="submit_other_transaction" id="submit_other_transaction" class="btn btn-primary" tabindex="14" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
-                                    <button type="reset" id="clear_othertransaction_form" class="btn btn-outline-secondary" style="margin-top: 18px;" tabindex="15">Clear</button>
+                                    <button name="submit_other_transaction" id="submit_other_transaction" class="btn btn-primary" tabindex="1" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
+                                    <button type="reset" id="clear_othertransaction_form" class="btn btn-outline-secondary" style="margin-top: 18px;" tabindex="1">Clear</button>
                                 </div>
                             </div>
                         </div>
@@ -598,7 +598,7 @@ require_once '../../include/views/money_format_india.php';
 
 <!------------------------------------------------------------ Other Transaction Name Modal Start ------------------------------------------------------------------>
 
-<div class="modal fade" id="add_name_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="add_name_modal" tabindex="1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
@@ -614,18 +614,18 @@ require_once '../../include/views/money_format_india.php';
                             <div class="col-sm-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label for="trans_cat">Transaction Category</label><span class="text-danger">*</span>
-                                    <input type="text" class="form-control" name="trans_cat" id="trans_cat" tabindex="2" readonly>
+                                    <input type="text" class="form-control" name="trans_cat" id="trans_cat" tabindex="1" readonly>
                                 </div>
                             </div>
                             <div class="col-sm-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label for="other_name">Name</label><span class="text-danger">*</span>
-                                    <input type="text" class="form-control" name="other_name" id="other_name" tabindex="3">
+                                    <input type="text" class="form-control" name="other_name" id="other_name" tabindex="1">
                                 </div>
                             </div>
                             <div class="col-sm-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <button name="submit_name" id="submit_name" class="btn btn-primary" tabindex="4" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
+                                    <button name="submit_name" id="submit_name" class="btn btn-primary" tabindex="1" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
                                 </div>
                             </div>
                         </div>
@@ -658,7 +658,7 @@ require_once '../../include/views/money_format_india.php';
 
 <!-- /////////////////////////////////////////////////////////////////// Balance Sheet Modal START ////////////////////////////////////////////////////////////////////// -->
 
-<div class="modal fade blncModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade blncModal" tabindex="1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 
     <div class="modal-dialog modal-lg">
         <div class="modal-content" style="background-color: white">
@@ -676,7 +676,7 @@ require_once '../../include/views/money_format_india.php';
                             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
                                 <div class="form-group">
                                     <label for='IDE_type'>Balance Sheet type</label>
-                                    <select class="form-control" id='IDE_type' name='IDE_type'>
+                                    <select class="form-control" id='IDE_type' name='IDE_type' tabindex="1">
                                         <option value=''>Select Sheet type</option>
                                         <option value='1'>Deposit</option>
                                         <option value='3'>EL</option>
@@ -687,7 +687,7 @@ require_once '../../include/views/money_format_india.php';
                             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
                                 <div class="form-group">
                                     <label for='IDE_view_type'>View</label>
-                                    <select class="form-control" id='IDE_view_type' name='IDE_view_type'>
+                                    <select class="form-control" id='IDE_view_type' name='IDE_view_type' tabindex="1">
                                         <option value=''>Select Sheet type</option>
                                         <option value='1'>Overall</option>
                                         <option value='2'>Individual</option>
@@ -697,7 +697,7 @@ require_once '../../include/views/money_format_india.php';
                             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12 IDE_nameDiv" style="display:none">
                                 <div class="form-group">
                                     <label for='IDE_name_list'>Name</label>
-                                    <select class="form-control" id='IDE_name_list' name='IDE_name_list'>
+                                    <select class="form-control" id='IDE_name_list' name='IDE_name_list' tabindex="1">
                                         <option value=''>Select Name</option>
                                     </select>
                                 </div>
@@ -711,7 +711,7 @@ require_once '../../include/views/money_format_india.php';
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" id='' data-dismiss="modal" onclick="resetBlncSheet()">Close</button>
+                <button type="button" class="btn btn-secondary" id='' tabindex="1" data-dismiss="modal" onclick="resetBlncSheet()">Close</button>
             </div>
         </div>
     </div>

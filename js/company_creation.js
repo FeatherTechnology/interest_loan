@@ -11,10 +11,27 @@ $(document).ready(function () {
         getTalukList($(this).val());
     });
 
-    $('#submit_company_creation').click(function () {
+    /////////////////////////// submit page AJAX /////////////////////////////////////
+
+    $('#submit_company_creation').click(function (event) {
         event.preventDefault();
-        //Validation
-        let company_name = $('#company_name').val(); let address = $('#address').val(); let state = $('#state').val(); let district = $('#district').val(); let taluk = $('#taluk').val(); let place = $('#place').val(); let pincode = $('#pincode').val(); let website = $('#website').val(); let mailid = $('#mailid').val(); let mobile = $('#mobile').val(); let whatsapp = $('#whatsapp').val(); let landline_code = $('#landline_code').val(); let landline = $('#landline').val(); let companyid = $('#companyid').val();
+
+        // Validation
+        let company_name = $('#company_name').val();
+        let address = $('#address').val();
+        let state = $('#state').val();
+        let district = $('#district').val();
+        let taluk = $('#taluk').val();
+        let place = $('#place').val();
+        let pincode = $('#pincode').val();
+        let website = $('#website').val();
+        let mailid = $('#mailid').val();
+        let mobile = $('#mobile').val();
+        let whatsapp = $('#whatsapp').val();
+        let landline_code = $('#landline_code').val();
+        let landline = $('#landline').val();
+        let companyid = $('#companyid').val();
+
         var data = ['company_name', 'address', 'state', 'place', 'district', 'taluk', 'pincode']
         var isValid = true;
         data.forEach(function (entry) {
@@ -23,25 +40,34 @@ $(document).ready(function () {
                 isValid = false;
             }
         });
+
         if (isValid) {
-            /////////////////////////// submit page AJAX /////////////////////////////////////
-            $.post('api/company_creation_files/submit_company_creation.php', { company_name, address, state, district, taluk, place, pincode, website, mailid, mobile, whatsapp, landline_code, landline, companyid }, function (response) {
-                if (response == '2') {
-                    swalSuccess('Success', 'Company Added Successfully!');
-                } else if (response == '1') {
-                    swalSuccess('Success', 'Company Updated Successfully!')
-                } else {
-                    swalError('Error', 'Error Occurs!')
+            swalConfirm(
+                'Are you sure?',
+                'Do you want to submit this company creation?',
+                function () {
+                    $.post('api/company_creation_files/submit_company_creation.php',
+                        { company_name, address, state, district, taluk, place, pincode, website, mailid, mobile, whatsapp, landline_code, landline, companyid },
+                        function (response) {
+                            if (response == '2') {
+                                swalSuccess('Success', 'Company Creation Added Successfully!');
+                            } else if (response == '1') {
+                                swalSuccess('Success', 'Company Creation Updated Successfully!');
+                            } else {
+                                swalError('Error', 'Error Occurs!');
+                            }
+                            $('#company_creation').trigger('reset');
+                            getCompanyTable();
+                            swapTableAndCreation(); //to change to div to table content.
+                        }
+                    );
                 }
-
-                $('#company_creation').trigger('reset');
-                getCompanyTable();
-                swapTableAndCreation();//to change to div to table content.
-
-            });
-            /////////////////////////// submit page AJAX END/////////////////////////////////////
+            );
         }
+
     });
+
+    /////////////////////////// submit page AJAX END/////////////////////////////////////
 
     ///////////////////////////////////// EDIT Screen START   /////////////////////////////////////
     $(document).on('click', '.companyActionBtn', async function () {

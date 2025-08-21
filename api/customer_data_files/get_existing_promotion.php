@@ -19,8 +19,27 @@ $whereCondition = "";
 
 // Build where condition for existing_details
 if (isset($_POST['existing_details']) && !empty($_POST['existing_details'])) {
-    $existing_details_str = implode("','", array_map('htmlspecialchars', $_POST['existing_details'])); // Prevent XSS
-    $whereCondition = "AND replace(ec.existing_detail,' ','') IN ('$existing_details_str')";
+    $details = $_POST['existing_details'];
+
+    $conditions = [];
+
+    // If "Needed" or "Later" selected
+    $normalSelections = array_intersect($details, ['needed', 'later']);
+    if (!empty($normalSelections)) {
+        // Make first letter uppercase to match DB values (Needed, Later)
+        $normalSelectionsStr = implode("','", array_map('ucfirst', $normalSelections));
+        $conditions[] = "replace(ec.existing_detail,' ','') IN ('$normalSelectionsStr')";
+    }
+
+    // If "To Follow" selected
+    if (in_array('tofollow', $details)) {
+        $conditions[] = "(ec.existing_detail IS NULL OR ec.existing_detail NOT IN ('Needed','Later'))";
+    }
+
+    // Combine conditions with OR
+    if (!empty($conditions)) {
+        $whereCondition = "AND (" . implode(" OR ", $conditions) . ")";
+    }
 }
 
 // Prepare the query to fetch customers with status >= 11
@@ -73,7 +92,7 @@ if ($customerQry->rowCount() > 0) {
         if ($customerRow['existing_detail'] != '') {
             $customerRow['action'] = $customerRow['existing_detail'];
         } else {
-            $customerRow['action'] = "<div class='dropdown'><button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button><div class='dropdown-content'><a href='#' class='exs_needed' value='" . $customerRow['loan_entry_id'] . "' data='Needed'>Needed</a><a href='#' class='exs_later' value='" . $customerRow['loan_entry_id'] . "' data='Later'>Later</a><a href='#' class='exs_to_follow' value='" . $customerRow['loan_entry_id'] . "' data='To Follow'>To Follow</a></div></div>";
+            $customerRow['action'] = "<div class='dropdown'><button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button><div class='dropdown-content'><a href='#' class='exs_needed' value='" . $customerRow['loan_entry_id'] . "' data='Needed'>Needed</a><a href='#' class='exs_later' value='" . $customerRow['loan_entry_id'] . "' data='Later'>Later</a></div></div>";
         }
 
         // Add the customer to the array

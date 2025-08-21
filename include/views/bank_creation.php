@@ -1,7 +1,7 @@
 <!-- Bank Creation List Start -->
 <div class="text-right">
     <button type="button" class="btn btn-primary " id="add_bank"><span class="fa fa-plus"></span>&nbsp; Add Bank Creation</button>
-    <button type="button" class="btn btn-primary" id="back_btn" style="display: none;"><span class="icon-arrow-left"></span>&nbsp; Back </button>
+    <button type="button" class="btn btn-primary" id="back_btn" tabindex="11" style="display: none;"><span class="icon-arrow-left"></span>&nbsp; Back </button>
 </div>
 <br>
 
@@ -81,7 +81,7 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="gpay"> Gpay Number</label>
-                                    <input type="number" class="form-control" id="gpay" name="gpay" onKeyPress="if(this.value.length==10) return false;" placeholder="Enter Gpay Number" tabindex="6">
+                                    <input type="number" class="form-control" id="gpay" name="gpay" onKeyPress="if(this.value.length==10) return false;" placeholder="Enter Gpay Number" tabindex="7">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">

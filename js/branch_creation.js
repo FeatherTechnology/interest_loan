@@ -12,10 +12,26 @@ $(document).ready(function () {
     });
 
     ////////////////////////////////branch creation submit start/////////////////////////////////////////////////////
+
     $('#submit_branch_creation').click(function () {
         event.preventDefault();
         //Validation
-        let company_name = $('#company_name').val(); let branch_code = $('#branch_code').val(); let branch_name = $('#branch_name').val(); let address = $('#address').val(); let state = $('#state').val(); let district = $('#district').val(); let taluk = $('#taluk').val(); let place = $('#place').val(); let pincode = $('#pincode').val(); let email_id = $('#email_id').val(); let mobile_number = $('#mobile_number').val(); let whatsapp = $('#whatsapp').val(); let landline = $('#landline').val(); let landline_code = $('#landline_code').val(); let branchid = $('#branchid').val();
+        let company_name = $('#company_name').val();
+        let branch_code = $('#branch_code').val();
+        let branch_name = $('#branch_name').val();
+        let address = $('#address').val();
+        let state = $('#state').val();
+        let district = $('#district').val();
+        let taluk = $('#taluk').val();
+        let place = $('#place').val();
+        let pincode = $('#pincode').val();
+        let email_id = $('#email_id').val();
+        let mobile_number = $('#mobile_number').val();
+        let whatsapp = $('#whatsapp').val();
+        let landline = $('#landline').val();
+        let landline_code = $('#landline_code').val();
+        let branchid = $('#branchid').val();
+
         var data = ['company_name', 'branch_code', 'branch_name', 'place', 'state', 'district', 'taluk', 'pincode']
         var isValid = true;
         data.forEach(function (entry) {
@@ -24,25 +40,32 @@ $(document).ready(function () {
                 isValid = false;
             }
         });
+
         if (isValid) {
-            $.post('api/branch_creation/submit_branch_creation.php', { company_name, branch_code, branch_name, address, state, district, taluk, place, pincode, email_id, mobile_number, whatsapp, landline, landline_code, branchid }, function (response) {
-                if (response == '2') {
-                    swalSuccess('Success', 'Branch Added Successfully!');
-                } else if (response == '1') {
-                    swalSuccess('Success', 'Branch Updated Successfully!')
-                } else {
-                    swalError('Error', 'Error Occurs!')
+            swalConfirm(
+                'Are you sure?',
+                'Do you want to submit this branch creation?',
+                function () {
+                    $.post('api/branch_creation/submit_branch_creation.php', { company_name, branch_code, branch_name, address, state, district, taluk, place, pincode, email_id, mobile_number, whatsapp, landline, landline_code, branchid }, function (response) {
+                        if (response == '2') {
+                            swalSuccess('Success', 'Branch Added Successfully!');
+                        } else if (response == '1') {
+                            swalSuccess('Success', 'Branch Updated Successfully!')
+                        } else {
+                            swalError('Error', 'Error Occurs!')
+                        }
+                        $('#branchid').val('');
+                        $('#branch_creation').trigger('reset');
+                        getBranchTable();
+                        swapTableAndCreation();//to change to div to table content.
+                    });
                 }
-                $('#branchid').val('');
-                $('#branch_creation').trigger('reset');
-                getBranchTable();
-                swapTableAndCreation();//to change to div to table content.
-
-            });
-
+            );
         }
     });
+
     //////////////////////////////////////////////////////branch creation submit End//////////////////////////////////////////
+
     /////////////////////////////////////////////////////Brach creation Edit start////////////////////////////////////
     $(document).on('click', '.branchActionBtn', async function () {
         var id = $(this).attr('value');
