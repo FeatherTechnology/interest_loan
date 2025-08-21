@@ -1,6 +1,6 @@
 <div class="text-right">
     <button type="button" class="btn btn-primary " id="add_customer"><span class="fa fa-plus"></span>&nbsp; Add Customer</button>
-    <button type="button" class="btn btn-primary" id="back_btn" style="display:none;"><span class="icon-arrow-left"></span>&nbsp; Back </button>
+    <button type="button" class="btn btn-primary" tabindex="27" id="back_btn" style="display:none;"><span class="icon-arrow-left"></span>&nbsp; Back </button>
 </div>
 <br>
 <div class="card customer_table_content">
@@ -55,32 +55,32 @@
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="first_name">First Name</label><span class="text-danger">*</span>
-                                            <input type="text" class="form-control " id="first_name" name="first_name" placeholder="Enter First name" tabindex="5">
+                                            <input type="text" class="form-control " id="first_name" name="first_name" placeholder="Enter First name" tabindex="3">
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="last_name">Last Name</label><span class="text-danger">*</span>
-                                            <input type="last_name" class="form-control" id="last_name" name="last_name" placeholder="Enter Last name" tabindex="6">
+                                            <input type="last_name" class="form-control" id="last_name" name="last_name" placeholder="Enter Last name" tabindex="4">
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="dob"> DOB</label>
-                                            <input type="date" class="form-control" id="dob" name="dob" placeholder="Enter Date Of Birth" tabindex="7">
+                                            <input type="date" class="form-control" id="dob" name="dob" placeholder="Enter Date Of Birth" tabindex="5">
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="age"> Age</label>
-                                            <input type="text" class="form-control" id="age" name="age" readonly placeholder="Age" tabindex="8">
+                                            <input type="text" class="form-control" id="age" name="age" readonly placeholder="Age" tabindex="6">
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="area">Area</label><span class="text-danger">*</span>
                                             <input type="hidden" id="area_edit">
-                                            <select type="text" class="form-control" id="area" name="area" tabindex="9">
+                                            <select type="text" class="form-control" id="area" name="area" tabindex="7">
                                                 <option value="">Select Area</option>
                                             </select>
                                         </div>
@@ -88,19 +88,19 @@
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="line"> Line </label><span class="text-danger">*</span>
-                                            <input type="text" class="form-control" id="line" name="line" disabled placeholder="Line" tabindex="30">
+                                            <input type="text" class="form-control" id="line" name="line" disabled placeholder="Line" tabindex="8">
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="mobile1"> Mobile Number 1</label><span class="text-danger">*</span>
-                                            <input type="number" class="form-control" id="mobile1" name="mobile1" placeholder="Enter Mobile Number 1" onKeyPress="if(this.value.length==10) return false;" tabindex="10">
+                                            <input type="number" class="form-control" id="mobile1" name="mobile1" placeholder="Enter Mobile Number 1" onKeyPress="if(this.value.length==10) return false;" tabindex="9">
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="mobile2"> Mobile Number 2</label>
-                                            <input type="number" class="form-control" id="mobile2" name="mobile2" onKeyPress="if(this.value.length==10) return false;" placeholder="Enter Mobile Number 2" tabindex="11">
+                                            <input type="number" class="form-control" id="mobile2" name="mobile2" onKeyPress="if(this.value.length==10) return false;" placeholder="Enter Mobile Number 2" tabindex="10">
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -114,38 +114,37 @@
                                                 <input type="radio" name="mobile_whatsapp" value="mobile2" id="mobile2_radio" tabindex="13">
                                                 Mobile Number 2
                                             </label>
-                                            <input type="hidden" id="selected_mobile_radio">
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="whatsapp"> WhatsApp Number </label>
-                                            <input type="number" class="form-control" id="whatsapp" name="whatsapp" onKeyPress="if(this.value.length==10) return false;" placeholder="Enter WhatsApp Number" tabindex="14">
+                                            <input type="number" class="form-control" id="whatsapp" name="whatsapp" onKeyPress="if(this.value.length==10) return false;" placeholder="Enter WhatsApp Number" tabindex="13">
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="occupation">Occupation</label>
-                                            <input type="text" class="form-control" id="occupation" name="occupation" placeholder="Enter Occupation" tabindex="15">
+                                            <input type="text" class="form-control" id="occupation" name="occupation" placeholder="Enter Occupation" tabindex="14">
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="occ_detail">Occupation Detail</label>
-                                            <input type="text" class="form-control" id="occ_detail" name="occ_detail" placeholder="Enter Occupation Detail" tabindex="16">
+                                            <input type="text" class="form-control" id="occ_detail" name="occ_detail" placeholder="Enter Occupation Detail" tabindex="15">
                                         </div>
                                     </div>
 
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="address"> Address </label>
-                                            <textarea class="form-control" name="address" id="address" placeholder="Enter Address" tabindex="17"></textarea>
+                                            <textarea class="form-control" name="address" id="address" placeholder="Enter Address" tabindex="16"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="native_address"> Native Address </label>
-                                            <textarea class="form-control" name="native_address" id="native_address" placeholder="Enter Native Address" tabindex="18"></textarea>
+                                            <textarea class="form-control" name="native_address" id="native_address" placeholder="Enter Native Address" tabindex="17"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -156,7 +155,7 @@
                                         <div class="form-group">
                                             <label for="pic"> Photo</label><br>
                                             <img id='imgshow' class="img_show" src='img\avatar.png' />
-                                            <input type="file" class="form-control  personal_info_disble" id="pic" name="pic" tabindex="20">
+                                            <input type="file" class="form-control  personal_info_disble" id="pic" name="pic" tabindex="18">
                                             <input type="hidden" class="personal_info_disble" id="per_pic">
                                         </div>
                                     </div>
@@ -170,7 +169,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">Family Info <span class="text-danger">*</span>
-                            <button type="button" class="btn btn-primary" id="add_group" name="add_group" data-toggle="modal" data-target="#add_fam_info_modal" onclick="getFamilyTable()" style="padding: 5px 35px; float: right;" tabindex='21'><span class="icon-add"></span></button>
+                            <button type="button" class="btn btn-primary" id="add_group" name="add_group" data-toggle="modal" data-target="#add_fam_info_modal" onclick="getFamilyTable()" style="padding: 5px 35px; float: right;" tabindex='19'><span class="icon-add"></span></button>
                         </div>
                     </div>
                     <div class="card-body">
@@ -202,7 +201,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">KYC Info <span class="text-danger">*</span>
-                            <button type="button" class="btn btn-primary" id="add_kyc" name="add_kyc" data-toggle="modal" data-target="#add_kyc_info_modal" onclick="getKycTable();fetchProofList()" style="padding: 5px 35px; float: right;" tabindex='33'><span class="icon-add"></span></button>
+                            <button type="button" class="btn btn-primary" id="add_kyc" name="add_kyc" data-toggle="modal" data-target="#add_kyc_info_modal" onclick="getKycTable();fetchProofList()" style="padding: 5px 35px; float: right;" tabindex='20'><span class="icon-add"></span></button>
                         </div>
                     </div>
                     <div class="card-body">
@@ -234,7 +233,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">Bank Info
-                            <button type="button" class="btn btn-primary" id="add_bank" name="add_bank" data-toggle="modal" data-target="#add_bank_info_modal" onclick="getBankTable()" style="padding: 5px 35px; float: right;" tabindex='32'><span class="icon-add"></span></button>
+                            <button type="button" class="btn btn-primary" id="add_bank" name="add_bank" data-toggle="modal" data-target="#add_bank_info_modal" onclick="getBankTable()" style="padding: 5px 35px; float: right;" tabindex='21'><span class="icon-add"></span></button>
                         </div>
                     </div>
                     <div class="card-body">
@@ -265,7 +264,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">Property Info
-                            <button type="button" class="btn btn-primary" id="add_property" name="add_property" data-toggle="modal" data-target="#add_prop_info_modal" onclick="getPropertyTable();getPropertyHolder()" style="padding: 5px 35px; float: right;" tabindex='31'><span class="icon-add"></span></button>
+                            <button type="button" class="btn btn-primary" id="add_property" name="add_property" data-toggle="modal" data-target="#add_prop_info_modal" onclick="getPropertyTable();getPropertyHolder()" style="padding: 5px 35px; float: right;" tabindex='22'><span class="icon-add"></span></button>
                         </div>
                     </div>
                     <div class="card-body">
@@ -299,13 +298,13 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="cus_limit"> Customer Limit</label><span class="text-danger">*</span>
-                                    <input type="number" class="form-control" id="cus_limit" name="cus_limit" placeholder="Enter Customer Limit" tabindex="36">
+                                    <input type="number" class="form-control" id="cus_limit" name="cus_limit" placeholder="Enter Customer Limit" tabindex="23">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="about_cus"> About Customer </label><span class="text-danger">*</span>
-                                    <textarea class="form-control" name="about_cus" id="about_cus" placeholder="Enter About Customer" tabindex="37"></textarea>
+                                    <textarea class="form-control" name="about_cus" id="about_cus" placeholder="Enter About Customer" tabindex="24"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -316,8 +315,8 @@
             <div class="col-md-12 ">
                 <div class="text-right">
 
-                    <button type="submit" name="submit_cus_creation" id="submit_cus_creation" class="btn btn-primary" value="Submit" tabindex="22"><span class="icon-check"></span>&nbsp;Submit</button>
-                    <button type="reset" class="btn btn-outline-secondary" tabindex="23">Clear</button>
+                    <button type="submit" name="submit_cus_creation" id="submit_cus_creation" class="btn btn-primary" value="Submit" tabindex="25"><span class="icon-check"></span>&nbsp;Submit</button>
+                    <button type="reset" class="btn btn-outline-secondary" tabindex="26">Clear</button>
                 </div>
             </div>
         </div>
@@ -326,7 +325,7 @@
 
 <!------------------------------------------------------------------ Family Info Modal start  ----------------------------------------------------------------------------->
 
-<div class="modal fade" id="add_fam_info_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="add_fam_info_modal" tabindex="1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
@@ -349,7 +348,7 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="fam_relationship">Relationship</label><span class="text-danger">*</span>
-                                    <select type="text" class="form-control" id="fam_relationship" name="fam_relationship" tabindex="2">
+                                    <select type="text" class="form-control" id="fam_relationship" name="fam_relationship" tabindex="1">
                                         <option value=""> Select Relationship </option>
                                         <option value="Father"> Father </option>
                                         <option value="Mother"> Mother </option>
@@ -365,39 +364,39 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 other" style="display: none;">
                                 <div class="form-group">
                                     <label for="relation_type">Relation Type</label>
-                                    <input class="form-control" name="relation_type" id="relation_type" tabindex="4" placeholder="Enter Relation Type">
+                                    <input class="form-control" name="relation_type" id="relation_type" tabindex="1" placeholder="Enter Relation Type">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="fam_age">Age</label>
-                                    <input type="number" class="form-control" name="fam_age" id="fam_age" tabindex="3" placeholder="Enter Age">
+                                    <input type="number" class="form-control" name="fam_age" id="fam_age" tabindex="1" placeholder="Enter Age">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="fam_occupation">Occupation</label>
-                                    <input class="form-control" name="fam_occupation" id="fam_occupation" tabindex="4" placeholder="Enter Occupation">
+                                    <input class="form-control" name="fam_occupation" id="fam_occupation" tabindex="1" placeholder="Enter Occupation">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="fam_aadhar">Aadhar No</label>
-                                    <input type="text" class="form-control" name="fam_aadhar" id="fam_aadhar" tabindex="5" maxlength="14" data-type="adhaar-number" placeholder="Enter Aadhar Number">
+                                    <input type="text" class="form-control" name="fam_aadhar" id="fam_aadhar" tabindex="1" maxlength="14" data-type="adhaar-number" placeholder="Enter Aadhar Number">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="fam_mobile">Mobile No</label>
-                                    <input type="number" class="form-control" name="fam_mobile" id="fam_mobile" onKeyPress="if(this.value.length==10) return false;" tabindex="6" placeholder="Enter Mobile Number">
+                                    <input type="number" class="form-control" name="fam_mobile" id="fam_mobile" onKeyPress="if(this.value.length==10) return false;" tabindex="1" placeholder="Enter Mobile Number">
                                 </div>
                             </div>
 
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="" style="visibility:hidden"></label><br>
-                                    <button name="submit_family" id="submit_family" class="btn btn-primary" tabindex="7"><span class="icon-check"></span>&nbsp;Submit</button>
-                                    <button type="reset" id="clear_fam_form" class="btn btn-outline-secondary" tabindex="8">Clear</button>
+                                    <button name="submit_family" id="submit_family" class="btn btn-primary" tabindex="1"><span class="icon-check"></span>&nbsp;Submit</button>
+                                    <button type="reset" id="clear_fam_form" class="btn btn-outline-secondary" tabindex="1">Clear</button>
                                 </div>
                             </div>
                         </div>
@@ -434,7 +433,7 @@
 
 <!------------------------------------------------------------------ KYC Info Modal Start -------------------------------------------------------------------------->
 
-<div class="modal fade" id="add_kyc_info_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="add_kyc_info_modal" tabindex="1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
@@ -467,7 +466,7 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 fam_mem_div" style="display:none">
                                 <div class="form-group">
                                     <label for="fam_mem"> Family Member </label><span class="text-danger">*</span>
-                                    <select type="text" class="form-control" id="fam_mem" name="fam_mem">
+                                    <select type="text" class="form-control" id="fam_mem" name="fam_mem" tabindex="1">
                                         <option value=""> Select Family Member </option>
                                     </select>
                                 </div>
@@ -507,7 +506,7 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <button name="submit_kyc" id="submit_kyc" class="btn btn-primary" tabindex="1" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
-                                    <button type="reset" id="clear_kyc_form" class="btn btn-outline-secondary" style="margin-top: 18px;" tabindex="9">Clear</button>
+                                    <button type="reset" id="clear_kyc_form" class="btn btn-outline-secondary" style="margin-top: 18px;" tabindex="1">Clear</button>
                                 </div>
                             </div>
                         </div>
@@ -545,7 +544,7 @@
 
 <!------------------------------------------------------------- KYC Proof Modal Start ------------------------------------------------------------------------------>
 
-<div class="modal fade" id="add_proof_info_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="add_proof_info_modal" tabindex="1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
@@ -602,7 +601,7 @@
 
 <!------------------------------------------------------------------- Bank Info Modal Start ---------------------------------------------------------------------------->
 
-<div class="modal fade" id="add_bank_info_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="add_bank_info_modal" tabindex="1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
@@ -649,7 +648,7 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <button name="submit_bank" id="submit_bank" class="btn btn-primary" tabindex="1" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
-                                    <button type="reset" id="clear_bank_form" class="btn btn-outline-secondary" style="margin-top: 18px;" tabindex="8">Clear</button>
+                                    <button type="reset" id="clear_bank_form" class="btn btn-outline-secondary" style="margin-top: 18px;" tabindex="1">Clear</button>
                                 </div>
                             </div>
                         </div>
@@ -685,7 +684,7 @@
 
 <!--------------------------------------------------------------- Property Info Modal Start --------------------------------------------------------------------------->
 
-<div class="modal fade" id="add_prop_info_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="add_prop_info_modal" tabindex="1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
@@ -727,7 +726,7 @@
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
-                                    <button name="submit_property" id="submit_property" class="btn btn-primary" tabindex="6" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
+                                    <button name="submit_property" id="submit_property" class="btn btn-primary" tabindex="1" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
                                     <button type="reset" id="clear_prop_form" class="btn btn-outline-secondary" style="margin-top: 18px;" tabindex="1">Clear</button>
                                 </div>
                             </div>

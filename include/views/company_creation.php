@@ -2,7 +2,7 @@
     <div class="col-12">
         <div class="col-12 text-right">
             <button class="btn btn-primary addcompanyBtn" id="add_company"><span class="icon-add"></span> Add Company Creation</button>
-            <button class="btn btn-primary backBtn" style="display: none;"><span class="icon-arrow-left"></span> Back</button>
+            <button class="btn btn-primary backBtn" tabindex="16" style="display: none;"><span class="icon-arrow-left"></span> Back</button>
         </div></br>
         <!----------------------------- CARD START  COMPANY CREATION TABLE------------------------------>
         <div class="card wow company_table_content">

@@ -223,6 +223,8 @@ require_once '../../include/views/money_format_india.php';
                 AND MONTH(c.collection_date) = MONTH('$cusDueMonth') 
                 AND YEAR(c.collection_date) = YEAR('$cusDueMonth');");
 
+            $interest_paid = getPaidInterest($pdo, $le_id);
+
             if ($run->rowCount() > 0) {
                 while ($row = $run->fetch()) {
 
@@ -322,12 +324,13 @@ require_once '../../include/views/money_format_india.php';
 
                         <!-- Balance Interest Amount (Payable - Paid) For After Due Start Date -->
                         <td>
-                            <?php $balanceInterestAmount = $payableMinusCollection - $paidInterestMinusCollection;
-                            if ($paidInterestMinusCollection != '') {
-                                echo moneyFormatIndia($balanceInterestAmount);
-                            } else {
-                                echo 0;
-                            } ?>
+                            <?php
+                            $balanceInterestAmount = $payableMinusCollection - $paidInterestMinusCollection;
+                            if ($balanceInterestAmount < 0) {
+                                $balanceInterestAmount = 0;
+                            }
+                            echo moneyFormatIndia($balanceInterestAmount);
+                            ?>
                         </td>
 
                         <!-- Paid Principal Amount For After Due Start Date -->
@@ -402,7 +405,8 @@ require_once '../../include/views/money_format_india.php';
                         <!-- Pending Calculation For After Due Start Date -->
                         <td>
                             <?php
-                            $pendingval = ceilAmount(pendingCalculation($loanFrom, $curInterest, $pdo, $le_id));
+                            $pendingval = pendingCalculation($loanFrom, $curInterest, $pdo, $le_id) - $interest_paid;
+                            $pendingval = max(0, ceilAmount($pendingval));
                             echo moneyFormatIndia($pendingval);
                             ?>
                         </td>
@@ -410,7 +414,8 @@ require_once '../../include/views/money_format_india.php';
                         <!-- Payable Calculation For After Due Start Date -->
                         <td>
                             <?php
-                            $payable = ceilAmount(payableCalculation($loanFrom, $curInterest, $pdo, $le_id));
+                            $payable = payableCalculation($loanFrom, $curInterest, $pdo, $le_id) - $interest_paid;
+                            $payable = max(0, ceilAmount($payable));
                             echo moneyFormatIndia($payable);
                             ?>
                         </td>
@@ -760,6 +765,13 @@ function dueAmtCalculation($pdo, $start_date, $end_date, $interest_amount, $loan
     }
 
     return $result;
+}
+
+function getPaidInterest($pdo, $le_id)
+{
+    $qry = $pdo->query("SELECT SUM(interest_amount_track) as int_paid FROM `collection` WHERE loan_entry_id = '$le_id' and (interest_amount_track != '' and interest_amount_track IS NOT NULL) ");
+    $int_paid = $qry->fetch()['int_paid'];
+    return intVal($int_paid);
 }
 
 function ceilAmount($amt)

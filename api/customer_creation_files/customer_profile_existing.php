@@ -26,7 +26,8 @@ if ($qry->rowCount() > 0) {
             fi.fam_relationship,
             fi.relation_type,
             fi.fam_aadhar,
-            fi.fam_mobile
+            fi.fam_mobile,
+            gi.gu_pic
         FROM guarantor_info gi
         LEFT JOIN family_info fi ON gi.family_info_id = fi.id
         WHERE gi.loan_entry_id = ?");

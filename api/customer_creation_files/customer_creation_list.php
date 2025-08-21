@@ -24,6 +24,7 @@ if (isset($_POST['search'])) {
                     OR CONCAT(cc.first_name, ' ', cc.last_name)LIKE '%" . $search . "%'
                     OR cc.aadhar_number LIKE '%" . $search . "%'
                     OR cc.mobile1 LIKE '%" . $search . "%'
+                    OR lnc.linename LIKE '%" . $search . "%'
                     OR anc.areaname LIKE '%" . $search . "%')";
     }
 }

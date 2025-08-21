@@ -352,13 +352,14 @@ class bulkUploadClass
             cus_id, aadhar_number , first_name, last_name, area, line, mobile1 , cus_limit, about_cus, insert_login_id, created_on, updated_on
         ) VALUES (
             '" . strip_tags($data['cus_id']) . "','" . strip_tags($data['aadhar_number']) . "', '" . strip_tags($data['first_name']) . "', 
-            '" . strip_tags($data['last_name']) . "', '" . strip_tags($data['area_id']) . "', '" . strip_tags($data['line_id']) . "',  '2', 
+            '" . strip_tags($data['last_name']) . "', '" . strip_tags($data['area_id']) . "', '" . strip_tags($data['line_id']) . "', 
             '" . strip_tags($data['mobile1']) . "', '" . strip_tags($data['cus_limit']) . "', '" . strip_tags($data['about_cus']) . "', 
             '" . $user_id . "', '" . strip_tags($data['loan_date']) . "', '" . strip_tags($data['loan_date']) . "'
         )";
 
             $pdo->query($insert_cp_query);
         }
+
 
         // <------------------------------------------------------------ Insert Loan Entry Table --------------------------------------------------------------------->
 

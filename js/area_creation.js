@@ -127,6 +127,8 @@ $(document).ready(function () {
 
     /////////////////////////////////////////////////////Area Modal END///////////////////////////////////////////////////
 
+    /////////////////////////// submit page AJAX /////////////////////////////////////
+
     $('#submit_area_creation').click(function () {
         event.preventDefault();
         //Validation
@@ -144,29 +146,30 @@ $(document).ready(function () {
                 isValid = false;
             }
         });
+
         let isMultiSelectValid = validateMultiSelectField('area_name', intance);
         if (isValid && isMultiSelectValid) {
-
-            /////////////////////////// submit page AJAX /////////////////////////////////////
-
-            $.post('api/area_creation_files/submit_area_creation.php', { branch_id, line_id, area_id, area_name2, id }, function (response) {
-
-                if (response === '2') {
-                    swalSuccess('Success', 'Area Added Successfully!');
-                } else if (response === '1') {
-                    swalSuccess('Success', 'Area Updated Successfully!');
-                } else {
-                    swalError('Error', 'Error Occurred!');
+            swalConfirm(
+                'Are you sure?',
+                'Do you want to submit this area creation?',
+                function () {
+                    $.post('api/area_creation_files/submit_area_creation.php', { branch_id, line_id, area_id, area_name2, id }, function (response) {
+                        if (response === '2') {
+                            swalSuccess('Success', 'Area Added Successfully!');
+                        } else if (response === '1') {
+                            swalSuccess('Success', 'Area Updated Successfully!');
+                        } else {
+                            swalError('Error', 'Error Occurred!');
+                        }
+                        $('#area_creation').trigger('reset');
+                        swapTableAndCreation();//to change to div to table content.
+                    });
                 }
-
-                $('#area_creation').trigger('reset');
-                // getAreaCreationTable();
-                swapTableAndCreation();//to change to div to table content.
-
-            });
-            /////////////////////////// submit page AJAX END/////////////////////////////////////
+            );
         }
     });
+
+    /////////////////////////// submit page AJAX END/////////////////////////////////////
 
     ///////////////////////////////////// EDIT Screen START   /////////////////////////////////////
 

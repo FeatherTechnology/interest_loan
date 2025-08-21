@@ -42,31 +42,37 @@ $(document).ready(function () {
         });
 
         if (isValid) {
-            $.post(
-                "api/customer_creation_files/submit_family_info.php",
-                {
-                    cus_id,
-                    fam_name,
-                    fam_relationship,
-                    relation_type,
-                    fam_age,
-                    fam_occupation,
-                    fam_aadhar,
-                    fam_mobile,
-                    family_id,
-                },
-                function (response) {
+            swalConfirm(
+                'Are you sure?',
+                'Do you want to submit this family info?',
+                function () {
+                    $.post(
+                        "api/customer_creation_files/submit_family_info.php",
+                        {
+                            cus_id,
+                            fam_name,
+                            fam_relationship,
+                            relation_type,
+                            fam_age,
+                            fam_occupation,
+                            fam_aadhar,
+                            fam_mobile,
+                            family_id,
+                        },
+                        function (response) {
 
-                    if (response === '2') {
-                        swalSuccess('Success', 'Family Added Successfully!');
-                    } else if (response === '1') {
-                        swalSuccess('Success', 'Family Updated Successfully!');
-                    } else {
-                        swalError('Error', 'Error Occurred!');
-                    }
+                            if (response === '2') {
+                                swalSuccess('Success', 'Family Added Successfully!');
+                            } else if (response === '1') {
+                                swalSuccess('Success', 'Family Updated Successfully!');
+                            } else {
+                                swalError('Error', 'Error Occurred!');
+                            }
 
-                    // Refresh the family table
-                    getFamilyTable();
+                            // Refresh the family table
+                            getFamilyTable();
+                        }
+                    );
                 }
             );
         }
@@ -146,43 +152,50 @@ $(document).ready(function () {
                 isValid = false;
             }
         });
+
         if (isValid) {
-            let kycDetail = new FormData();
+            swalConfirm(
+                'Are you sure?',
+                'Do you want to submit this KYC info?',
+                function () {
+                    let kycDetail = new FormData();
 
-            kycDetail.append('proof_of', proof_of)
-            kycDetail.append('fam_mem', fam_mem);
-            kycDetail.append('cus_id', cus_id)
-            kycDetail.append('proof', proof)
-            kycDetail.append('proof_detail', proof_detail)
-            kycDetail.append('upload', upload)
-            kycDetail.append('kyc_upload', kyc_upload)
-            kycDetail.append('kyc_id', kyc_id)
+                    kycDetail.append('proof_of', proof_of)
+                    kycDetail.append('fam_mem', fam_mem);
+                    kycDetail.append('cus_id', cus_id)
+                    kycDetail.append('proof', proof)
+                    kycDetail.append('proof_detail', proof_detail)
+                    kycDetail.append('upload', upload)
+                    kycDetail.append('kyc_upload', kyc_upload)
+                    kycDetail.append('kyc_id', kyc_id)
 
-            $.ajax({
-                url: 'api/customer_creation_files/submit_kyc.php',
-                type: 'post',
-                data: kycDetail,
-                contentType: false,
-                processData: false,
-                cache: false,
-                success: function (response) {
+                    $.ajax({
+                        url: 'api/customer_creation_files/submit_kyc.php',
+                        type: 'post',
+                        data: kycDetail,
+                        contentType: false,
+                        processData: false,
+                        cache: false,
+                        success: function (response) {
 
-                    if (response === '2') {
-                        swalSuccess('Success', 'KYC Added Successfully!');
-                        $('.kyc_name_div').hide();
-                        $('.fam_mem_div').hide();
-                    } else if (response === '1') {
-                        swalSuccess('Success', 'KYC Updated Successfully!')
-                        $('.kyc_name_div').hide();
-                        $('.fam_mem_div').hide();
-                    }
-                    else {
-                        swalError('Error', 'Error Occurred!');
-                    }
+                            if (response === '2') {
+                                swalSuccess('Success', 'KYC Added Successfully!');
+                                $('.kyc_name_div').hide();
+                                $('.fam_mem_div').hide();
+                            } else if (response === '1') {
+                                swalSuccess('Success', 'KYC Updated Successfully!')
+                                $('.kyc_name_div').hide();
+                                $('.fam_mem_div').hide();
+                            }
+                            else {
+                                swalError('Error', 'Error Occurred!');
+                            }
 
-                    getKycTable();
+                            getKycTable();
+                        }
+                    });
                 }
-            });
+            );
         }
     });
 
@@ -301,21 +314,27 @@ $(document).ready(function () {
             }
         });
         if (isValid) {
-            $.post('api/customer_creation_files/submit_proof.php', { addProof_name, proof_id }, function (response) {
+            swalConfirm(
+                'Are you sure?',
+                'Do you want to submit this proof info?',
+                function () {
+                    $.post('api/customer_creation_files/submit_proof.php', { addProof_name, proof_id }, function (response) {
 
-                if (response === '2') {
-                    swalSuccess('Success', 'Proof Added Successfully!');
-                } else if (response === '1') {
-                    swalSuccess('Success', 'Proof Updated Successfully!');
-                } else {
-                    swalError('Error', 'Error Occurred!');
+                        if (response === '2') {
+                            swalSuccess('Success', 'Proof Added Successfully!');
+                        } else if (response === '1') {
+                            swalSuccess('Success', 'Proof Updated Successfully!');
+                        } else {
+                            swalError('Error', 'Error Occurred!');
+                        }
+
+                        $('#proof_id').val('')
+                        $('#add_proof_info_modal').modal('hide');
+                        getProofTable();
+                        fetchProofList();
+                    });
                 }
-
-                $('#proof_id').val('')
-                $('#add_proof_info_modal').modal('hide');
-                getProofTable();
-                fetchProofList();
-            });
+            );
         }
     });
 
@@ -372,18 +391,24 @@ $(document).ready(function () {
         });
 
         if (isValid) {
-            $.post('api/customer_creation_files/submit_bank.php', { cus_id, bank_name, branch_name, acc_holder_name, acc_number, ifsc_code, bank_id }, function (response) {
+            swalConfirm(
+                'Are you sure?',
+                'Do you want to submit this bank info?',
+                function () {
+                    $.post('api/customer_creation_files/submit_bank.php', { cus_id, bank_name, branch_name, acc_holder_name, acc_number, ifsc_code, bank_id }, function (response) {
 
-                if (response === '2') {
-                    swalSuccess('Success', 'Bank Added Successfully!');
-                } else if (response === '1') {
-                    swalSuccess('Success', 'Bank Updated Successfully!');
-                } else {
-                    swalError('Error', 'Error Occurred!');
+                        if (response === '2') {
+                            swalSuccess('Success', 'Bank Added Successfully!');
+                        } else if (response === '1') {
+                            swalSuccess('Success', 'Bank Updated Successfully!');
+                        } else {
+                            swalError('Error', 'Error Occurred!');
+                        }
+
+                        getBankTable();
+                    });
                 }
-
-                getBankTable();
-            });
+            );
         }
     })
 
@@ -430,18 +455,24 @@ $(document).ready(function () {
         });
 
         if (isValid) {
-            $.post('api/customer_creation_files/submit_property.php', { cus_id, property, property_detail, property_holder, property_id }, function (response) {
+            swalConfirm(
+                'Are you sure?',
+                'Do you want to submit this property info?',
+                function () {
+                    $.post('api/customer_creation_files/submit_property.php', { cus_id, property, property_detail, property_holder, property_id }, function (response) {
 
-                if (response === '2') {
-                    swalSuccess('Success', 'Property Added Successfully!');
-                } else if (response === '1') {
-                    swalSuccess('Success', 'Property Updated Successfully!');
-                } else {
-                    swalError('Error', 'Error Occurred!');
+                        if (response === '2') {
+                            swalSuccess('Success', 'Property Added Successfully!');
+                        } else if (response === '1') {
+                            swalSuccess('Success', 'Property Updated Successfully!');
+                        } else {
+                            swalError('Error', 'Error Occurred!');
+                        }
+
+                        getPropertyTable();
+                    });
                 }
-
-                getPropertyTable();
-            });
+            );
         }
     });
 
@@ -553,43 +584,49 @@ $(document).ready(function () {
         });
 
         if (isValid) {
+            swalConfirm(
+                'Are you sure?',
+                'Do you want to submit this customer creation?',
+                function () {
 
-            if (kycInfoRowCount === 0) {
-                swalError('Warning', 'Please Fill out KYC Info!');
-                return false;
-            }
-
-            if (familyInfoRowCount === 0) {
-                swalError('Warning', 'Please Fill out Family Info!');
-                return false;
-            }
-
-            $("#submit_cus_creation").prop("disabled", true);
-            $.ajax({
-                url: "api/customer_creation_files/submit_customer.php",
-                type: "post",
-                data: cusDetail,
-                contentType: false,
-                processData: false,
-                cache: false,
-                success: function (response) {
-                    $("#submit_cus_creation").prop("disabled", false);
-                    response = JSON.parse(response);
-
-                    if (response === 2) {
-                        swalSuccess('Success', 'Customer Creation Added Successfully!');
-                    } else if (response === 1) {
-                        swalSuccess('Success', 'Customer Creation Updated Successfully!');
-                    } else {
-                        swalError('Error', 'Error Occurred!');
+                    if (kycInfoRowCount === 0) {
+                        swalError('Warning', 'Please Fill out KYC Info!');
+                        return false;
                     }
 
-                    $("#customer_profile_id").val(response.last_id);
-                    $("#customer_creation").trigger("reset");
-                    getCustomerEntryTable();
-                    swapTableAndCreation();
-                },
-            });
+                    if (familyInfoRowCount === 0) {
+                        swalError('Warning', 'Please Fill out Family Info!');
+                        return false;
+                    }
+
+                    $("#submit_cus_creation").prop("disabled", true);
+                    $.ajax({
+                        url: "api/customer_creation_files/submit_customer.php",
+                        type: "post",
+                        data: cusDetail,
+                        contentType: false,
+                        processData: false,
+                        cache: false,
+                        success: function (response) {
+                            $("#submit_cus_creation").prop("disabled", false);
+                            response = JSON.parse(response);
+
+                            if (response === 2) {
+                                swalSuccess('Success', 'Customer Creation Added Successfully!');
+                            } else if (response === 1) {
+                                swalSuccess('Success', 'Customer Creation Updated Successfully!');
+                            } else {
+                                swalError('Error', 'Error Occurred!');
+                            }
+
+                            $("#customer_profile_id").val(response.last_id);
+                            $("#customer_creation").trigger("reset");
+                            getCustomerEntryTable();
+                            swapTableAndCreation();
+                        },
+                    });
+                }
+            );
         }
     });
 
@@ -606,9 +643,27 @@ $(document).ready(function () {
         return;
     });
 
+    let isAadharValid = true; // global flag
+
     $("#aadhar_number").on("blur", function () {
-        let aadhar_number = $("#aadhar_number").val().trim().replace(/\s/g, "");
-        existingCustmerProfile(aadhar_number);
+        let aadhar_number = $(this).val().trim().replace(/\s/g, "");
+
+        if (aadhar_number !== "") {
+            $.post(
+                "api/customer_creation_files/existing_aadhar_number.php",
+                { aadhar_number },
+                function (response) {
+                    if (response.exists) {
+                        swalError("Warning", "This Aadhar number is already created.");
+                        $("#aadhar_number").val("");
+                        isAadharValid = false;
+                    } else {
+                        isAadharValid = true;
+                    }
+                },
+                "json"
+            );
+        }
     });
 
     //////////////////////////////////////////////////////////////////// submit customer creation end /////////////////////////////////////////////////////////////////////
@@ -695,7 +750,7 @@ $(document).ready(function () {
         // event.preventDefault();
         $("input").each(function () {
             var id = $(this).attr("id");
-            if (id !== "cus_id") {
+            if (id !== "cus_id" && id !== "mobile1_radio" && id !== "mobile2_radio") {
                 $(this).val("");
             }
         });
@@ -832,11 +887,9 @@ async function editCustomerCreation(id) {
         $("#occ_detail").val(response[0].occ_detail);
 
         if (response[0].whatsapp === response[0].mobile1) {
-            $("#mobile1_radio").prop("checked", true);
-            $("#selected_mobile_radio").val("mobile1");
+            $("#mobile1_radio").prop("checked", true).trigger("change");
         } else if (response[0].whatsapp === response[0].mobile2) {
-            $("#mobile2_radio").prop("checked", true);
-            $("#selected_mobile_radio").val("mobile2");
+            $("#mobile2_radio").prop("checked", true).trigger("change");
         }
 
         await getAreaName();
@@ -849,6 +902,9 @@ async function editCustomerCreation(id) {
         let path = "uploads/customer_creation/cus_pic/";
         $("#per_pic").val(response[0].pic);
         $("#imgshow").attr("src", path + response[0].pic);
+        if (response[0].pic == "") {
+            $("#imgshow").attr("src", "img/avatar.png");
+        }
 
     } catch (error) {
         console.error("Error editing customer:", error);
@@ -856,92 +912,6 @@ async function editCustomerCreation(id) {
 }
 
 ///////////////////////////////////////////////////////////// Customer creation edit end ///////////////////////////////////////////////////////////////////////////
-
-///////////////////////////////////////////////////////// existing Customer creation data start ///////////////////////////////////////////////////////////////////////////
-
-async function existingCustmerProfile(aadhar_number) {
-    try {
-        const response = await $.post(
-            "api/customer_creation_files/customer_profile_existing.php",
-            { aadhar_number },
-            null,
-            "json"
-        );
-
-        $("#customer_profile_id").val("");
-
-        const dataArr = response.data;
-        if (dataArr.length === 0) {
-            // New customer
-            $("#area_edit").val("");
-            $("#first_name").val("");
-            $("#last_name").val("");
-            $("#dob").val("");
-            $("#age").val("");
-            $("#area").val("");
-            $("#line").val("");
-            $("#mobile1").val("");
-            $("#mobile2").val("");
-            $("#whatsapp").val("");
-            $("#address").val("");
-            $("#native_address").val("");
-            $('#cus_limit').val("");
-            $('#about_cus').val("");
-            $("#occupation").val("");
-            $("#occ_detail").val("");
-            $("#relationship").val("");
-
-            $("#per_pic").val("");
-            $("#imgshow").attr("src", "img/avatar.png");
-            var img = $('#gur_imgshow');
-            img.attr('src', 'img/avatar.png');
-
-        } else {
-            const data = dataArr[0]; // Get the first customer record
-
-            $("#area_edit").val(data.area);
-            $("#cus_id").val(data.cus_id);
-            $("#first_name").val(data.first_name);
-            $("#last_name").val(data.last_name);
-            $("#dob").val(data.dob);
-            $("#age").val(data.age);
-            $("#line").val(data.line);
-            $("#mobile1").val(data.mobile1);
-            $("#mobile2").val(data.mobile2);
-            $("#whatsapp").val(data.whatsapp);
-            $("#address").val(data.address);
-            $("#native_address").val(data.native_address);
-            $('#cus_limit').val(data.cus_limit);
-            $('#about_cus').val(data.about_cus);
-            $("#occupation").val(data.occupation);
-            $("#occ_detail").val(data.occ_detail);
-
-            if (data.whatsapp === data.mobile1) {
-                $("#mobile1_radio").prop("checked", true);
-                $("#selected_mobile_radio").val("mobile1");
-            } else if (data.whatsapp === data.mobile2) {
-                $("#mobile2_radio").prop("checked", true);
-                $("#selected_mobile_radio").val("mobile2");
-            }
-
-            let path = "uploads/customer_creation/cus_pic/";
-            $("#per_pic").val(data.pic || "");
-            $("#imgshow").attr("src", data.pic ? path + data.pic : "img/avatar.png");
-        }
-
-        await getAreaName();
-        $("#area").trigger("change");
-        await getFamilyInfoTable();
-        await getKycInfoTable();
-        getBankInfoTable();
-        getPropertyInfoTable();
-
-    } catch (error) {
-        console.error("Error in existingCustmerProfile:", error);
-    }
-}
-
-/////////////////////////////////////////////////////////// Existing Customer creation data Emd ////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////// Customer creation delete start ///////////////////////////////////////////////////////////////////////////
 

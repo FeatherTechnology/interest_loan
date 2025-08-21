@@ -62,31 +62,37 @@ $(document).ready(function () {
         });
 
         if (isValid) {
-            $.post(
-                "api/customer_creation_files/submit_family_info.php",
-                {
-                    cus_id,
-                    fam_name,
-                    fam_relationship,
-                    relation_type,
-                    fam_age,
-                    fam_occupation,
-                    fam_aadhar,
-                    fam_mobile,
-                    family_id,
-                },
-                function (response) {
+            swalConfirm(
+                'Are you sure?',
+                'Do you want to submit this family info?',
+                function () {
+                    $.post(
+                        "api/customer_creation_files/submit_family_info.php",
+                        {
+                            cus_id,
+                            fam_name,
+                            fam_relationship,
+                            relation_type,
+                            fam_age,
+                            fam_occupation,
+                            fam_aadhar,
+                            fam_mobile,
+                            family_id,
+                        },
+                        function (response) {
 
-                    if (response === '2') {
-                        swalSuccess('Success', 'Family Added Successfully!');
-                    } else if (response === '1') {
-                        swalSuccess('Success', 'Family Updated Successfully!');
-                    } else {
-                        swalError('Error', 'Error Occurred!');
-                    }
+                            if (response === '2') {
+                                swalSuccess('Success', 'Family Added Successfully!');
+                            } else if (response === '1') {
+                                swalSuccess('Success', 'Family Updated Successfully!');
+                            } else {
+                                swalError('Error', 'Error Occurred!');
+                            }
 
-                    // Refresh the family table
-                    getFamilyTable();
+                            // Refresh the family table
+                            getFamilyTable();
+                        }
+                    );
                 }
             );
         }
@@ -158,7 +164,7 @@ $(document).ready(function () {
         let proof_detail = $('#proof_detail').val();
         let kyc_id = $('#kyc_id').val();
 
-        var data = ['proof_of', 'kyc_relationship', 'proof', 'proof_detail']
+        var data = ['proof_of', 'kyc_relationship', 'proof']
         var isValid = true;
         data.forEach(function (entry) {
             var fieldIsValid = validateField($('#' + entry).val(), entry);
@@ -166,43 +172,50 @@ $(document).ready(function () {
                 isValid = false;
             }
         });
+
         if (isValid) {
-            let kycDetail = new FormData();
+            swalConfirm(
+                'Are you sure?',
+                'Do you want to submit this KYC info?',
+                function () {
+                    let kycDetail = new FormData();
 
-            kycDetail.append('proof_of', proof_of)
-            kycDetail.append('fam_mem', fam_mem);
-            kycDetail.append('cus_id', cus_id)
-            kycDetail.append('proof', proof)
-            kycDetail.append('proof_detail', proof_detail)
-            kycDetail.append('upload', upload)
-            kycDetail.append('kyc_upload', kyc_upload)
-            kycDetail.append('kyc_id', kyc_id)
+                    kycDetail.append('proof_of', proof_of)
+                    kycDetail.append('fam_mem', fam_mem);
+                    kycDetail.append('cus_id', cus_id)
+                    kycDetail.append('proof', proof)
+                    kycDetail.append('proof_detail', proof_detail)
+                    kycDetail.append('upload', upload)
+                    kycDetail.append('kyc_upload', kyc_upload)
+                    kycDetail.append('kyc_id', kyc_id)
 
-            $.ajax({
-                url: 'api/customer_creation_files/submit_kyc.php',
-                type: 'post',
-                data: kycDetail,
-                contentType: false,
-                processData: false,
-                cache: false,
-                success: function (response) {
+                    $.ajax({
+                        url: 'api/customer_creation_files/submit_kyc.php',
+                        type: 'post',
+                        data: kycDetail,
+                        contentType: false,
+                        processData: false,
+                        cache: false,
+                        success: function (response) {
 
-                    if (response === '2') {
-                        swalSuccess('Success', 'KYC Added Successfully!');
-                        $('.kyc_name_div').hide();
-                        $('.fam_mem_div').hide();
-                    } else if (response === '1') {
-                        swalSuccess('Success', 'KYC Updated Successfully!')
-                        $('.kyc_name_div').hide();
-                        $('.fam_mem_div').hide();
-                    }
-                    else {
-                        swalError('Error', 'Error Occurred!');
-                    }
+                            if (response === '2') {
+                                swalSuccess('Success', 'KYC Added Successfully!');
+                                $('.kyc_name_div').hide();
+                                $('.fam_mem_div').hide();
+                            } else if (response === '1') {
+                                swalSuccess('Success', 'KYC Updated Successfully!')
+                                $('.kyc_name_div').hide();
+                                $('.fam_mem_div').hide();
+                            }
+                            else {
+                                swalError('Error', 'Error Occurred!');
+                            }
 
-                    getKycTable();
+                            getKycTable();
+                        }
+                    });
                 }
-            });
+            );
         }
     });
 
@@ -320,22 +333,29 @@ $(document).ready(function () {
                 isValid = false;
             }
         });
+
         if (isValid) {
-            $.post('api/customer_creation_files/submit_proof.php', { addProof_name, proof_id }, function (response) {
+            swalConfirm(
+                'Are you sure?',
+                'Do you want to submit this proof info?',
+                function () {
+                    $.post('api/customer_creation_files/submit_proof.php', { addProof_name, proof_id }, function (response) {
 
-                if (response === '2') {
-                    swalSuccess('Success', 'Proof Added Successfully!');
-                } else if (response === '1') {
-                    swalSuccess('Success', 'Proof Updated Successfully!');
-                } else {
-                    swalError('Error', 'Error Occurred!');
+                        if (response === '2') {
+                            swalSuccess('Success', 'Proof Added Successfully!');
+                        } else if (response === '1') {
+                            swalSuccess('Success', 'Proof Updated Successfully!');
+                        } else {
+                            swalError('Error', 'Error Occurred!');
+                        }
+
+                        $('#proof_id').val('')
+                        $('#add_proof_info_modal').modal('hide');
+                        getProofTable();
+                        fetchProofList();
+                    });
                 }
-
-                $('#proof_id').val('')
-                $('#add_proof_info_modal').modal('hide');
-                getProofTable();
-                fetchProofList();
-            });
+            );
         }
     });
 
@@ -392,18 +412,24 @@ $(document).ready(function () {
         });
 
         if (isValid) {
-            $.post('api/customer_creation_files/submit_bank.php', { cus_id, bank_name, branch_name, acc_holder_name, acc_number, ifsc_code, bank_id }, function (response) {
+            swalConfirm(
+                'Are you sure?',
+                'Do you want to submit this bank info?',
+                function () {
+                    $.post('api/customer_creation_files/submit_bank.php', { cus_id, bank_name, branch_name, acc_holder_name, acc_number, ifsc_code, bank_id }, function (response) {
 
-                if (response === '2') {
-                    swalSuccess('Success', 'Bank Added Successfully!');
-                } else if (response === '1') {
-                    swalSuccess('Success', 'Bank Updated Successfully!');
-                } else {
-                    swalError('Error', 'Error Occurred!');
+                        if (response === '2') {
+                            swalSuccess('Success', 'Bank Added Successfully!');
+                        } else if (response === '1') {
+                            swalSuccess('Success', 'Bank Updated Successfully!');
+                        } else {
+                            swalError('Error', 'Error Occurred!');
+                        }
+
+                        getBankTable();
+                    });
                 }
-
-                getBankTable();
-            });
+            );
         }
     })
 
@@ -450,18 +476,24 @@ $(document).ready(function () {
         });
 
         if (isValid) {
-            $.post('api/customer_creation_files/submit_property.php', { cus_id, property, property_detail, property_holder, property_id }, function (response) {
+            swalConfirm(
+                'Are you sure?',
+                'Do you want to submit this property info?',
+                function () {
+                    $.post('api/customer_creation_files/submit_property.php', { cus_id, property, property_detail, property_holder, property_id }, function (response) {
 
-                if (response === '2') {
-                    swalSuccess('Success', 'Property Added Successfully!');
-                } else if (response === '1') {
-                    swalSuccess('Success', 'Property Updated Successfully!');
-                } else {
-                    swalError('Error', 'Error Occurred!');
+                        if (response === '2') {
+                            swalSuccess('Success', 'Property Added Successfully!');
+                        } else if (response === '1') {
+                            swalSuccess('Success', 'Property Updated Successfully!');
+                        } else {
+                            swalError('Error', 'Error Occurred!');
+                        }
+
+                        getPropertyTable();
+                    });
                 }
-
-                getPropertyTable();
-            });
+            );
         }
     });
 
@@ -572,39 +604,45 @@ $(document).ready(function () {
         });
 
         if (isValid) {
+            swalConfirm(
+                'Are you sure?',
+                'Do you want to submit this customer profile?',
+                function () {
 
-            if (kycInfoRowCount === 0) {
-                swalError('Warning', 'Please Fill out KYC Info!');
-                return false;
-            }
-
-            $("#submit_cus_creation").prop("disabled", true);
-            $.ajax({
-                url: "api/customer_creation_files/submit_customer.php",
-                type: "post",
-                data: cusDetail,
-                contentType: false,
-                processData: false,
-                cache: false,
-                success: function (response) {
-                    $("#submit_cus_creation").prop("disabled", false);
-                    response = JSON.parse(response);
-
-                    if (response === 1) {
-                        swalSuccess('Success', 'Customer Creation Updated Successfully!');
-                        if ($('.page-content').length) {
-                            $('html, body').animate({
-                                scrollTop: $('.page-content').offset().top
-                            }, 3000);
-                        }
-                    } else {
-                        swalError('Error', 'Error Occurred!');
+                    if (kycInfoRowCount === 0) {
+                        swalError('Warning', 'Please Fill out KYC Info!');
+                        return false;
                     }
 
-                    $("#customer_creation").trigger("reset");
+                    $("#submit_cus_creation").prop("disabled", true);
+                    $.ajax({
+                        url: "api/customer_creation_files/submit_customer.php",
+                        type: "post",
+                        data: cusDetail,
+                        contentType: false,
+                        processData: false,
+                        cache: false,
+                        success: function (response) {
+                            $("#submit_cus_creation").prop("disabled", false);
+                            response = JSON.parse(response);
 
-                },
-            });
+                            if (response === 1) {
+                                swalSuccess('Success', 'Customer Creation Updated Successfully!');
+                                if ($('.page-content').length) {
+                                    $('html, body').animate({
+                                        scrollTop: $('.page-content').offset().top
+                                    }, 3000);
+                                }
+                            } else {
+                                swalError('Error', 'Error Occurred!');
+                            }
+
+                            $("#customer_creation").trigger("reset");
+
+                        },
+                    });
+                }
+            );
         }
     });
 
@@ -1299,7 +1337,7 @@ $(document).ready(function () {
         if (printWindow) {
             // Load the content into the popup window
             $.ajax({
-                url: 'api/update_customer_files/print_update_document.php',
+                url: 'api/loan_issue_files/print_document.php',
                 data: { cus_profile_id },
                 cache: false,
                 type: "post",
@@ -1865,6 +1903,7 @@ function getChequeCreationTable() {
             "relationship",
             "bank_name",
             "cheque_cnt",
+            "cheque_no",
             "upload",
             "action"
         ]
@@ -1889,6 +1928,7 @@ function getChequeInfoTable() {
             "relationship",
             "bank_name",
             "cheque_cnt",
+            "cheque_no",
             "upload"
         ];
 
@@ -1919,12 +1959,13 @@ function emptyholderFields() {
 function getFamilyMember(optn, selector) {
     return new Promise((resolve, reject) => {
         let cus_id = $('#cus_id').val();
+        let holderType = $('#cq_holder_type').val();
 
         $.post('api/loan_issue_files/get_family_name.php', { cus_id }, function (response) {
             let appendOption = "<option value=''>" + optn + "</option>"; // Default option 
 
             $.each(response, function (index, val) {
-                if (val.type === 'Customer') {
+                if (val.type === 'Customer' && holderType !== '3') {
                     appendOption += "<option value='0'>" + val.name + "</option>";  // Customer
                 } else if (val.type === 'Family') {
                     appendOption += "<option value='" + val.id + "'>" + val.name + "</option>";  // Family Member

@@ -122,7 +122,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="card-title">NOC Summary&nbsp;<button type="button" id="back_to_cus_status" style="float:right" class="btn btn-primary "><span class="icon-arrow-left"></span>&nbsp;Back</button></h5>
+                            <h5 class="card-title">NOC Summary&nbsp;<button type="button" id="back_to_cus_status" tabindex ="1" style="float:right" class="btn btn-primary "><span class="icon-arrow-left"></span>&nbsp;Back</button></h5>
                         </div>
                         <div class="card-body">
                             <div class="card cheque-div" style="display:none">
@@ -246,7 +246,7 @@
 
 <div id="loan_entry_content" style="display:none;">
     <div class="text-right">
-        <button type="button" class="btn btn-primary" id="back_btn"><span class="icon-arrow-left"></span>&nbsp; Back </button>
+        <button type="button" class="btn btn-primary" id="back_btn" tabindex="20"><span class="icon-arrow-left"></span>&nbsp; Back </button>
         <br><br>
     </div>
     <form id="loan_entry_customer_profile" name="loan_entry_customer_profile">
@@ -351,7 +351,7 @@
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="pic"> Photo</label><br>
-                                            <img id='imgshow' class="img_show" src='img\avatar.png' />
+                                            <img id='imgshow' class="img_show" tabindex="14" src='img\avatar.png' />
                                             <input type="hidden" class="personal_info_disble" id="per_pic">
                                         </div>
                                     </div>
@@ -375,7 +375,7 @@
                                         <div class="form-group">
                                             <label for="guarantor_name"> Guarantor Name</label><span class="text-danger">*</span>
                                             <input type="hidden" id="guarantor_name_edit">
-                                            <select type="text" class="form-control" id="guarantor_name" name="guarantor_name" tabindex="14" disabled>
+                                            <select type="text" class="form-control" id="guarantor_name" name="guarantor_name" tabindex="15" disabled>
                                                 <option value="">Select Guarantor Name</option>
                                             </select>
                                         </div>
@@ -383,7 +383,7 @@
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="relationship"> Relationship</label><span class="text-danger">*</span>
-                                            <input type="text" class="form-control" id="relationship" name="relationship" pattern="[a-zA-Z\s]+" disabled placeholder="Enter Relationship" tabindex="15" readonly>
+                                            <input type="text" class="form-control" id="relationship" name="relationship" pattern="[a-zA-Z\s]+" disabled placeholder="Enter Relationship" tabindex="16" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -393,7 +393,7 @@
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="pic"> Photo</label><br>
-                                            <img id='gur_imgshow' class="img_show" src='img\avatar.png' />
+                                            <img id='gur_imgshow' class="img_show" tabindex="17" src='img\avatar.png' />
                                             <input type="hidden" id="gur_pic">
                                         </div>
                                     </div>
@@ -522,13 +522,13 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="cus_limit"> Customer Limit</label>
-                                    <input type="number" class="form-control" id="cus_limit" name="cus_limit" placeholder="Enter Customer Limit" tabindex="21" readonly>
+                                    <input type="number" class="form-control" id="cus_limit" name="cus_limit" placeholder="Enter Customer Limit" tabindex="18" readonly>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="about_cus"> About Customer </label>
-                                    <textarea class="form-control" name="about_cus" id="about_cus" placeholder="Enter About Customer" tabindex="22" readonly></textarea>
+                                    <textarea class="form-control" name="about_cus" id="about_cus" placeholder="Enter About Customer" tabindex="19" readonly></textarea>
                                 </div>
                             </div>
                         </div>
@@ -545,7 +545,7 @@
 
 <div id="loan_content" style="display:none;">
     <div class="text-right">
-        <button type="button" class="btn btn-primary" id="loan_back_btn"><span class="icon-arrow-left"></span>&nbsp; Back </button>
+        <button type="button" class="btn btn-primary" id="loan_back_btn" tabindex="23"><span class="icon-arrow-left"></span>&nbsp; Back </button>
         <br><br>
     </div>
     <form id="loan_entry_loan_calculation" name="loan_entry_loan_calculation">
@@ -659,31 +659,31 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="loan_amnt_calc">Loan Amount</label><span class="text-danger">*</span>
-                                    <input type="text" class="form-control refresh_loan_calc" id="loan_amnt_calc" name="loan_amnt_calc" tabindex="14" readonly>
+                                    <input type="text" class="form-control refresh_loan_calc" id="loan_amnt_calc" name="loan_amnt_calc" tabindex="13" readonly>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="doc_charge_calculate">Document Charges</label><span class="text-danger doc-diff">*</span>
-                                    <input type="text" class="form-control refresh_loan_calc" id="doc_charge_calculate" name="doc_charge_calculate" tabindex="15" readonly>
+                                    <input type="text" class="form-control refresh_loan_calc" id="doc_charge_calculate" name="doc_charge_calculate" tabindex="14" readonly>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="processing_fees_calculate">Processing Fees</label><span class="text-danger proc-diff">*</span>
-                                    <input type="text" class="form-control refresh_loan_calc" id="processing_fees_calculate" name="processing_fees_calculate" tabindex="16" readonly>
+                                    <input type="text" class="form-control refresh_loan_calc" id="processing_fees_calculate" name="processing_fees_calculate" tabindex="15" readonly>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="net_cash_calc">Net Cash</label><span class="text-danger">*</span>
-                                    <input type="text" class="form-control refresh_loan_calc" id="net_cash_calc" name="net_cash_calc" tabindex="17" readonly>
+                                    <input type="text" class="form-control refresh_loan_calc" id="net_cash_calc" name="net_cash_calc" tabindex="16" readonly>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="interest_amnt_calc">Interest Amount</label><span class="text-danger int-diff">*</span>
-                                    <input type="text" class="form-control refresh_loan_calc" id="interest_amnt_calc" name="interest_amnt_calc" tabindex="18" readonly>
+                                    <input type="text" class="form-control refresh_loan_calc" id="interest_amnt_calc" name="interest_amnt_calc" tabindex="17" readonly>
                                 </div>
                             </div>
                         </div>
@@ -701,13 +701,13 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="due_startdate_calc">Due Start Date</label><span class="text-danger">*</span>
-                                    <input type="date" class="form-control" id="due_startdate_calc" name="due_startdate_calc" tabindex="20" disabled>
+                                    <input type="date" class="form-control" id="due_startdate_calc" name="due_startdate_calc" tabindex="18" disabled>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="maturity_date_calc">Maturity Date</label><span class="text-danger">*</span>
-                                    <input type="date" class="form-control" id="maturity_date_calc" name="maturity_date_calc" tabindex="21" readonly>
+                                    <input type="date" class="form-control" id="maturity_date_calc" name="maturity_date_calc" tabindex="19" readonly>
                                 </div>
                             </div>
                         </div>
@@ -725,7 +725,7 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="referred_calc">Referred</label>
-                                    <select class="form-control" id="referred_calc" name="referred_calc" tabindex="22" disabled>
+                                    <select class="form-control" id="referred_calc" name="referred_calc" tabindex="20" disabled>
                                         <option value="">Select Referred</option>
                                         <option value="0">Yes</option>
                                         <option value="1">No</option>
@@ -735,7 +735,7 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="agent_id_calc">Agent Name</label>
-                                    <select class="form-control" id="agent_id_calc" name="agent_id_calc" tabindex="23" readonly>
+                                    <select class="form-control" id="agent_id_calc" name="agent_id_calc" tabindex="21" readonly>
                                         <option value="">Select Agent Name</option>
                                     </select>
                                 </div>
@@ -743,7 +743,7 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                 <div class="form-group">
                                     <label for="agent_name_calc">Agent ID</label>
-                                    <input type="text" class="form-control" id="agent_name_calc" name="agent_name_calc" tabindex="24" readonly>
+                                    <input type="text" class="form-control" id="agent_name_calc" name="agent_name_calc" tabindex="22" readonly>
                                 </div>
                             </div>
                         </div>
@@ -784,13 +784,13 @@
 
 <div id="loan_issue_content" style="display:none;">
     <div class="text-right">
-        <button type="button" class="btn btn-primary" id="doc_back_btn"><span class="icon-arrow-left"></span>&nbsp; Back </button>
+        <button type="button" class="btn btn-primary" id="doc_back_btn" tabindex="3"><span class="icon-arrow-left"></span>&nbsp; Back </button>
         <br><br>
     </div>
     <form id="documentation_form" name="documentation_form">
         <input type="hidden" id="customer_profile_id">
         <div class="text-right">
-            <button type="button" class="btn btn-primary" id="print_doc"><span class="icon-print"></span>&nbsp; Print </button>
+            <button type="button" class="btn btn-primary" id="print_doc" tabindex="1"><span class="icon-print"></span>&nbsp; Print </button>
             <br><br>
         </div>
         <div class="row gutters">
@@ -1005,7 +1005,7 @@
 
 <!----------------------------------------------------------------------- Closed Remark Modal Start ----------------------------------------------------------------------->
 
-<div class="modal fade" id="closed_remark_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="closed_remark_model" tabindex="1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
@@ -1023,13 +1023,13 @@
                             <div class="col-sm-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label for="sub_status">Sub Status</label><span class="required">*</span>
-                                    <input type="text" name="sub_status" id="sub_status" class="form-control" tabindex="2" readonly>
+                                    <input type="text" name="sub_status" id="sub_status" class="form-control" tabindex="1" readonly>
                                 </div>
                             </div>
                             <div class="col-sm-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label for="remark">Remark</label>
-                                    <textarea class="form-control" name="remark" id="remark" tabindex="3" placeholder="Remarks" readonly></textarea>
+                                    <textarea class="form-control" name="remark" id="remark" tabindex="1" placeholder="Remarks" readonly></textarea>
                                 </div>
                             </div>
                         </div>
@@ -1038,8 +1038,8 @@
 
             </div>
             <div class="modal-footer">
-                <button name="submit_closed_remark" id="submit_closed_remark" class="btn btn-primary" tabindex="4"><span class="icon-check"></span>&nbsp;Submit</button>
-                <button class="btn btn-secondary" data-dismiss="modal" onclick="closeChartsModal()" tabindex="6">Close</button>
+                <button name="submit_closed_remark" id="submit_closed_remark" class="btn btn-primary" tabindex="1"><span class="icon-check"></span>&nbsp;Submit</button>
+                <button class="btn btn-secondary" data-dismiss="modal" onclick="closeChartsModal()" tabindex="1">Close</button>
             </div>
         </div>
     </div>
@@ -1176,7 +1176,7 @@
 
 <!----------------------------------------------------------------------- Due Chart Modal Start ----------------------------------------------------------------------->
 
-<div class="modal fade bd-example-modal-lg" id="due_chart_model" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-lg" id="due_chart_model" tabindex="1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document" style="max-width: 70% !important">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
@@ -1211,7 +1211,7 @@
 
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal" onclick="closeChartsModal()" tabindex="4">Close</button>
+                <button class="btn btn-secondary" data-dismiss="modal" onclick="closeChartsModal()" tabindex="1">Close</button>
             </div>
         </div>
     </div>
@@ -1221,7 +1221,7 @@
 
 <!----------------------------------------------------------------------- Penalty Chart Modal Start ------------------------------------------------------------------------>
 
-<div class="modal fade" id="penalty_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="penalty_model" tabindex="1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
@@ -1249,7 +1249,7 @@
 
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal" onclick="closeChartsModal()" tabindex="4">Close</button>
+                <button class="btn btn-secondary" data-dismiss="modal" onclick="closeChartsModal()" tabindex="1">Close</button>
             </div>
         </div>
     </div>
@@ -1259,7 +1259,7 @@
 
 <!----------------------------------------------------------------------- Fine Chart Modal Start ------------------------------------------------------------------------->
 
-<div class="modal fade" id="fine_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="fine_model" tabindex="1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
@@ -1283,7 +1283,7 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal" onclick="closeChartsModal()" tabindex="4">Close</button>
+                <button class="btn btn-secondary" data-dismiss="modal" onclick="closeChartsModal()" tabindex="1">Close</button>
             </div>
         </div>
     </div>

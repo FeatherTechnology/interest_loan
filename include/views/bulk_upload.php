@@ -13,13 +13,13 @@
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="upload_btn">Upload Excel Here</label>
-											<input type="file" class="form-control" id="upload_btn" name="upload_btn" accept=".csv,.xls,.xlsx,.xml">
+											<input type="file" class="form-control" id="upload_btn" name="upload_btn" accept=".csv,.xls,.xlsx,.xml" tabindex="1">
 										</div>
 									</div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label style="visibility: hidden;" class="form-control"></label>
-											<input type="button" class="btn btn-primary" value="Submit" name="bk_submit" id="bk_submit">
+											<input type="button" class="btn btn-primary" value="Submit" name="bk_submit" id="bk_submit" tabindex="2">
 										</div>
 									</div>
 

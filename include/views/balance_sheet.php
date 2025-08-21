@@ -1,10 +1,10 @@
 <div class="row gutters">
 
     <div class="toggle-container dwnmrgn col-12">
-        <input type="button" class="toggle-button" data-toggle='modal' data-target='#dayModal' value='Day Wise'>
-        <input type="button" class="toggle-button" value='Today'>
-        <input type="button" class="toggle-button" data-toggle='modal' data-target='#monthModal' value='Month Wise'>
-        <select type="text" class="toggle-button" id='by_user' name='by_user'>
+        <input type="button" class="toggle-button" data-toggle='modal' data-target='#dayModal' value='Day Wise' tabindex='1'>
+        <input type="button" class="toggle-button" value='Today' tabindex='2'>
+        <input type="button" class="toggle-button" data-toggle='modal' data-target='#monthModal' value='Month Wise' tabindex='3'> 
+        <select type="text" class="toggle-button" id='by_user' name='by_user' tabindex='4'>
             <option value=''>Select User</option>
         </select>
     </div> <br>

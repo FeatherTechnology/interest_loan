@@ -25,8 +25,23 @@ if ($qry->rowCount() > 0) {
             while ($fetchdata = $qry2->fetch()) {
                 $cheque_info['upload'] .= "<a href='uploads/loan_issue/cheque_info/" . $fetchdata['uploads'] . "' target='_blank'>" . $fetchdata['uploads'] . "</a>, ";
             }
+            // remove last comma + space
+            $cheque_info['upload'] = rtrim($cheque_info['upload'], ', ');
         } else {
             $cheque_info['upload'] = '';
+        }
+
+        $qry3 = $pdo->query("SELECT cheque_no FROM cheque_no_list WHERE cheque_info_id = '" . $cheque_info['id'] . "'");
+        $cheque_info['cheque_no'] = '';
+
+        if ($qry3->rowCount() > 0) {
+            while ($fetchdata = $qry3->fetch()) {
+                $cheque_info['cheque_no'] .= $fetchdata['cheque_no'] . ', ';
+            }
+            // remove last comma + space
+            $cheque_info['cheque_no'] = rtrim($cheque_info['cheque_no'], ', ');
+        } else {
+            $cheque_info['cheque_no'] = '';
         }
 
         $cheque_info['action'] = "<span class='icon-border_color chequeActionBtn' value='" . $cheque_info['id'] . "'></span> <span class='icon-trash-2 chequeDeleteBtn' value='" . $cheque_info['id'] . "'></span>";

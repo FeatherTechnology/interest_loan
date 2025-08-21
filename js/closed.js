@@ -145,24 +145,30 @@ $(document).ready(function () {
     $('#submit_closed_remark').click(function (event) {
         event.preventDefault();
         if (validate()) {
-            let loan_entry_id = $('#loan_entry_id').val();
-            let sub_status = $('#sub_status').val();
-            let remark = $('#remark').val();
-            $.post('api/closed_files/closed_submit.php', { sub_status, remark, loan_entry_id }, function (response) {
-                if (response == '1') {
-                    swalSuccess('Success', 'Closed Info Updated Successfully!');
-                    $('#closed_remark_form input').val('');
-                    $('#closed_remark_form select').val('');
-                    $('#closed_remark_form textarea').val('');
-                    $('#closed_remark_form input').css('border', '1px solid #cecece');
-                    $('#closed_remark_form select').css('border', '1px solid #cecece');
-                    $('#closed_remark_model').modal('hide');
-                    let cus_id = $('#cus_id').val();
-                    getClosedLoanList(cus_id);
-                } else {
-                    swalError('Error', 'Failed to Closed');
+            swalConfirm(
+                'Are you sure?',
+                'Do you want to submit this closed remark?',
+                function () {
+                    let loan_entry_id = $('#loan_entry_id').val();
+                    let sub_status = $('#sub_status').val();
+                    let remark = $('#remark').val();
+                    $.post('api/closed_files/closed_submit.php', { sub_status, remark, loan_entry_id }, function (response) {
+                        if (response == '1') {
+                            swalSuccess('Success', 'Closed Info Updated Successfully!');
+                            $('#closed_remark_form input').val('');
+                            $('#closed_remark_form select').val('');
+                            $('#closed_remark_form textarea').val('');
+                            $('#closed_remark_form input').css('border', '1px solid #cecece');
+                            $('#closed_remark_form select').css('border', '1px solid #cecece');
+                            $('#closed_remark_model').modal('hide');
+                            let cus_id = $('#cus_id').val();
+                            getClosedLoanList(cus_id);
+                        } else {
+                            swalError('Error', 'Failed to Closed');
+                        }
+                    }, 'json');
                 }
-            }, 'json');
+            );
         }
     });
 

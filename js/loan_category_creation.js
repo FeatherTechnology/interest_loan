@@ -111,42 +111,48 @@ $(document).ready(function () {
         }
 
         if (isValid && (isLoanCalculationValid)) {
-            let formData = {
-                loan_category: $('#loan_category').val(),
-                loan_limit: $('#loan_limit').val().replace(/,/g, ''),
-                profit_type: $('#profit_type_calc').val(),
-                due_method: $('#due_method').val(),
-                due_type: $('#due_type').val(),
-                benefit_method: $('#benefit_method').val(),
-                due_period: $('#due_period').val(),
-                interest_calculate: $('#interest_calculate').val(),
-                due_calculate: $('#due_calculate').val(),
-                interest_rate_min: $('#interest_rate_min').val(),
-                interest_rate_max: $('#interest_rate_max').val(),
-                document_charge: $('#document_charge').val(),
-                doc_charge_min: $('#doc_charge_min').val(),
-                doc_charge_max: $('#doc_charge_max').val(),
-                processing_fee_type: $('#processing_type').val(),
-                processing_fee_min: $('#processing_fee_min').val(),
-                processing_fee_max: $('#processing_fee_max').val(),
-                overdue_type: $('#overdue_type').val(),
-                overdue_penalty: $('#overdue_penalty').val(),
-                id: $('#loan_category_creation_id').val()
-            };
+            swalConfirm(
+                'Are you sure?',
+                'Do you want to submit this loan category creation?',
+                function () {
+                    let formData = {
+                        loan_category: $('#loan_category').val(),
+                        loan_limit: $('#loan_limit').val().replace(/,/g, ''),
+                        profit_type: $('#profit_type_calc').val(),
+                        due_method: $('#due_method').val(),
+                        due_type: $('#due_type').val(),
+                        benefit_method: $('#benefit_method').val(),
+                        due_period: $('#due_period').val(),
+                        interest_calculate: $('#interest_calculate').val(),
+                        due_calculate: $('#due_calculate').val(),
+                        interest_rate_min: $('#interest_rate_min').val(),
+                        interest_rate_max: $('#interest_rate_max').val(),
+                        document_charge: $('#document_charge').val(),
+                        doc_charge_min: $('#doc_charge_min').val(),
+                        doc_charge_max: $('#doc_charge_max').val(),
+                        processing_fee_type: $('#processing_type').val(),
+                        processing_fee_min: $('#processing_fee_min').val(),
+                        processing_fee_max: $('#processing_fee_max').val(),
+                        overdue_type: $('#overdue_type').val(),
+                        overdue_penalty: $('#overdue_penalty').val(),
+                        id: $('#loan_category_creation_id').val()
+                    };
 
-            // Submit form via AJAX
-            $.post('api/loan_category_creation_files/submit_loan_category_creation.php', formData, function (response) {
-                if (response === '2') {
-                    swalSuccess('Success', 'Loan Category Added Successfully!');
-                } else if (response === '1') {
-                    swalSuccess('Success', 'Loan Category Updated Successfully!');
-                } else {
-                    swalError('Error', 'Error Occurred!');
+                    // Submit form via AJAX
+                    $.post('api/loan_category_creation_files/submit_loan_category_creation.php', formData, function (response) {
+                        if (response === '2') {
+                            swalSuccess('Success', 'Loan Category Added Successfully!');
+                        } else if (response === '1') {
+                            swalSuccess('Success', 'Loan Category Updated Successfully!');
+                        } else {
+                            swalError('Error', 'Error Occurred!');
+                        }
+                        clearLoanCategoryForm();
+                        getLoanCategoryCreationTable();
+                        swapTableAndCreation(); // Change to table content
+                    });
                 }
-                clearLoanCategoryForm();
-                getLoanCategoryCreationTable();
-                swapTableAndCreation(); // Change to table content
-            });
+            );
         }
 
     });
@@ -313,10 +319,6 @@ function deleteLoanCategoryCreation(id) {
         if (response == '0') {
             swalSuccess('Success', 'Loan Category creation Disabled Successfully');
             getLoanCategoryCreationTable();
-        } else if (response == '1') {
-            swalError('Access Denied', 'Used in Another Screen.');
-        } else if (response == '2') {
-            swalError('Warning', 'Used in User Creation.');
         } else {
             swalError('Warning', 'Loan Category Creation Delete Failed!');
         }

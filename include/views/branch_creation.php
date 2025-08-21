@@ -34,7 +34,7 @@
 <!-- Branch Creation-->
 <div id="branch_creation_content" style="display:none;">
     <div class="text-right backBtn">
-        <button type="button" class="btn btn-primary backBtn" id="back_btn"><span class="icon-arrow-left"></span>&nbsp; Back </button>
+        <button type="button" class="btn btn-primary backBtn" tabindex="16" id="back_btn"><span class="icon-arrow-left"></span>&nbsp; Back </button>
     </div>
     <br>
     <form id="branch_creation" name="branch_creation" action="" method="post" enctype="multipart/form-data">

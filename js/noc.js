@@ -155,32 +155,38 @@ $(document).ready(function () {
             }
         });
         if (isValid) {
-            let nocData = {
-                'chequeId': chequeId,
-                'mortId': mortId,
-                'endorsementId': endorsementId,
-                'docId': docId,
-                'goldId': goldId,
-                'date_of_noc': date_of_noc,
-                'noc_member': noc_member,
-                'noc_relation': noc_relation,
-                'le_id': le_id,
-                'cus_id': cus_id,
-                'cheque_list_cnt': cheque_list_cnt,
-                'mort_list_cnt': mort_list_cnt,
-                'endorsemnt_list_cnt': endorsemnt_list_cnt,
-                'doc_list_cnt': doc_list_cnt,
-                'gold_list_cnt': gold_list_cnt
-            }
+            swalConfirm(
+                'Are you sure?',
+                'Do you want to submit this NOC?',
+                function () {
+                    let nocData = {
+                        'chequeId': chequeId,
+                        'mortId': mortId,
+                        'endorsementId': endorsementId,
+                        'docId': docId,
+                        'goldId': goldId,
+                        'date_of_noc': date_of_noc,
+                        'noc_member': noc_member,
+                        'noc_relation': noc_relation,
+                        'le_id': le_id,
+                        'cus_id': cus_id,
+                        'cheque_list_cnt': cheque_list_cnt,
+                        'mort_list_cnt': mort_list_cnt,
+                        'endorsemnt_list_cnt': endorsemnt_list_cnt,
+                        'doc_list_cnt': doc_list_cnt,
+                        'gold_list_cnt': gold_list_cnt
+                    }
 
-            $.post('api/noc_files/submit_noc.php', nocData, function (response) {
-                if (response == '1') {
-                    swalSuccess('Success', 'NOC submitted successfully.');
-                    callAllFunctions(le_id);
-                } else {
-                    swalError('Error', 'NOC submission failed.');
+                    $.post('api/noc_files/submit_noc.php', nocData, function (response) {
+                        if (response == '1') {
+                            swalSuccess('Success', 'NOC submitted successfully.');
+                            callAllFunctions(le_id);
+                        } else {
+                            swalError('Error', 'NOC submission failed.');
+                        }
+                    }, 'json');
                 }
-            }, 'json');
+            );
         }
     });
 });

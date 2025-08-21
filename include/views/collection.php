@@ -28,8 +28,8 @@
             </div>
         </div>
         <div class="col-12 text-right" style="margin-bottom:10px">
-            <button class="btn btn-primary" id="back_to_coll_list" style="display: none;"><span class="icon-arrow-left"></span> Back</button>
-            <button class="btn btn-primary" id="back_to_loan_list" style="display: none;"><span class="icon-cancel"></span> cancel</button>
+            <button class="btn btn-primary" id="back_to_coll_list" tabindex="10" style="display: none;"><span class="icon-arrow-left"></span> Back</button>
+            <button class="btn btn-primary" id="back_to_loan_list" tabindex="27" style="display: none;"><span class="icon-cancel"></span> cancel</button>
         </div>
         <div id="coll_main_container" style="display:none">
             <!-- Row start -->
@@ -81,19 +81,19 @@
                                             <div class="form-group">
                                                 <label for="area">Area</label>
                                                 <input type="hidden" id="area_edit">
-                                                <input type="text" class="form-control" id="area" name="area" tabindex="7" disabled>
+                                                <input type="text" class="form-control" id="area" name="area" tabindex="6" disabled>
                                             </div>
                                         </div>
                                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                             <div class="form-group">
                                                 <label for="line"> Line </label>
-                                                <input type="text" class="form-control" id="line" name="line" disabled placeholder="Line" tabindex="8">
+                                                <input type="text" class="form-control" id="line" name="line" disabled placeholder="Line" tabindex="7">
                                             </div>
                                         </div>
                                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                             <div class="form-group">
                                                 <label for="mobile1"> Mobile Number </label>
-                                                <input type="number" class="form-control" id="mobile1" name="mobile1" placeholder="Enter Mobile Number 1" onKeyPress="if(this.value.length==10) return false;" tabindex="9" readonly>
+                                                <input type="number" class="form-control" id="mobile1" name="mobile1" placeholder="Enter Mobile Number 1" onKeyPress="if(this.value.length==10) return false;" tabindex="8" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -103,7 +103,7 @@
                                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                             <div class="form-group">
                                                 <label for="pic"> Photo</label><br>
-                                                <img id='imgshow' class="img_show" src='img\avatar.png' />
+                                                <img id='imgshow' class="img_show" tabindex="9" src='img\avatar.png' />
                                                 <input type="hidden" class="personal_info_disble" id="per_pic">
                                             </div>
                                         </div>
@@ -163,38 +163,38 @@
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="disabledInput">Loan Amount</label>&nbsp;<span class="text-danger totspan">*</span>
-                                        <input type="text" class="form-control" readonly id="loan_amount" name="loan_amount" value='' tabindex='8'>
+                                        <input type="text" class="form-control" readonly id="loan_amount" name="loan_amount" value='' tabindex='1'>
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="disabledInput">Paid Amount</label>&nbsp;<span class="text-danger paidspan">*</span>
-                                        <input type="text" class="form-control" readonly id="paid_amount" name="paid_amount" value='' tabindex='9'>
+                                        <input type="text" class="form-control" readonly id="paid_amount" name="paid_amount" value='' tabindex='2'>
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="disabledInput">Balance Amount</label>&nbsp;<span class="text-danger balspan">*</span>
-                                        <input type="text" class="form-control" readonly id="balance_amount" name="balance_amount" value='' tabindex='10'>
+                                        <input type="text" class="form-control" readonly id="balance_amount" name="balance_amount" value='' tabindex='3'>
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="disabledInput">Interest Amount</label>&nbsp;<span class="text-danger">*</span>
-                                        <input type="text" class="form-control" readonly id="interest_amount" name="interest_amount" value='' tabindex='11'>
+                                        <input type="text" class="form-control" readonly id="interest_amount" name="interest_amount" value='' tabindex='4'>
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="disabledInput">Pending Amount</label>&nbsp;<span class="text-danger pendingspan">*</span>
-                                        <input type="text" class="form-control" readonly id="pending_amount" name="pending_amount" value='' tabindex='12'>
+                                        <input type="text" class="form-control" readonly id="pending_amount" name="pending_amount" value='' tabindex='5'>
                                         <input type="hidden" class="form-control" readonly id="pend_amt" name="pend_amt">
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="disabledInput">Payable Amount</label>&nbsp;<span class="text-danger payablespan">*</span>
-                                        <input type="text" class="form-control" readonly id="payable_amount" name="payable_amount" value='' tabindex='13'>
+                                        <input type="text" class="form-control" readonly id="payable_amount" name="payable_amount" value='' tabindex='6'>
                                         <input type="hidden" class="form-control" readonly id="payableAmount" name="payableAmount">
                                     </div>
                                 </div>
@@ -202,23 +202,23 @@
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="disabledInput">Penalty</label>&nbsp;<span class="text-danger ">*</span>
-                                        <input type="text" class="form-control" readonly id="penalty" name="penalty" value='' tabindex='14'>
+                                        <input type="text" class="form-control" readonly id="penalty" name="penalty" value='' tabindex='7'>
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="disabledInput">Fine</label>&nbsp;<span class="text-danger ">*</span>
-                                        <input type="text" class="form-control" readonly id="fine_charge" name="fine_charge" value='' tabindex='15'>
+                                        <input type="text" class="form-control" readonly id="fine_charge" name="fine_charge" value='' tabindex='8'>
                                     </div>
                                 </div>
                                 <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1" style="margin-top: 20px;">
-                                    <button type="submit" name="till_now" id="till_now" class="btn btn-primary" value="Submit" tabindex='33'> &nbsp;  Till Now &nbsp; </button>
+                                    <button type="submit" name="till_now" id="till_now" class="btn btn-primary" value="Submit" tabindex='9'> &nbsp;  Till Now &nbsp; </button>
                                 </div>
                                 <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 till_now_pay" style="display: none;margin-left: -20px;">
                                     <div class="form-group">
                                         <label for="till_now_payable">Till Now Payable <span class="text-danger">*</span></label>
                                         <div class="d-flex align-items-center gap-2">
-                                            <input type="text" class="form-control" readonly id="till_now_payable" name="till_now_payable" tabindex="15" />
+                                            <input type="text" class="form-control" readonly id="till_now_payable" name="till_now_payable" tabindex="10" />
                                             <div class="form-check mt-1">
                                                 <input type="checkbox" class="form-check-input" id="till_now_pay_checkbox" style=" width: 20px;height: 20px;">
                                             </div>
@@ -248,31 +248,31 @@
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="disabledInput">Interest Amount</label>&nbsp;<span class="text-danger">*</span>
-                                        <input type="text" class="form-control clearFields" id="interest_amount_track" name="interest_amount_track" value='' placeholder='Enter Interest Amount' tabindex='18'>
+                                        <input type="text" class="form-control clearFields" id="interest_amount_track" name="interest_amount_track" value='' placeholder='Enter Interest Amount' tabindex='11'>
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="disabledInput">Penalty</label>&nbsp;<span class="text-danger">*</span>
-                                        <input type="text" class="form-control clearFields" id="penalty_track" name="penalty_track" value='' placeholder='Enter Penalty Amount' tabindex='19'>
+                                        <input type="text" class="form-control clearFields" id="penalty_track" name="penalty_track" value='' placeholder='Enter Penalty Amount' tabindex='12'>
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="disabledInput">Fine</label>&nbsp;<span class="text-danger">*</span>
-                                        <input type="text" class="form-control clearFields" id="fine_charge_track" name="fine_charge_track" value='' placeholder='Enter Fine' tabindex='20'>
+                                        <input type="text" class="form-control clearFields" id="fine_charge_track" name="fine_charge_track" value='' placeholder='Enter Fine' tabindex='13'>
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 ">
                                     <div class="form-group">
                                         <label for="disabledInput">Principal Amount</label>&nbsp;<span class="text-danger">*</span>
-                                        <input type="number" class="form-control clearFields" id="principal_amount_track" name="principal_amount_track" value='' placeholder='Enter Principal Amount' tabindex='17'>
+                                        <input type="number" class="form-control clearFields" id="principal_amount_track" name="principal_amount_track" value='' placeholder='Enter Principal Amount' tabindex='14'>
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="disabledInput">Total Paid</label>
-                                        <input type="text" readonly class="form-control clearFields" id="total_paid_track" name="total_paid_track" value='' tabindex='21'>
+                                        <input type="text" readonly class="form-control clearFields" id="total_paid_track" name="total_paid_track" value='' tabindex='15'>
                                     </div>
                                 </div>
                             </div>
@@ -283,31 +283,31 @@
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="disabledInput">Interest Waiver</label>
-                                        <input type="text" class="form-control clearFields" id="interest_waiver" name="interest_waiver" value='' placeholder='Enter Interest Waiver' tabindex='23'>
+                                        <input type="text" class="form-control clearFields" id="interest_waiver" name="interest_waiver" value='' placeholder='Enter Interest Waiver' tabindex='16'>
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="disabledInput">Penalty Waiver</label>
-                                        <input type="text" class="form-control clearFields" id="penalty_waiver" name="penalty_waiver" value='' placeholder='Enter Penalty Waiver' tabindex='23'>
+                                        <input type="text" class="form-control clearFields" id="penalty_waiver" name="penalty_waiver" value='' placeholder='Enter Penalty Waiver' tabindex='17'>
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="disabledInput">Fine Waiver</label>
-                                        <input type="text" class="form-control clearFields" id="fine_charge_waiver" name="fine_charge_waiver" value='' placeholder='Enter Fine Waiver' tabindex='24'>
+                                        <input type="text" class="form-control clearFields" id="fine_charge_waiver" name="fine_charge_waiver" value='' placeholder='Enter Fine Waiver' tabindex='18'>
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="disabledInput">Principle Waiver</label>
-                                        <input type="text" class="form-control clearFields" id="principal_waiver" name="principal_waiver" value='' placeholder='Enter Principal Waiver' tabindex='24'>
+                                        <input type="text" class="form-control clearFields" id="principal_waiver" name="principal_waiver" value='' placeholder='Enter Principal Waiver' tabindex='19'>
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="disabledInput">Total Waiver</label>
-                                        <input type="text" readonly class="form-control clearFields" id="total_waiver" name="total_waiver" value='' tabindex='25'>
+                                        <input type="text" readonly class="form-control clearFields" id="total_waiver" name="total_waiver" value='' tabindex='20'>
                                     </div>
                                 </div>
                             </div>
@@ -321,19 +321,19 @@
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="disabledInput">Collection Date</label>&nbsp;<span class="text-danger">*</span>
-                                        <input type="text" readonly class="form-control" id="collection_date" name="collection_date" tabindex='26'>
+                                        <input type="text" readonly class="form-control" id="collection_date" name="collection_date" tabindex='21'>
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="disabledInput">Collection ID</label>&nbsp;<span class="text-danger">*</span>
-                                        <input type="text" readonly class="form-control" id="collection_id" name="collection_id" value='' tabindex='27'>
+                                        <input type="text" readonly class="form-control" id="collection_id" name="collection_id" value='' tabindex='22'>
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="disabledInput">Collection Mode</label>&nbsp;<span class="text-danger">*</span>
-                                        <select class='form-control clearFields' id='collection_mode' name='collection_mode' tabindex='28'>
+                                        <select class='form-control clearFields' id='collection_mode' name='collection_mode' tabindex='23'>
                                             <option value=''>Select Collection Mode</option>
                                             <option value='1'>Cash</option>
                                             <option value='2'>Bank Transfer</option>
@@ -343,7 +343,7 @@
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 transaction" style="display:none">
                                     <div class="form-group">
                                         <label for="disabledInput">Bank Name</label>&nbsp;<span class="text-danger">*</span>
-                                        <select class='form-control' id='bank_id' name='bank_id' tabindex='29'>
+                                        <select class='form-control' id='bank_id' name='bank_id' tabindex='24'>
                                             <option value=''>Select Bank Name</option>
                                         </select>
                                     </div>
@@ -351,7 +351,7 @@
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 transaction" style="display:none">
                                     <div class="form-group">
                                         <label for="disabledInput">Transaction ID</label>&nbsp;<span class="text-danger">*</span>
-                                        <input type="text" class="form-control" id="trans_id" name="trans_id" value='' placeholder="Enter Transaction ID" tabindex='31'>
+                                        <input type="text" class="form-control" id="trans_id" name="trans_id" value='' placeholder="Enter Transaction ID" tabindex='25'>
                                     </div>
                                 </div>
                             </div>
@@ -364,7 +364,7 @@
             <!-- Submit Button Start -->
             <div class="col-md-12 coll_details" style="display: none;">
                 <div class="text-right">
-                    <button type="submit" name="submit_collection" id="submit_collection" class="btn btn-primary" value="Submit" tabindex='33'><span class="icon-check"></span>&nbsp;Submit</button>
+                    <button type="submit" name="submit_collection" id="submit_collection" class="btn btn-primary" value="Submit" tabindex='26'><span class="icon-check"></span>&nbsp;Submit</button>
                 </div>
             </div>
             <!-- Submit Button End -->
@@ -376,7 +376,7 @@
 
 <!-- /////////////////////////////////////////////////////////////////// Due Chart Modal Start ////////////////////////////////////////////////////////////////////// -->
 
-<div class="modal fade bd-example-modal-lg" id="due_chart_model" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-lg" id="due_chart_model" tabindex="1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document" style="max-width: 70% !important">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
@@ -411,7 +411,7 @@
 
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal" onclick="closeChartsModal()" tabindex="4">Close</button>
+                <button class="btn btn-secondary" data-dismiss="modal" onclick="closeChartsModal()" tabindex="1">Close</button>
             </div>
         </div>
     </div>
@@ -421,7 +421,7 @@
 
 <!-- /////////////////////////////////////////////////////////////////// Penalty Chart Modal Start ////////////////////////////////////////////////////////////////////// -->
 
-<div class="modal fade" id="penalty_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="penalty_model" tabindex="1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
@@ -449,7 +449,7 @@
 
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal" onclick="closeChartsModal()" tabindex="4">Close</button>
+                <button class="btn btn-secondary" data-dismiss="modal" onclick="closeChartsModal()" tabindex="1">Close</button>
             </div>
         </div>
     </div>
@@ -459,7 +459,7 @@
 
 <!-- /////////////////////////////////////////////////////////////////// Fine Chart Modal Start ////////////////////////////////////////////////////////////////////// -->
 
-<div class="modal fade" id="fine_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="fine_model" tabindex="1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
@@ -483,7 +483,7 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal" onclick="closeChartsModal()" tabindex="4">Close</button>
+                <button class="btn btn-secondary" data-dismiss="modal" onclick="closeChartsModal()" tabindex="1">Close</button>
             </div>
         </div>
     </div>
@@ -493,7 +493,7 @@
 
 <!-- /////////////////////////////////////////////////////////////////// Fine Add Modal START ////////////////////////////////////////////////////////////// -->
 
-<div class="modal fade" id="fine_form_modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade" id="fine_form_modal" tabindex="1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
@@ -514,17 +514,17 @@
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                         <div class="form-group">
                             <label for="coll_purpose"> Purpose </label> <span class="required">&nbsp;*</span>
-                            <input type="text" class="form-control" id="fine_purpose" name="fine_purpose" placeholder="Enter Purpose" onkeydown="return /[a-z ]/i.test(event.key)" tabindex='2'>
+                            <input type="text" class="form-control" id="fine_purpose" name="fine_purpose" placeholder="Enter Purpose" onkeydown="return /[a-z ]/i.test(event.key)" tabindex='1'>
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                         <div class="form-group">
                             <label for="coll_amnt"> Amount </label> <span class="required">&nbsp;*</span>
-                            <input type="number" class="form-control" id="fine_Amnt" name="fine_Amnt" placeholder="Enter Amount" tabindex='3'>
+                            <input type="number" class="form-control" id="fine_Amnt" name="fine_Amnt" placeholder="Enter Amount" tabindex='1'>
                         </div>
                     </div>
                     <div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
-                        <button type="button" tabindex="4" name="fine_form_submit" id="fine_form_submit" class="btn btn-primary" style="margin-top: 19px;">Submit</button>
+                        <button type="button" tabindex="1" name="fine_form_submit" id="fine_form_submit" class="btn btn-primary" style="margin-top: 19px;">Submit</button>
                     </div>
                 </div>
                 </br>
@@ -544,7 +544,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeFineChartModal()">Close</button>
+                <button type="button" class="btn btn-secondary" tabindex="1" data-dismiss="modal" onclick="closeFineChartModal()">Close</button>
             </div>
         </div>
     </div>

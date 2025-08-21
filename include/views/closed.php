@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="col-12 text-right back_to_closed_list" style="margin-bottom:10px">
-            <button class="btn btn-primary back_to_closed_list" id="back_to_closed_list" style="display: none;"><span class="icon-arrow-left"></span> Back</button>
+            <button class="btn btn-primary back_to_closed_list" id="back_to_closed_list" tabindex="10" style="display: none;"><span class="icon-arrow-left"></span> Back</button>
         </div>
         <div id="closed_main_container" style="display:none">
             <!-- Row start -->
@@ -82,19 +82,19 @@
                                             <div class="form-group">
                                                 <label for="area">Area</label>
                                                 <input type="hidden" id="area_edit">
-                                                <input type="text" class="form-control" id="area" name="area" tabindex="7" disabled>
+                                                <input type="text" class="form-control" id="area" name="area" tabindex="6" disabled>
                                             </div>
                                         </div>
                                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                             <div class="form-group">
                                                 <label for="line"> Line </label>
-                                                <input type="text" class="form-control" id="line" name="line" disabled placeholder="Line" tabindex="8">
+                                                <input type="text" class="form-control" id="line" name="line" disabled placeholder="Line" tabindex="7">
                                             </div>
                                         </div>
                                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                             <div class="form-group">
                                                 <label for="mobile1"> Mobile Number </label>
-                                                <input type="number" class="form-control" id="mobile1" name="mobile1" placeholder="Enter Mobile Number 1" onKeyPress="if(this.value.length==10) return false;" tabindex="9" readonly>
+                                                <input type="number" class="form-control" id="mobile1" name="mobile1" placeholder="Enter Mobile Number 1" onKeyPress="if(this.value.length==10) return false;" tabindex="8" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -104,7 +104,7 @@
                                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                             <div class="form-group">
                                                 <label for="pic"> Photo</label><br>
-                                                <img id='imgshow' class="img_show" src='img\avatar.png' />
+                                                <img id='imgshow' class="img_show" tabindex="9" src='img\avatar.png' />
                                                 <input type="hidden" class="personal_info_disble" id="per_pic">
                                             </div>
                                         </div>
@@ -152,7 +152,7 @@
 
 <!-- /////////////////////////////////////////////////////////////////// Due Chart Modal Start ////////////////////////////////////////////////////////////////////// -->
 
-<div class="modal fade bd-example-modal-lg" id="due_chart_model" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-lg" id="due_chart_model" tabindex="1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document" style="max-width: 70% !important">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
@@ -187,7 +187,7 @@
 
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal" onclick="closeChartsModal()" tabindex="4">Close</button>
+                <button class="btn btn-secondary" data-dismiss="modal" onclick="closeChartsModal()" tabindex="1">Close</button>
             </div>
         </div>
     </div>
@@ -197,7 +197,7 @@
 
 <!-- /////////////////////////////////////////////////////////////////// Penalty Chart Modal Start ////////////////////////////////////////////////////////////////////// -->
 
-<div class="modal fade" id="penalty_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="penalty_model" tabindex="1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
@@ -225,7 +225,7 @@
 
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal" onclick="closeChartsModal()" tabindex="4">Close</button>
+                <button class="btn btn-secondary" data-dismiss="modal" onclick="closeChartsModal()" tabindex="1">Close</button>
             </div>
         </div>
     </div>
@@ -235,7 +235,7 @@
 
 <!-- /////////////////////////////////////////////////////////////////// Fine Chart Modal Start ////////////////////////////////////////////////////////////////////// -->
 
-<div class="modal fade" id="fine_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="fine_model" tabindex="1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
@@ -259,7 +259,7 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal" onclick="closeChartsModal()" tabindex="4">Close</button>
+                <button class="btn btn-secondary" data-dismiss="modal" onclick="closeChartsModal()" tabindex="1">Close</button>
             </div>
         </div>
     </div>
@@ -269,7 +269,7 @@
 
 <!-- /////////////////////////////////////////////////////////////////// Closed Remark Modal Start ////////////////////////////////////////////////////////////////// -->
 
-<div class="modal fade" id="closed_remark_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="closed_remark_model" tabindex="1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
@@ -287,7 +287,7 @@
                             <div class="col-sm-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label for="sub_status">Sub Status</label><span class="required">*</span>
-                                    <select name="sub_status" id="sub_status" class="form-control" tabindex="2">
+                                    <select name="sub_status" id="sub_status" class="form-control" tabindex="1">
                                         <option value="">Select Sub Status</option>
                                         <option value="1">Consider</option>
                                         <option value="2">Reject</option>
@@ -297,7 +297,7 @@
                             <div class="col-sm-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label for="remark">Remark</label>
-                                    <textarea class="form-control" name="remark" id="remark" tabindex="3" placeholder="Enter Remarks"></textarea>
+                                    <textarea class="form-control" name="remark" id="remark" tabindex="1" placeholder="Enter Remarks"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -306,8 +306,8 @@
 
             </div>
             <div class="modal-footer">
-                <button name="submit_closed_remark" id="submit_closed_remark" class="btn btn-primary" tabindex="4"><span class="icon-check"></span>&nbsp;Submit</button>
-                <button class="btn btn-secondary" data-dismiss="modal" onclick="closeChartsModal()" tabindex="6">Close</button>
+                <button name="submit_closed_remark" id="submit_closed_remark" class="btn btn-primary" tabindex="1"><span class="icon-check"></span>&nbsp;Submit</button>
+                <button class="btn btn-secondary" data-dismiss="modal" onclick="closeChartsModal()" tabindex="1">Close</button>
             </div>
         </div>
     </div>

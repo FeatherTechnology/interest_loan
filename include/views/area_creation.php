@@ -3,7 +3,7 @@
     <div class="col-12">
         <div class="col-12 text-right">
             <button class="btn btn-primary add_area_btn"><span class="icon-add"></span> Add Area Creation</button>
-            <button class="btn btn-primary back_to_area_btn" style="display: none;"><span class="icon-arrow-left"></span> Back</button>
+            <button class="btn btn-primary back_to_area_btn" tabindex="8" style="display: none;"><span class="icon-arrow-left"></span> Back</button>
         </div></br>
         <!----------------------------- CARD START  AREA CREATION TABLE ------------------------------>
         <div class="card wow area_table_content">
@@ -62,21 +62,21 @@
                                     </div>
                                     <div class="col-md-1 col-sm-2" style="margin-top: 18px;">
                                         <div class="form-group">
-                                            <button type="button" class="btn btn-primary modalBtnCss" id="line_modal_btn" onclick="getLineNameTable()"><span class="icon-add"></span></button>
+                                            <button type="button" class="btn btn-primary modalBtnCss" tabindex="3" id="line_modal_btn" onclick="getLineNameTable()"><span class="icon-add"></span></button>
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-sm-4">
                                         <div class="form-group">
                                             <label for="area_name">Area Name</label><span class="text-danger">*</span>
                                             <input type="hidden" id="area_name2">
-                                            <select class="form-control" id="area_name" name="area_name" tabindex="3" multiple>
+                                            <select class="form-control" id="area_name" name="area_name" tabindex="4" multiple>
                                                 <option value="">Select Area Name</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-1 col-sm-2" style="margin-top: 18px;">
                                         <div class="form-group">
-                                            <button type="button" class="btn btn-primary modalBtnCss" id="area_modal_btn" onclick="getAreaNameTable()"><span class="icon-add"></span></button>
+                                            <button type="button" class="btn btn-primary modalBtnCss" tabindex="5" id="area_modal_btn" onclick="getAreaNameTable()"><span class="icon-add"></span></button>
                                         </div>
                                     </div>
                                 </div>
@@ -84,8 +84,8 @@
                         </div>
 
                         <div class="col-12 mt-3 text-right">
-                            <button name="submit_area_creation" id="submit_area_creation" class="btn btn-primary" tabindex="4"><span class="icon-check"></span>&nbsp;Submit</button>
-                            <button type="reset" class="btn btn-outline-secondary" tabindex="14">Clear</button>
+                            <button name="submit_area_creation" id="submit_area_creation" class="btn btn-primary" tabindex="6"><span class="icon-check"></span>&nbsp;Submit</button>
+                            <button type="reset" class="btn btn-outline-secondary" tabindex="7">Clear</button>
                         </div>
 
                     </div>
@@ -99,7 +99,7 @@
 
 <!-- /////////////////////////////////////////////////////////////////// Line Name Modal Start ////////////////////////////////////////////////////////////////////// -->
 
-<div class="modal fade" id="add_line_name_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="add_line_name_modal" tabindex="1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
@@ -115,13 +115,13 @@
                         <div class="col-sm-4 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label for="addline_name">Line Name</label><span class="text-danger">*</span>
-                                <input class="form-control" name="addline_name" id="addline_name" tabindex="2" placeholder="Enter Line Name">
+                                <input class="form-control" name="addline_name" id="addline_name" tabindex="1" placeholder="Enter Line Name">
                                 <input type="hidden" id="addline_name_id" value='0'>
                             </div>
                         </div>
                         <div class="col-sm-4 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <button name="submit_addline" id="submit_addline" class="btn btn-primary" tabindex="3" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
+                                <button name="submit_addline" id="submit_addline" class="btn btn-primary" tabindex="1" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
                             </div>
                         </div>
                     </div>
@@ -148,7 +148,7 @@
 
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal" tabindex="4" onclick="getLineNameDropdown()">Close</button>
+                <button class="btn btn-secondary" data-dismiss="modal" tabindex="1" onclick="getLineNameDropdown()">Close</button>
             </div>
         </div>
     </div>
@@ -157,7 +157,7 @@
 
 <!-- /////////////////////////////////////////////////////////////////// Area Name Modal Start ////////////////////////////////////////////////////////////////////// -->
 
-<div class="modal fade" id="add_area_name_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="add_area_name_modal" tabindex="1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg " role="document">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
@@ -172,14 +172,14 @@
                         <div class="col-sm-4 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label for="addarea_name">Area Name</label><span class="text-danger">*</span>
-                                <input class="form-control" name="addarea_name" id="addarea_name" tabindex="2" placeholder="Enter Area Name">
+                                <input class="form-control" name="addarea_name" id="addarea_name" tabindex="1" placeholder="Enter Area Name">
                                 <input type="hidden" id="addarea_name_id" value='0'>
                             </div>
                         </div>
                         <div class="col-sm-4 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label for="area_status">Status</label><span class="text-danger">*</span>
-                                <select class="form-control" id="area_status" name="area_status" tabindex="3">
+                                <select class="form-control" id="area_status" name="area_status" tabindex="1">
                                     <option value="">Select Status</option>
                                     <option value="1">Enable</option>
                                     <option value="0">Disable</option>
@@ -188,7 +188,7 @@
                         </div>
                         <div class="col-sm-4 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <button name="submit_addarea" id="submit_addarea" class="btn btn-primary" tabindex="4" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
+                                <button name="submit_addarea" id="submit_addarea" class="btn btn-primary" tabindex="1" style="margin-top: 18px;"><span class="icon-check"></span>&nbsp;Submit</button>
                             </div>
                         </div>
                     </div>
@@ -216,7 +216,7 @@
 
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal" tabindex="5" onclick="getAreaNameDropdown()">Close</button>
+                <button class="btn btn-secondary" data-dismiss="modal" tabindex="1" onclick="getAreaNameDropdown()">Close</button>
             </div>
         </div>
     </div>

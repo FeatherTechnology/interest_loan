@@ -63,6 +63,7 @@ if (isset($_POST['search'])) {
         OR cc.mobile1 LIKE '%" . $search . "%' 
         OR lc.loan_category LIKE '%" . $search . "%' 
         OR agc.agent_name LIKE '%" . $search . "%' 
+        OR DATE_FORMAT(le.loan_date, '%d-%m-%Y') LIKE '%" . $search . "%'
         OR li.issue_date LIKE '%" . $search . "%' 
         OR le.loan_amount LIKE '%" . $search . "%' 
         OR le.loan_amount LIKE '%" . $search . "%' 

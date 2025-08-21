@@ -19,7 +19,7 @@ $(document).ready(function () {
         let proof_detail = $('#proof_detail').val();
         let kyc_id = $('#kyc_id').val();
 
-        var data = ['proof_of', 'kyc_relationship', 'proof', 'proof_detail']
+        var data = ['proof_of', 'kyc_relationship', 'proof']
         var isValid = true;
         data.forEach(function (entry) {
             var fieldIsValid = validateField($('#' + entry).val(), entry);
@@ -27,43 +27,50 @@ $(document).ready(function () {
                 isValid = false;
             }
         });
+
         if (isValid) {
-            let kycDetail = new FormData();
+            swalConfirm(
+                'Are you sure?',
+                'Do you want to submit this KYC info?',
+                function () {
+                    let kycDetail = new FormData();
 
-            kycDetail.append('proof_of', proof_of)
-            kycDetail.append('fam_mem', fam_mem);
-            kycDetail.append('cus_id', cus_id)
-            kycDetail.append('proof', proof)
-            kycDetail.append('proof_detail', proof_detail)
-            kycDetail.append('upload', upload)
-            kycDetail.append('kyc_upload', kyc_upload)
-            kycDetail.append('kyc_id', kyc_id)
+                    kycDetail.append('proof_of', proof_of)
+                    kycDetail.append('fam_mem', fam_mem);
+                    kycDetail.append('cus_id', cus_id)
+                    kycDetail.append('proof', proof)
+                    kycDetail.append('proof_detail', proof_detail)
+                    kycDetail.append('upload', upload)
+                    kycDetail.append('kyc_upload', kyc_upload)
+                    kycDetail.append('kyc_id', kyc_id)
 
-            $.ajax({
-                url: 'api/customer_creation_files/submit_kyc.php',
-                type: 'post',
-                data: kycDetail,
-                contentType: false,
-                processData: false,
-                cache: false,
-                success: function (response) {
+                    $.ajax({
+                        url: 'api/customer_creation_files/submit_kyc.php',
+                        type: 'post',
+                        data: kycDetail,
+                        contentType: false,
+                        processData: false,
+                        cache: false,
+                        success: function (response) {
 
-                    if (response === '2') {
-                        swalSuccess('Success', 'KYC Added Successfully!');
-                        $('.kyc_name_div').hide();
-                        $('.fam_mem_div').hide();
-                    } else if (response === '1') {
-                        swalSuccess('Success', 'KYC Updated Successfully!')
-                        $('.kyc_name_div').hide();
-                        $('.fam_mem_div').hide();
-                    }
-                    else {
-                        swalError('Error', 'Error Occurred!');
-                    }
+                            if (response === '2') {
+                                swalSuccess('Success', 'KYC Added Successfully!');
+                                $('.kyc_name_div').hide();
+                                $('.fam_mem_div').hide();
+                            } else if (response === '1') {
+                                swalSuccess('Success', 'KYC Updated Successfully!')
+                                $('.kyc_name_div').hide();
+                                $('.fam_mem_div').hide();
+                            }
+                            else {
+                                swalError('Error', 'Error Occurred!');
+                            }
 
-                    getKycTable();
+                            getKycTable();
+                        }
+                    });
                 }
-            });
+            );
         }
     });
 
@@ -184,21 +191,27 @@ $(document).ready(function () {
         });
 
         if (isValid) {
-            $.post('api/customer_creation_files/submit_proof.php', { addProof_name, proof_id }, function (response) {
+            swalConfirm(
+                'Are you sure?',
+                'Do you want to submit this proof info?',
+                function () {
+                    $.post('api/customer_creation_files/submit_proof.php', { addProof_name, proof_id }, function (response) {
 
-                if (response === '2') {
-                    swalSuccess('Success', 'Proof Added Successfully!');
-                } else if (response === '1') {
-                    swalSuccess('Success', 'Proof Updated Successfully!');
-                } else {
-                    swalError('Error', 'Error Occurred!');
+                        if (response === '2') {
+                            swalSuccess('Success', 'Proof Added Successfully!');
+                        } else if (response === '1') {
+                            swalSuccess('Success', 'Proof Updated Successfully!');
+                        } else {
+                            swalError('Error', 'Error Occurred!');
+                        }
+
+                        $('#proof_id').val('')
+                        $('#add_proof_info_modal').modal('hide');
+                        getProofTable();
+                        fetchProofList();
+                    });
                 }
-
-                $('#proof_id').val('')
-                $('#add_proof_info_modal').modal('hide');
-                getProofTable();
-                fetchProofList();
-            });
+            );
         }
 
     });
@@ -256,18 +269,24 @@ $(document).ready(function () {
         });
 
         if (isValid) {
-            $.post('api/customer_creation_files/submit_bank.php', { cus_id, bank_name, branch_name, acc_holder_name, acc_number, ifsc_code, bank_id }, function (response) {
+            swalConfirm(
+                'Are you sure?',
+                'Do you want to submit this bank info?',
+                function () {
+                    $.post('api/customer_creation_files/submit_bank.php', { cus_id, bank_name, branch_name, acc_holder_name, acc_number, ifsc_code, bank_id }, function (response) {
 
-                if (response === '2') {
-                    swalSuccess('Success', 'Bank Added Successfully!');
-                } else if (response === '1') {
-                    swalSuccess('Success', 'Bank Updated Successfully!');
-                } else {
-                    swalError('Error', 'Error Occurred!');
+                        if (response === '2') {
+                            swalSuccess('Success', 'Bank Added Successfully!');
+                        } else if (response === '1') {
+                            swalSuccess('Success', 'Bank Updated Successfully!');
+                        } else {
+                            swalError('Error', 'Error Occurred!');
+                        }
+
+                        getBankTable();
+                    });
                 }
-
-                getBankTable();
-            });
+            );
         }
     })
 
@@ -314,18 +333,24 @@ $(document).ready(function () {
         });
 
         if (isValid) {
-            $.post('api/customer_creation_files/submit_property.php', { cus_id, property, property_detail, property_holder, property_id }, function (response) {
+            swalConfirm(
+                'Are you sure?',
+                'Do you want to submit this property info?',
+                function () {
+                    $.post('api/customer_creation_files/submit_property.php', { cus_id, property, property_detail, property_holder, property_id }, function (response) {
 
-                if (response === '2') {
-                    swalSuccess('Success', 'Property Added Successfully!');
-                } else if (response === '1') {
-                    swalSuccess('Success', 'Property Updated Successfully!');
-                } else {
-                    swalError('Error', 'Error Occurred!');
+                        if (response === '2') {
+                            swalSuccess('Success', 'Property Added Successfully!');
+                        } else if (response === '1') {
+                            swalSuccess('Success', 'Property Updated Successfully!');
+                        } else {
+                            swalError('Error', 'Error Occurred!');
+                        }
+
+                        getPropertyTable();
+                    });
                 }
-
-                getPropertyTable();
-            });
+            );
         }
     });
 
@@ -401,6 +426,9 @@ $(document).ready(function () {
 
         let formData = new FormData();
         formData.append('guarantor_name', guarantor_name);
+        if (gu_pic) {
+            formData.append('gu_pic', gu_pic);
+        }
 
         $.ajax({
             url: 'api/customer_creation_files/add_guarantor_info.php',
@@ -422,6 +450,9 @@ $(document).ready(function () {
                         <td>${g.relation_type || ''}</td>
                         <td>${g.fam_aadhar}</td>
                         <td>${g.fam_mobile}</td>
+                        <td>
+                            ${response.gu_pic ? `<a href="uploads/loan_entry/gu_pic/${response.gu_pic}" target="_blank">${response.gu_pic}</a>` : ''}
+                        </td>
                         <td style="display:none" class="hidden-guarantor-pics" 
                             data-gur-pic="${gur_pic}">
                         </td>
@@ -490,6 +521,7 @@ $(document).ready(function () {
         let customer_profile_id = $('#customer_profile_id').val();
         let cus_limit = $('#cus_limit').val().replace(/,/g, '');
         let about_cus = $('#about_cus').val();
+        let cus_status = $('#cus_status').val();
         let guarantorRowCount = $('#guarantor_info tbody tr').length;
 
         let isValid = true;
@@ -516,6 +548,7 @@ $(document).ready(function () {
         personalDetail.append('customer_profile_id', customer_profile_id);
         personalDetail.append('cus_limit', cus_limit);
         personalDetail.append('about_cus', about_cus);
+        personalDetail.append('cus_status', cus_status);
 
         // Gather guarantor data
         var guarantorMappingData = [];
@@ -540,30 +573,35 @@ $(document).ready(function () {
         // Add mapping data
         personalDetail.append('guarantorMappingData', JSON.stringify(guarantorMappingData));
         if (isValid) {
-            // Submit via AJAX
-            $.ajax({
-                url: 'api/loan_entry_files/submit_customer_profile_info.php',
-                type: 'POST',
-                data: personalDetail,
-                contentType: false,
-                processData: false,
-                cache: false,
-                dataType: 'json',
-                success: function (response) {
-                    if (response.result == 1) {
-                        swalSuccess('Success', 'Customer Profile Updated Successfully!');
-                    } else if (response.result == 2) {
-                        swalSuccess('Success', 'Customer Profile Added Successfully!');
-                    }
+            swalConfirm(
+                'Are you sure?',
+                'Do you want to submit this customer profile?',
+                function () {
+                    $.ajax({
+                        url: 'api/loan_entry_files/submit_customer_profile_info.php',
+                        type: 'POST',
+                        data: personalDetail,
+                        contentType: false,
+                        processData: false,
+                        cache: false,
+                        dataType: 'json',
+                        success: function (response) {
+                            if (response.result == 1) {
+                                swalSuccess('Success', 'Customer Profile Updated Successfully!');
+                            } else if (response.result == 2) {
+                                swalSuccess('Success', 'Customer Profile Added Successfully!');
+                            }
 
-                    $('#loan_calculation').trigger('click')
-                    $('html, body').animate({
-                        scrollTop: $('.page-content').offset().top
-                    }, 3000);
+                            $('#loan_calculation').trigger('click')
+                            $('html, body').animate({
+                                scrollTop: $('.page-content').offset().top
+                            }, 3000);
 
-                    $('#customer_profile_id').val(response.loan_entry_id);
+                            $('#customer_profile_id').val(response.loan_entry_id);
+                        }
+                    });
                 }
-            });
+            );
         }
     });
 
@@ -640,39 +678,6 @@ $(document).ready(function () {
             callLoanCaculationFunctions();
         }
     })
-
-    //<---------------------- Family info relationship - other on Change  ----------------------------------->
-
-    $('#fam_relationship').on('change', function () {
-        if ($(this).val() === 'Other') {
-            $('.other').show();
-        } else {
-            $('.other').hide();
-            $('#relation_type').val(''); // Clear input when hidden
-        }
-    });
-
-    //<------------------------------------ aadhar number Change  ------------------------------------------------->
-
-    $("#aadhar_number").on("blur", function () {
-        let aadhar_number = $("#aadhar_number").val().trim().replace(/\s/g, "");
-        existingCustmerProfile(aadhar_number);
-    });
-
-    $('input[data-type="adhaar-number"]').change(function () {
-        let len = $(this).val().length;
-        if (len < 14) {
-            $(this).val('');
-            swalError('Warning', 'Kindly Enter Valid Aadhaar Number');
-        }
-    });
-
-    // Function to format Aadhaar number input
-    $('input[data-type="adhaar-number"]').keyup(function () {
-        var value = $(this).val();
-        value = value.replace(/\D/g, "").split(/(?:([\d]{4}))/g).filter(s => s.length > 0).join(" ");
-        $(this).val(value);
-    });
 
     //<---------------------- area and line on chnage function --------------------------------------------------->
 
@@ -844,26 +849,32 @@ $(document).ready(function () {
             'cus_status': '2'
         }
         if (isFormDataValid(formData)) {
-            $.post('api/loan_entry_files/loan_calculation_files/submit_loan_calculation.php', formData, function (response) {
-                if (response.status == '1') {
-                    swalSuccess('Success', 'Loan Calculation Added Successfully!');
-                    if ($('.page-content').length) {
-                        $('html, body').animate({
-                            scrollTop: $('.page-content').offset().top
-                        }, 3000);
-                    }
-                } else if (response.status == '2') {
-                    swalSuccess('Success', 'Loan Calculation Updated Successfully!')
-                    if ($('.page-content').length) {
-                        $('html, body').animate({
-                            scrollTop: $('.page-content').offset().top
-                        }, 3000);
-                    }
-                } else {
-                    swalError('Error', 'Error Occurs!')
-                }
+            swalConfirm(
+                'Are you sure?',
+                'Do you want to submit this loan calculation?',
+                function () {
+                    $.post('api/loan_entry_files/loan_calculation_files/submit_loan_calculation.php', formData, function (response) {
+                        if (response.status == '1') {
+                            swalSuccess('Success', 'Loan Calculation Added Successfully!');
+                            if ($('.page-content').length) {
+                                $('html, body').animate({
+                                    scrollTop: $('.page-content').offset().top
+                                }, 3000);
+                            }
+                        } else if (response.status == '2') {
+                            swalSuccess('Success', 'Loan Calculation Updated Successfully!')
+                            if ($('.page-content').length) {
+                                $('html, body').animate({
+                                    scrollTop: $('.page-content').offset().top
+                                }, 3000);
+                            }
+                        } else {
+                            swalError('Error', 'Error Occurs!')
+                        }
 
-            }, 'json');
+                    }, 'json');
+                }
+            );
         }
     });
 
@@ -889,6 +900,12 @@ function getApprovalTable() {
     serverSideTable('#approval_table', '', 'api/approval_files/approval_list.php');
 }
 
+function checkAdditionalRenewal(cus_id) {
+    $.post('api/loan_entry_files/check_additional_renewal.php', { cus_id }, function (response) {
+        $('#cus_status').val(response);
+    }, 'json');
+}
+
 function swapTableAndCreation() {
     if ($('.loan_table_content').is(':visible')) {
         $('.loan_table_content').hide();
@@ -907,7 +924,7 @@ function swapTableAndCreation() {
 
 function moveToNext(cus_sts_id, cus_sts) {
     $.post('api/common_files/move_to_next.php', { cus_sts_id, cus_sts }, function (response) {
-        if (response == '0') {
+        if (response == 0) {
             let alertName;
             if (cus_sts == '4') {
                 alertName = 'Approved Successfully';
@@ -943,12 +960,16 @@ function closeRemarkModal() {
 
 function checkCustomerLimit(loan_entry_id, cus_sts_id, cus_sts) {
     $.post('api/common_files/check_customer_limit.php', { loan_entry_id }, function (response) {
-        if (response == '1') {
+        if (response.status == '1') {
             swalError('Warning', 'Kindly Enter The Customer Limit');
-        } else if (response == '2') {
+        } else if (response.status == '2') {
             swalError('Warning', 'Customer limit is less than the loan amount. Please update either the customer limit or the loan amount.');
-        } else if (response == '3') {
-            moveToNext(cus_sts_id, cus_sts);
+        } else if (response.status == '3') {
+            swalConfirm(
+                "Customer Limit",
+                "Customer limit is set to " + response.cus_limit + ". Do you want to Approve?",
+                () => moveToNext(cus_sts_id, cus_sts)
+            );
         } else {
             swalError('Alert', 'Failed To Approved');
         }
@@ -982,6 +1003,7 @@ async function editCustmerProfile(id) {
         $('#customer_profile_id').val(id);
         $('#aadhar_number').val(data.aadhar_number);
         $('#cus_id').val(data.cus_id);
+        $('#cus_data').val(data.cus_data);
         $('#first_name').val(data.first_name);
         $('#last_name').val(data.last_name);
         $('#dob').val(data.dob);
@@ -1026,8 +1048,11 @@ async function editCustmerProfile(id) {
             $('#loan_count_div').show();
             let cus_id = $('#cus_id').val();
             getLoanCount(cus_id);
-        } else {
+            $('.cus_status_div').show();
+            checkAdditionalRenewal(data.cus_id);
+        } else if (data.cus_data == 'New') {
             $('#loan_count_div').hide();
+            $('.cus_status_div').hide();
         }
 
         $('#guarantor_info tbody').empty();
@@ -1042,6 +1067,9 @@ async function editCustmerProfile(id) {
                         <td>${g.relation_type || ''}</td>
                         <td>${g.fam_aadhar}</td>
                         <td>${g.fam_mobile}</td>
+                        <td>
+                            ${g.gu_pic ? `<a href="uploads/loan_entry/gu_pic/${g.gu_pic}" target="_blank">${g.gu_pic}</a>` : ''}
+                        </td>
                         <td style="display:none" class="hidden-guarantor-pics" 
                             data-gur-pic="${g.gur_pic || ''}">
                         </td>
