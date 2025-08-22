@@ -23,20 +23,26 @@ $(document).ready(function () {
         });
 
         if (isValid) {
-            $.post('api/agent_creation_files/submit_agent_creation.php', { agent_code, agent_name, mobile1, mobile2, area, occupation, agent_id }, function (response) {
-                if (response === '2') {
-                    swalSuccess('Success', 'Agent Added Successfully!');
-                } else if (response === '1') {
-                    swalSuccess('Success', 'Agent Updated Successfully!');
-                } else {
-                    swalError('Error', 'Error Occurred!');
-                }
-                $('#agent_id').val('');
-                $('#agent_creation').trigger('reset');
-                getAgentTable();
-                swapTableAndCreation();//to change to div to table content.
+            swalConfirm(
+                'Are you sure?',
+                'Do you want to submit this agent creation?',
+                function () {
+                    $.post('api/agent_creation_files/submit_agent_creation.php', { agent_code, agent_name, mobile1, mobile2, area, occupation, agent_id }, function (response) {
+                        if (response === '2') {
+                            swalSuccess('Success', 'Agent Added Successfully!');
+                        } else if (response === '1') {
+                            swalSuccess('Success', 'Agent Updated Successfully!');
+                        } else {
+                            swalError('Error', 'Error Occurred!');
+                        }
+                        $('#agent_id').val('');
+                        $('#agent_creation').trigger('reset');
+                        getAgentTable();
+                        swapTableAndCreation();//to change to div to table content.
 
-            });
+                    });
+                }
+            );
 
         }
     });
