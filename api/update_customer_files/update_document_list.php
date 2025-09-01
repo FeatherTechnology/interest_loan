@@ -43,8 +43,12 @@ if ($qry->rowCount() > 0) {
 
         $loanInfo['loan_amount'] = moneyFormatIndia($loanInfo['loan_amount']);
 
-        $closedDate = new DateTime($loanInfo['closed_date']);
-        $loanInfo['closed_date'] = $closedDate->format('d-m-Y');
+        if (!empty($loanInfo['closed_date']) && $loanInfo['closed_date'] != "0000-00-00") {
+            $closedDate = new DateTime($loanInfo['closed_date']);
+            $loanInfo['closed_date'] = $closedDate->format('d-m-Y');
+        } else {
+            $loanInfo['closed_date'] = ''; 
+        }
 
         $originalStatus = $loanInfo['c_sts']; // Convert numeric status to its string representation for display 
         $loanInfo['c_sts'] = isset($status[$originalStatus]) ? $status[$originalStatus] : '';
@@ -59,7 +63,7 @@ if ($qry->rowCount() > 0) {
         if ($originalStatus <= '12') {
             $loanInfo['action'] .= "<a href='#' class='doc-update' value='" . $loanInfo['loan_entry_id'] . "' title='update details'>Update</a>";
         }
-        
+
         $loanInfo['action'] .= "<a href='#' class='doc-print' value='" . $loanInfo['loan_entry_id'] . "' title='print'>Print</a>";
 
         $loanInfo['action'] .= "</div></div>";

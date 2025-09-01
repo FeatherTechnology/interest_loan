@@ -11,18 +11,13 @@ $column = array(
     'anc.areaname',
     'lnc.linename',
     'bc.branch_name',
-    'lc.loan_category',
-    'le.loan_amount',
     'cc.mobile1',
-    'le.cus_data',
     'cc.id'
 );
 
 $query = "SELECT le.id AS loan_entry_id, cc.id , cc.cus_id ,  CONCAT(cc.first_name, ' ', COALESCE(cc.last_name, '')) AS cus_name, cc.aadhar_number , anc.areaname , lnc.linename , bc.branch_name , cc.mobile1, cs.id as cus_sts_id,  cs.status as c_sts
 FROM customer_creation cc
 LEFT JOIN loan_entry le ON cc.cus_id = le.cus_id
-LEFT JOIN loan_category_creation lcc ON le.loan_category = lcc.id
-LEFT JOIN loan_category lc ON lcc.loan_category = lc.id
 LEFT JOIN line_name_creation lnc ON cc.line = lnc.id
 LEFT JOIN area_name_creation anc ON cc.area = anc.id
 LEFT JOIN area_creation ac ON cc.line = ac.line_id
