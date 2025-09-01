@@ -345,7 +345,6 @@ function getTillDateInterest($loan_arr, $response, $pdo, $data, $le_id)
         $cur_date = new DateTime(date('Y-m-d'));
 
         $result = dueAmtCalculation($pdo, $issued_date, $cur_date, $response['interest_amount'], $loan_arr, '', $le_id);
-        // $result = (($issued_date->diff($cur_date))->days) * $issue_month_due;
 
         //to increase till date Interest to nearest multiple of 5
         $cur_amt = ceil($result / 5) * 5; //ceil will set the number to nearest upper integer//i.e ceil(121/5)*5 = 125
@@ -536,7 +535,7 @@ function dueAmtCalculation($pdo, $start_date, $end_date, $interest_amount, $loan
     // <------------------------------------------------------------------- Penalty Logic ----------------------------------------------------------------->
 
     if ($status === 'pending') {
-        $penaltyRow = $pdo->query("SELECT overdue_penalty AS overdue, overdue_type FROM loan_category_creation WHERE loan_category = '$loan_category'")->fetch(PDO::FETCH_ASSOC);
+        $penaltyRow = $pdo->query("SELECT overdue_penalty AS overdue, overdue_type FROM loan_category_creation WHERE id = '$loan_category'")->fetch(PDO::FETCH_ASSOC);
         $penalty_val = $penaltyRow['overdue'] ?? 0;
         $penalty_type = strtolower(trim($penaltyRow['overdue_type'] ?? 'percentage'));
 

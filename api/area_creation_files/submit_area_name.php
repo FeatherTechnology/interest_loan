@@ -14,7 +14,7 @@ if ($qry->rowCount() > 0) {
 } else {
     if ($id != '0') {
         if ($status == '0') {
-            $checkQry = $pdo->query("SELECT * FROM area_creation where FIND_IN_SET($id,area_id)");
+            $checkQry = $pdo->query("SELECT * FROM area_creation_area_name where area_id = $id");
             if ($checkQry->rowCount() > 0) {
                 $result = 3; //Already added in Area Creation.
 
