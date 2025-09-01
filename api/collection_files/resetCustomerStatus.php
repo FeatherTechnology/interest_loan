@@ -536,7 +536,6 @@ function dueAmtCalculation($pdo, $start_date, $end_date, $interest_amount, $loan
 
     if ($status === 'pending') {
         $penaltyRow = $pdo->query("SELECT overdue_penalty AS overdue, overdue_type FROM loan_category_creation WHERE id = '$loan_category'")->fetch(PDO::FETCH_ASSOC);
-        echo "SELECT overdue_penalty AS overdue, overdue_type FROM loan_category_creation WHERE id = '$loan_category'";
         $penalty_val = $penaltyRow['overdue'] ?? 0;
         $penalty_type = strtolower(trim($penaltyRow['overdue_type'] ?? 'percentage'));
 
