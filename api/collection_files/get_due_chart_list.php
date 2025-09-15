@@ -769,7 +769,7 @@ function dueAmtCalculation($pdo, $start_date, $end_date, $interest_amount, $loan
 
 function getPaidInterest($pdo, $le_id)
 {
-    $qry = $pdo->query("SELECT SUM(interest_amount_track) as int_paid FROM `collection` WHERE loan_entry_id = '$le_id' and (interest_amount_track != '' and interest_amount_track IS NOT NULL) ");
+    $qry = $pdo->query("SELECT COALESCE(SUM(interest_amount_track), 0) + COALESCE(SUM(interest_waiver), 0) AS int_paid FROM `collection` WHERE loan_entry_id = '$le_id' and (interest_amount_track != '' and interest_amount_track IS NOT NULL OR interest_waiver != '' and interest_waiver IS NOT NULL) ");
     $int_paid = $qry->fetch()['int_paid'];
     return intVal($int_paid);
 }
