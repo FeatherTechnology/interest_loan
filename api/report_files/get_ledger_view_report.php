@@ -126,7 +126,7 @@ $to_date = date('Y-m-d', strtotime($inputDate)) . ' 23:59:59';
                 <td><?php echo date('d-m-Y', strtotime($dailyInfo['maturity_date_calc'])); ?></td>
                 <td>
                     <?php
-                    $balance_amount = intval($dailyInfo['loan_amount']) - intval($dailyInfo['principal_amount_track']);
+                    $balance_amount = intval($dailyInfo['loan_amount']) - (intval($dailyInfo['princ_amt_track']) + intval($dailyInfo['principal_waiver']));
                     echo moneyFormatIndia($balance_amount);
                     ?>
                 </td>

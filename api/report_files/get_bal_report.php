@@ -355,10 +355,10 @@ function dueAmtCalculation($pdo, $start_date, $end_date, $interest_amount, $loan
 
 function getPaidInterest($pdo, $le_id , $to_date)
 {
-    $stmt = $pdo->prepare("SELECT SUM(interest_amount_track) as int_paid 
+    $stmt = $pdo->prepare("SELECT COALESCE(SUM(interest_amount_track), 0) + COALESCE(SUM(interest_waiver), 0) AS int_paid 
         FROM collection 
-        WHERE loan_entry_id = :le_id 
-        AND interest_amount_track IS NOT NULL AND interest_amount_track > 0 AND  
+        WHERE loan_entry_id = :le_id AND
+        (interest_amount_track != '' and interest_amount_track IS NOT NULL OR interest_waiver != '' and interest_waiver IS NOT NULL) AND  
         DATE(collection_date) <= DATE('$to_date')");
 
     $stmt->execute([':le_id' => $le_id]);

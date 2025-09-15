@@ -288,7 +288,7 @@ function calculateInterestLoan($loan_arr, $response, $pdo, $le_id)
 
 function getPaidInterest($pdo, $le_id)
 {
-    $qry = $pdo->query("SELECT SUM(interest_amount_track) as int_paid FROM `collection` WHERE loan_entry_id = '$le_id' and (interest_amount_track != '' and interest_amount_track IS NOT NULL) ");
+    $qry = $pdo->query("SELECT COALESCE(SUM(interest_amount_track), 0) + COALESCE(SUM(interest_waiver), 0) AS int_paid FROM `collection` WHERE loan_entry_id = '$le_id' and (interest_amount_track != '' and interest_amount_track IS NOT NULL OR interest_waiver != '' and interest_waiver IS NOT NULL) ");
     $int_paid = $qry->fetch()['int_paid'];
     return intVal($int_paid);
 }
@@ -444,15 +444,15 @@ function dueAmtCalculation($pdo, $start_date, $end_date, $interest_amount, $loan
 
     $interest_calculate = $loan_arr['interest_calculate'];
     $interest_rate_calc = $loan_arr['interest_rate_calc'];
-    $loan_category = $loan_arr['loan_category'];
+
     $result = 0;
     $monthly_interest_data = [];
 
     $loanRow = $pdo->query("SELECT loan_amnt_calc FROM loan_entry WHERE id = '$le_id'")->fetch(PDO::FETCH_ASSOC);
     $default_balance = $loanRow['loan_amnt_calc'];
 
-    $collections = $pdo->query("SELECT principal_amount_track, collection_date FROM collection 
-        WHERE loan_entry_id = '$le_id' AND principal_amount_track != '' ORDER BY collection_date ASC")->fetchAll();
+    $collections = $pdo->query("SELECT principal_amount_track, collection_date , principal_waiver FROM collection 
+        WHERE loan_entry_id = '$le_id'  AND (principal_amount_track != '' OR principal_waiver != '') ORDER BY collection_date ASC")->fetchAll();
 
     if (!empty($collections)) {
 
@@ -465,19 +465,21 @@ function dueAmtCalculation($pdo, $start_date, $end_date, $interest_amount, $loan
             $today_str = $start->format('Y-m-d');
             $month_key = $start->format('Y-m-01');
             $paid_principal_today = 0;
+            $paid_principal_waiver = 0;
 
             while ($collection_index < count($collections)) {
                 $collection = $collections[$collection_index];
                 $collection_date = (new DateTime($collection['collection_date']))->format('Y-m-d');
                 if ($collection_date == $today_str) {
                     $paid_principal_today += (float)$collection['principal_amount_track'];
+                    $paid_principal_waiver += (float)$collection['principal_waiver'];
                     $collection_index++;
                 } else {
                     break;
                 }
             }
 
-            $current_balance -= $paid_principal_today;
+            $current_balance = max(0, $current_balance - ($paid_principal_today + $paid_principal_waiver));
 
             $interest_today = calculateNewInterestAmt($interest_rate_calc, $current_balance, $interest_calculate);
 
@@ -535,21 +537,52 @@ function dueAmtCalculation($pdo, $start_date, $end_date, $interest_amount, $loan
     // <------------------------------------------------------------------- Penalty Logic ----------------------------------------------------------------->
 
     if ($status === 'pending') {
-        $penaltyRow = $pdo->query("SELECT overdue_penalty AS overdue, overdue_type FROM loan_category_creation WHERE id = '$loan_category'")->fetch(PDO::FETCH_ASSOC);
-        $penalty_val = $penaltyRow['overdue'] ?? 0;
-        $penalty_type = strtolower(trim($penaltyRow['overdue_type'] ?? 'percentage'));
+        $penaltyRow = $pdo->query("SELECT overdue_type, overdue_penalty 
+        FROM loan_category_creation 
+        WHERE id = '" . $loan_arr['loan_category'] . "' ")->fetch(PDO::FETCH_ASSOC);
+
+        $penalty_val  = $penaltyRow['overdue_penalty'] ?? 0;
+        $overdue_type = strtolower(trim($penaltyRow['overdue_type'] ?? 'percentage'));
+
+        $monthly_unpaid = [];
+        $monthly_first_date = [];
+
+        $current_month = date('Y-m'); // current month key
 
         foreach ($monthly_interest_data as $penalty_date => $cur_result) {
-            $paid_interest = getPaidInterest($pdo, $le_id, $penalty_date);
+            $month_key = date('Y-m', strtotime($penalty_date));
+            // skip current month
+            if ($month_key === $current_month) {
+                continue;
+            }
+
+            $paid_interest   = getPaidInterest($pdo, $le_id);
             $unpaid_interest = max(0, $cur_result - $paid_interest);
 
-            if ($unpaid_interest > 0 && $penalty_val > 0) {
-                $penalty = ($penalty_type === 'rupee') ? round($penalty_val) : round(($unpaid_interest * $penalty_val) / 100);
+            if ($unpaid_interest > 0) {
+                if (!isset($monthly_unpaid[$month_key])) {
+                    $monthly_unpaid[$month_key] = 0;
+                    $monthly_first_date[$month_key] = $penalty_date;
+                }
+                $monthly_unpaid[$month_key] += $unpaid_interest;
+            }
+        }
 
-                $checkPenalty = $pdo->query("SELECT 1 FROM penalty_charges WHERE penalty_date = '$penalty_date' AND loan_entry_id = '$le_id'");
+        // Step 2: Apply penalty only for past months
+        foreach ($monthly_unpaid as $month => $unpaid) {
+            if ($unpaid > 0 && $penalty_val > 0) {
+                $penalty = ($overdue_type === 'rupee') ? round($penalty_val) : round(($unpaid * $penalty_val) / 100);
+
+                $first_date = $monthly_first_date[$month];
+
+                $checkPenalty = $pdo->query("SELECT 1 FROM penalty_charges 
+                WHERE penalty_date = '$first_date' 
+                AND loan_entry_id = '" . $le_id . "'");
+
                 if ($checkPenalty->rowCount() == 0) {
-                    $insertQry = $pdo->prepare("INSERT INTO penalty_charges (loan_entry_id, penalty_date, penalty, created_date) VALUES (?, ?, ?, NOW())");
-                    $insertQry->execute([$le_id, $penalty_date, $penalty]);
+                    $pdo->query("INSERT INTO penalty_charges 
+                    (loan_entry_id, penalty_date, penalty, created_date) 
+                    VALUES ('$le_id', '$first_date', $penalty, NOW())");
                 }
             }
         }
