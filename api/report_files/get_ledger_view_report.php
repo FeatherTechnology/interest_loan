@@ -73,7 +73,8 @@ $to_date = date('Y-m-d', strtotime($inputDate)) . ' 23:59:59';
         le.maturity_date_calc, 
         c.principal_amount_track, 
         c.interest_amount_track, 
-        le.loan_amount  
+        le.loan_amount,
+        c.principal_waiver
     FROM loan_issue li
     JOIN loan_entry le ON li.loan_entry_id = le.id
     JOIN customer_creation cc ON le.cus_id = cc.cus_id
@@ -82,7 +83,8 @@ $to_date = date('Y-m-d', strtotime($inputDate)) . ' 23:59:59';
             loan_entry_id, 
             SUM(principal_amount_track) AS principal_amount_track, 
             SUM(interest_amount_track) AS interest_amount_track,
-            SUM(balance_amount) AS balance_amount
+            SUM(balance_amount) AS balance_amount,
+            principal_waiver
         FROM collection 
         WHERE collection_date <= '$to_date'
         GROUP BY loan_entry_id
@@ -126,7 +128,7 @@ $to_date = date('Y-m-d', strtotime($inputDate)) . ' 23:59:59';
                 <td><?php echo date('d-m-Y', strtotime($dailyInfo['maturity_date_calc'])); ?></td>
                 <td>
                     <?php
-                    $balance_amount = intval($dailyInfo['loan_amount']) - (intval($dailyInfo['princ_amt_track']) + intval($dailyInfo['principal_waiver']));
+                    $balance_amount = intval($dailyInfo['loan_amount']) - (intval($dailyInfo['principal_amount_track']) + intval($dailyInfo['principal_waiver']));
                     echo moneyFormatIndia($balance_amount);
                     ?>
                 </td>
