@@ -84,10 +84,10 @@ require_once '../../include/views/money_format_india.php';
         <?php
         $issued = date('Y-m-d', strtotime($issue_date));
 
-        $run = $pdo->query("SELECT c.collection_id, c.loan_amount, c.interest_amount , c.pending_amount, c.payable_amount, c.collection_date, c.principal_amount_track, c.interest_amount_track, c.balance_amount, c.fine_charge_track, c.principal_waiver
+        $run = $pdo->query("SELECT c.collection_id, c.loan_amount, c.interest_amount , c.pending_amount, c.payable_amount, c.collection_date, c.principal_amount_track, c.interest_amount_track, c.balance_amount, c.fine_charge_track, c.principal_waiver , c.interest_waiver
             FROM `collection` c
             LEFT JOIN users u ON c.insert_login_id = u.id
-            WHERE c.`loan_entry_id` = '$le_id' AND ( c.principal_waiver!='' OR c.principal_amount_track != '' OR c.interest_amount_track != '')
+            WHERE c.`loan_entry_id` = '$le_id' AND ( c.principal_waiver!='' OR c.principal_amount_track != '' OR c.interest_amount_track != '' OR c.interest_waiver != '')
             AND (
                 (
                     ( 
@@ -156,6 +156,8 @@ require_once '../../include/views/money_format_india.php';
                     <!-- Payable AmountFor Current Date For Before Due Start Date -->
                     <td>
                         <?php $paid_interest_amount = (intVal($row['interest_amount_track']));
+                        $bals_Interest_Amount = intval($row['interest_amount_track']) + intval($row['interest_waiver']);
+
                         if ($paid_interest_amount != '') {
                             echo moneyFormatIndia($paid_interest_amount);
                         } else {
@@ -165,8 +167,8 @@ require_once '../../include/views/money_format_india.php';
 
                     <!-- Balance Interest Amount (Payable - Paid) Before Due Start Date -->
                     <td>
-                        <?php $balance_Interest_Amount = $payable_amount - $paid_interest_amount;
-                        if ($paid_interest_amount != '') {
+                        <?php $balance_Interest_Amount = $payable_amount - $bals_Interest_Amount;
+                        if ($balance_Interest_Amount > 0) {
                             echo moneyFormatIndia($balance_Interest_Amount);
                         } else {
                             echo 0;
@@ -216,14 +218,14 @@ require_once '../../include/views/money_format_india.php';
         $lastCusdueMonth = '1970-00-00';
         foreach ($dueMonth as $cusDueMonth) {
             //Query for Monthly.
-            $run = $pdo->query("SELECT c.collection_id, c.loan_amount,  c.interest_amount , c.pending_amount, c.payable_amount, c.collection_date, c.principal_amount_track, c.interest_amount_track, c.balance_amount, c.fine_charge_track, c.principal_waiver  FROM `collection` c 
+            $run = $pdo->query("SELECT c.collection_id, c.loan_amount,  c.interest_amount , c.pending_amount, c.payable_amount, c.collection_date, c.principal_amount_track, c.interest_amount_track, c.balance_amount, c.fine_charge_track, c.principal_waiver , c.interest_waiver FROM `collection` c 
                 LEFT JOIN users u ON c.insert_login_id = u.id 
                 WHERE c.loan_entry_id = $le_id AND ( c.principal_amount_track != '' OR c.interest_amount_track != '' 
                 OR c.principal_waiver != '') 
                 AND MONTH(c.collection_date) = MONTH('$cusDueMonth') 
                 AND YEAR(c.collection_date) = YEAR('$cusDueMonth');");
 
-            $interest_paid = getPaidInterest($pdo, $le_id);
+            $interest_paid = getPaidInterest($pdo, $le_id , $cusDueMonth);
 
             if ($run->rowCount() > 0) {
                 while ($row = $run->fetch()) {
@@ -315,6 +317,8 @@ require_once '../../include/views/money_format_india.php';
                         <!-- Paid Interest Amount For After Due Start Date -->
                         <td>
                             <?php $paidInterestMinusCollection = (intVal($row['interest_amount_track']));
+                            $balInterestAmount = intval($row['interest_amount_track']) + intval($row['interest_waiver']);
+
                             if ($paidInterestMinusCollection != '') {
                                 echo moneyFormatIndia($paidInterestMinusCollection);
                             } else {
@@ -325,7 +329,7 @@ require_once '../../include/views/money_format_india.php';
                         <!-- Balance Interest Amount (Payable - Paid) For After Due Start Date -->
                         <td>
                             <?php
-                            $balanceInterestAmount = $payableMinusCollection - $paidInterestMinusCollection;
+                            $balanceInterestAmount = $payableMinusCollection - $balInterestAmount;
                             if ($balanceInterestAmount < 0) {
                                 $balanceInterestAmount = 0;
                             }
@@ -405,7 +409,7 @@ require_once '../../include/views/money_format_india.php';
                         <!-- Pending Calculation For After Due Start Date -->
                         <td>
                             <?php
-                            $pendingval = pendingCalculation($loanFrom, $curInterest, $pdo, $le_id) - $interest_paid;
+                            $pendingval = pendingCalculation($loanFrom, $curInterest, $pdo, $le_id , $cusDueMonth) - $interest_paid;
                             $pendingval = max(0, ceilAmount($pendingval));
                             echo moneyFormatIndia($pendingval);
                             ?>
@@ -414,7 +418,7 @@ require_once '../../include/views/money_format_india.php';
                         <!-- Payable Calculation For After Due Start Date -->
                         <td>
                             <?php
-                            $payable = payableCalculation($loanFrom, $curInterest, $pdo, $le_id) - $interest_paid;
+                            $payable = payableCalculation($loanFrom, $curInterest, $pdo, $le_id, $cusDueMonth) - $interest_paid;
                             $payable = max(0, ceilAmount($payable));
                             echo moneyFormatIndia($payable);
                             ?>
@@ -462,7 +466,7 @@ require_once '../../include/views/money_format_india.php';
         $maturity_date_calc = $maturity_month_obj->modify('+1 month')->format('Y-m-01');
         $maturity_date_calc = $maturity_date_calc . ' ' . $startTime;
         //Query for Monthly.
-        $run = $pdo->query("SELECT c.collection_id, c.pending_amount, c.payable_amount, c.collection_date, c.principal_amount_track ,c.interest_amount_track, c.balance_amount, c.fine_charge_track, c.principal_waiver
+        $run = $pdo->query("SELECT c.collection_id, c.pending_amount, c.payable_amount, c.collection_date, c.principal_amount_track ,c.interest_amount_track, c.balance_amount, c.fine_charge_track, c.principal_waiver , c.interest_waiver
             FROM `collection` c
             LEFT JOIN users u ON c.insert_login_id = u.id
             WHERE c.`loan_entry_id` = '$le_id' 
@@ -518,6 +522,8 @@ require_once '../../include/views/money_format_india.php';
                     <!-- Payable AmountFor Current Date For After Maturity End Date -->
                     <td>
                         <?php $paid_interest_amount = (intVal($row['interest_amount_track']));
+                        $bal_Interest_Amount = intval($row['interest_amount_track']) + intval($row['interest_waiver']);
+
                         if ($paid_interest_amount != '') {
                             echo moneyFormatIndia($paid_interest_amount);
                         } else {
@@ -527,8 +533,9 @@ require_once '../../include/views/money_format_india.php';
 
                     <!-- Balance Interest Amount (Payable - Paid) After Maturity End Date -->
                     <td>
-                        <?php $balance_Interest_Amount = $payable_amount - $paid_interest_amount;
-                        if ($paid_interest_amount != '') {
+                        <?php $balance_Interest_Amount = $payable_amount - $bal_Interest_Amount;
+                        
+                        if ($balance_Interest_Amount != '') {
                             echo moneyFormatIndia($balance_Interest_Amount);
                         } else {
                             echo 0;
@@ -571,17 +578,17 @@ require_once '../../include/views/money_format_india.php';
 
 <?php
 
-function pendingCalculation($loanFrom, $curInterest, $pdo, $le_id)
+function pendingCalculation($loanFrom, $curInterest, $pdo, $le_id , $date)
 {
-    $pending_amount = getTillDateInterest($loanFrom, $curInterest, $pdo, 'pendingmonth', $le_id);
+    $pending_amount = getTillDateInterest($loanFrom, $curInterest, $pdo, 'pendingmonth', $le_id , $date);
     return $pending_amount;
 }
 
-function getTillDateInterest($loanFrom, $curInterest, $pdo, $data, $le_id)
+function getTillDateInterest($loanFrom, $curInterest, $pdo, $data, $le_id , $date)
 {
     if ($data == 'forstartmonth') {
         $issued_date = new DateTime(date('Y-m-d', strtotime($loanFrom['loan_date'])));
-        $cur_date = new DateTime(date('Y-m-d'));
+        $cur_date = new DateTime(date('Y-m-d', strtotime($date)));
 
         $result = dueAmtCalculation($pdo, $issued_date, $cur_date, $curInterest, $loanFrom, '', $le_id);
         $cur_amt = ceil($result / 5) * 5;
@@ -593,13 +600,13 @@ function getTillDateInterest($loanFrom, $curInterest, $pdo, $data, $le_id)
 
     if ($data == 'curmonth') {
         $issued_date = new DateTime(date('Y-m-d', strtotime($loanFrom['loan_date'])));
-        $cur_date = new DateTime(date('Y-m-d'));
+        $cur_date = new DateTime(date('Y-m-d', strtotime($date)));
         return dueAmtCalculation($pdo, $issued_date, $cur_date, $curInterest, $loanFrom, '', $le_id);
     }
 
     if ($data == 'pendingmonth') {
         $issued_date = new DateTime(date('Y-m-d', strtotime($loanFrom['loan_date'])));
-        $cur_date = new DateTime(date('Y-m-d'));
+        $cur_date = new DateTime(date('Y-m-d', strtotime($date)));
         $cur_date->modify('-2 months');
         $cur_date->modify('last day of this month');
 
@@ -612,10 +619,10 @@ function getTillDateInterest($loanFrom, $curInterest, $pdo, $data, $le_id)
     return $curInterest;
 }
 
-function payableCalculation($loanFrom, $interest_amount, $pdo, $le_id)
+function payableCalculation($loanFrom, $interest_amount, $pdo, $le_id, $date)
 {
     $issued_date = new DateTime(date('Y-m-d', strtotime($loanFrom['loan_date'])));
-    $cur_date = new DateTime(date('Y-m-d'));
+    $cur_date    = new DateTime(date('Y-m-d', strtotime($date)));
     $result = 0;
 
     if ($loanFrom['interest_calculate'] == "Month") {
@@ -767,9 +774,11 @@ function dueAmtCalculation($pdo, $start_date, $end_date, $interest_amount, $loan
     return $result;
 }
 
-function getPaidInterest($pdo, $le_id)
+function getPaidInterest($pdo, $le_id, $date)
 {
-    $qry = $pdo->query("SELECT COALESCE(SUM(interest_amount_track), 0) + COALESCE(SUM(interest_waiver), 0) AS int_paid FROM `collection` WHERE loan_entry_id = '$le_id' and (interest_amount_track != '' and interest_amount_track IS NOT NULL OR interest_waiver != '' and interest_waiver IS NOT NULL) ");
+    $date = date('Y-m-d', strtotime($date));
+
+    $qry = $pdo->query("SELECT COALESCE(SUM(interest_amount_track), 0) + COALESCE(SUM(interest_waiver), 0) AS int_paid FROM `collection` WHERE loan_entry_id = '$le_id' and (interest_amount_track != '' and interest_amount_track IS NOT NULL OR interest_waiver != '' and interest_waiver IS NOT NULL)  AND collection_date <= $date ");
     $int_paid = $qry->fetch()['int_paid'];
     return intVal($int_paid);
 }
