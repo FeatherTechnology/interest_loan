@@ -610,7 +610,7 @@ function getTillDateInterest($loanFrom, $curInterest, $pdo, $data, $le_id , $dat
         $cur_date->modify('-2 months');
         $cur_date->modify('last day of this month');
 
-        if ($issued_date->format('m') <= $cur_date->format('m')) {
+        if ($issued_date->format('Y-m') <= $cur_date->format('Y-m')) {
             return dueAmtCalculation($pdo, $issued_date, $cur_date, $curInterest, $loanFrom, 'pending', $le_id);
         }
         return 0;
@@ -741,7 +741,7 @@ function dueAmtCalculation($pdo, $start_date, $end_date, $interest_amount, $loan
                 $dueperday = $interest_amount / intval($start->format('t'));
 
                 if ($status != 'pending') {
-                    if ($start->format('m') != $end->format('m')) {
+                    if ($start->format('Y-m') != $end->format('Y-m')) {
                         $new_end_date = clone $start;
                         $new_end_date->modify('last day of this month');
                         $cur_result = (($start->diff($new_end_date))->days + 1) * $dueperday;
