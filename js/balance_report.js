@@ -16,7 +16,7 @@ $(document).ready(function () {
             let buttons = [];
     
             // Add Excel button if download access is 1
-            if (downloadAccess === 1) {
+            if (downloadAccess === '1') {
                 buttons.push({
                     extend: 'excel',
                     title: "Balance Report List"
