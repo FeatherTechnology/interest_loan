@@ -29,7 +29,7 @@ $(document).ready(function () {
             let buttons = [];
 
             // Add Excel button only if download access is granted
-            if (downloadAccess === 1) {
+            if (downloadAccess === '1') {
                 buttons.push({
                     extend: 'excel',
                     title: "Collection Report List"

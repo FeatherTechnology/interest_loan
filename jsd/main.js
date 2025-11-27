@@ -268,7 +268,7 @@ function setdtable(table_id) {
 		let buttons = [];
 
 		// Add Excel button if download access is 1
-		if (downloadAccess === 1) {
+		if (downloadAccess === '1') {
 			buttons.push({
 				extend: 'excel',
 				title: "Export Data"
@@ -342,7 +342,7 @@ function serverSideTable(tableSelector, params, apiUrl) {
 		let buttons = [];
 
 		// Add Excel button if download access is 1
-		if (downloadAccess === 1) {
+		if (downloadAccess === '1') {
 			buttons.push({
 				extend: 'excel',
 				title: "Branch List"

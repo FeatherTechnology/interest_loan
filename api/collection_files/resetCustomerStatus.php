@@ -156,10 +156,14 @@ function calculateInterestLoan($loan_arr, $response, $pdo, $le_id)
 
     $due_start_from = $loan_arr['loan_date'];
     $maturity_month = $loan_arr['maturity_date_calc'];
+    $due_startdate = $loan_arr['due_startdate_calc'];
+    $curr_date = date('Y-m-d');
 
     //Convert Date to Year and month, because with date, it will use exact date to loop months, instead of taking end of month
     $due_start_from = date('Y-m', strtotime($due_start_from));
     $maturity_month = date('Y-m', strtotime($maturity_month));
+    $due_startdate_month = date('Y-m', strtotime($due_startdate));
+    $curr_date_month = date('Y-m', strtotime($curr_date));
 
     // Create a DateTime object from the given date
     $maturity_month = new DateTime($maturity_month);
@@ -258,20 +262,35 @@ function calculateInterestLoan($loan_arr, $response, $pdo, $le_id)
 
 
     if ($count > 0) {
-        $interest_paid = getPaidInterest($pdo, $le_id);
+        if ($due_startdate <= $curr_date) {
 
-        $res['payable_amount'] = payableCalculation($loan_arr, $response, $pdo, $le_id) - $interest_paid;
-        $res['till_date_int'] = getTillDateInterest($loan_arr, $response, $pdo, 'curmonth', $le_id) - $interest_paid;
-        $res['pending_amount'] = pendingCalculation($loan_arr, $response, $pdo, $le_id) - $interest_paid;
+            $interest_paid = getPaidInterest($pdo, $le_id);
 
-        if ($res['pending_amount'] < 0) {
+            $res['payable_amount'] = payableCalculation($loan_arr, $response, $pdo, $le_id) - $interest_paid;
+            $res['till_date_int'] = getTillDateInterest($loan_arr, $response, $pdo, 'curmonth', $le_id) - $interest_paid;
+
+            if ($due_startdate_month == $curr_date_month) {
+                $res['pending_amount'] = 0;
+            } else {
+                $res['pending_amount'] = pendingCalculation($loan_arr, $response, $pdo, $le_id) - $interest_paid;
+            }
+
+            if ($res['pending_amount'] < 0) {
+                $res['pending_amount'] = 0;
+            }
+
+            if ($res['payable_amount'] < 0) {
+                $res['payable_amount'] = 0;
+            }
+
+            $res['penalty'] = getPenaltyCharges($pdo, $le_id);
+        } else {
+            //in this calculate till date interest when month are not crossed for due starting month
+            $res['till_date_int'] = getTillDateInterest($loan_arr, $response, $pdo, 'forstartmonth', $le_id);
             $res['pending_amount'] = 0;
-        }
-        if ($res['payable_amount'] < 0) {
             $res['payable_amount'] = 0;
+            $res['penalty'] = 0;
         }
-
-        $res['penalty'] = getPenaltyCharges($pdo, $le_id);
     } else {
         //in this calculate till date interest when month are not crossed for due starting month
         $res['till_date_int'] = getTillDateInterest($loan_arr, $response, $pdo, 'forstartmonth', $le_id);
@@ -300,19 +319,27 @@ function payableCalculation($loan_arr, $response, $pdo, $le_id)
     $result = 0;
 
     if ($response['interest_calculate'] == "Month") {
+        // Calculate till the last completed month before $to_date
         $last_month = clone $cur_date;
-        $last_month->modify('-1 month'); // Last month same date
+        $last_month->modify('first day of this month');
+        $last_month->modify('-1 day'); // Last day of previous month
+
         $st_date = clone $issued_date;
 
-        while ($st_date->format('Y-m') <= $last_month->format('Y-m')) {
+        while ($st_date <= $last_month) {
             $end_date = clone $st_date;
             $end_date->modify('last day of this month');
-            $start = clone $st_date; // Due to mutation in function
+
+            // Prevent overshooting
+            if ($end_date > $last_month) {
+                $end_date = clone $last_month;
+            }
+
+            $start = clone $st_date;
 
             $result += dueAmtCalculation($pdo, $start, $end_date, $response['interest_amount'], $loan_arr, 'payable', $le_id);
 
-            $st_date->modify('+1 month');
-            $st_date->modify('first day of this month');
+            $st_date->modify('first day of next month');
         }
     } elseif ($response['interest_calculate'] == "Days") {
         $last_date = clone $cur_date;
@@ -346,11 +373,9 @@ function getTillDateInterest($loan_arr, $response, $pdo, $data, $le_id)
 
         $result = dueAmtCalculation($pdo, $issued_date, $cur_date, $response['interest_amount'], $loan_arr, '', $le_id);
 
-        //to increase till date Interest to nearest multiple of 5
-        $cur_amt = ceil($result / 5) * 5; //ceil will set the number to nearest upper integer//i.e ceil(121/5)*5 = 125
-        if ($cur_amt < $result) {
-            $cur_amt += 5;
-        }
+        // Use your clean rounding logic
+        $cur_amt = ceilAmount($result);
+
         $result = $cur_amt;
 
         return $result;
@@ -412,7 +437,13 @@ function getPenaltyCharges($pdo, $le_id)
 
 function ceilAmount($amt)
 {
-    $cur_amt = ceil($amt / 5) * 5; //ceil will set the number to nearest upper integer//i.e ceil(121/5)*5 = 125
+    // Round the amount to avoid floating point precision errors.
+    $amt = round($amt, 2);  // Round to two decimal places (or adjust as needed)
+    $cur_amt = ceil($amt / 5) * 5;
+    // If cur_amt is exactly equal to amt (with small floating point tolerance), don't increment.
+    if (abs($cur_amt - $amt) < 0.01) {
+        return $cur_amt;
+    }
     if ($cur_amt < $amt) {
         $cur_amt += 5;
     }
@@ -428,10 +459,9 @@ function calculateNewInterestAmt($interest_rate_calc, $balance_amount, $interest
         $int = ($balance_amount * ($interest_rate_calc / 100) / 30);
     }
 
-    $curInterest = ceil($int / 5) * 5; //to increase Interest to nearest multiple of 5
-    if ($curInterest < $int) {
-        $curInterest += 5;
-    }
+    // Use your clean rounding logic
+    $curInterest = ceilAmount($int);
+
     $response = $curInterest;
 
     return $response;
@@ -519,8 +549,8 @@ function dueAmtCalculation($pdo, $start_date, $end_date, $interest_amount, $loan
 
                 $result += $cur_result;
                 $monthly_interest_data[$month_key] = ($monthly_interest_data[$month_key] ?? 0) + $cur_result;
+                $start->setDate($start->format('Y'), $start->format('m'), 1);
                 $start->modify('+1 month');
-                $start->modify('first day of this month');
             }
         } elseif ($interest_calculate === 'Days') {
             while ($start->format('Y-m-d') <= $end->format('Y-m-d')) {

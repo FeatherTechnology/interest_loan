@@ -32,7 +32,7 @@ require_once '../../include/views/money_format_india.php';
         $dueMonth[] = $start_date_obj->format('Y-m-d');
     }
 
-    $issueDate = $pdo->query("SELECT  le.interest_amnt_calc,  le.loan_amnt_calc, li.issue_date FROM loan_issue li 
+    $issueDate = $pdo->query("SELECT  le.interest_amnt_calc,  le.loan_amnt_calc, li.issue_date , le.due_startdate_calc FROM loan_issue li 
     JOIN loan_entry le ON li.loan_entry_id = le.id
     JOIN customer_status cs ON cs.loan_entry_id = li.loan_entry_id   
     WHERE li.loan_entry_id = '$le_id' and cs.status >= 7 ");
@@ -44,6 +44,7 @@ require_once '../../include/views/money_format_india.php';
     $interest_amnt_calc = intVal($loanIssue['interest_amnt_calc']);
     $princ_amt_1 = $loanIssue['loan_amnt_calc'];
     $issue_date = $loanIssue['issue_date'];
+    $due_startdate = $loanIssue['due_startdate_calc'];
     ?>
 
     <thead>
@@ -225,7 +226,7 @@ require_once '../../include/views/money_format_india.php';
                 AND MONTH(c.collection_date) = MONTH('$cusDueMonth') 
                 AND YEAR(c.collection_date) = YEAR('$cusDueMonth');");
 
-            $interest_paid = getPaidInterest($pdo, $le_id , $cusDueMonth);
+            $interest_paid = getPaidInterest($pdo, $le_id, $cusDueMonth);
 
             if ($run->rowCount() > 0) {
                 while ($row = $run->fetch()) {
@@ -279,11 +280,8 @@ require_once '../../include/views/money_format_india.php';
                                 $int = 0; // default fallback
                             }
 
-                            // Round up to next multiple of 5
-                            $curInterest = ceil($int / 5) * 5;
-                            if ($curInterest < $int) {
-                                $curInterest += 5;
-                            }
+                            // Use your clean rounding logic
+                            $curInterest = ceilAmount($int);
 
                             echo moneyFormatIndia($curInterest);
                             ?>
@@ -396,11 +394,8 @@ require_once '../../include/views/money_format_india.php';
                                 $int = 0; // default fallback
                             }
 
-                            // Round up to next multiple of 5
-                            $curInterest = ceil($int / 5) * 5;
-                            if ($curInterest < $int) {
-                                $curInterest += 5;
-                            }
+                            // Use your clean rounding logic
+                            $curInterest = ceilAmount($int);
 
                             echo moneyFormatIndia($curInterest);
                             ?>
@@ -409,8 +404,21 @@ require_once '../../include/views/money_format_india.php';
                         <!-- Pending Calculation For After Due Start Date -->
                         <td>
                             <?php
-                            $pendingval = pendingCalculation($loanFrom, $curInterest, $pdo, $le_id , $cusDueMonth) - $interest_paid;
-                            $pendingval = max(0, ceilAmount($pendingval));
+                            // Row's due date
+                            $row_due_month = date('Y-m', strtotime($cusDueMonth));
+
+                            // Loan's due start month
+                            $due_start_month = date('Y-m', strtotime($due_startdate));
+
+                            if ($row_due_month == $due_start_month) {
+                                // This due belongs to the first due month → no pending
+                                $pendingval = 0;
+                            } else {
+                                // This due is after the due start month → pending allowed
+                                $pendingval = pendingCalculation($loanFrom, $curInterest, $pdo, $le_id, $cusDueMonth) - $interest_paid;
+                                $pendingval = max(0, ceilAmount($pendingval));
+                            }
+
                             echo moneyFormatIndia($pendingval);
                             ?>
                         </td>
@@ -534,7 +542,7 @@ require_once '../../include/views/money_format_india.php';
                     <!-- Balance Interest Amount (Payable - Paid) After Maturity End Date -->
                     <td>
                         <?php $balance_Interest_Amount = $payable_amount - $bal_Interest_Amount;
-                        
+
                         if ($balance_Interest_Amount != '') {
                             echo moneyFormatIndia($balance_Interest_Amount);
                         } else {
@@ -578,23 +586,23 @@ require_once '../../include/views/money_format_india.php';
 
 <?php
 
-function pendingCalculation($loanFrom, $curInterest, $pdo, $le_id , $date)
+function pendingCalculation($loanFrom, $curInterest, $pdo, $le_id, $date)
 {
-    $pending_amount = getTillDateInterest($loanFrom, $curInterest, $pdo, 'pendingmonth', $le_id , $date);
+    $pending_amount = getTillDateInterest($loanFrom, $curInterest, $pdo, 'pendingmonth', $le_id, $date);
     return $pending_amount;
 }
 
-function getTillDateInterest($loanFrom, $curInterest, $pdo, $data, $le_id , $date)
+function getTillDateInterest($loanFrom, $curInterest, $pdo, $data, $le_id, $date)
 {
     if ($data == 'forstartmonth') {
         $issued_date = new DateTime(date('Y-m-d', strtotime($loanFrom['loan_date'])));
         $cur_date = new DateTime(date('Y-m-d', strtotime($date)));
 
         $result = dueAmtCalculation($pdo, $issued_date, $cur_date, $curInterest, $loanFrom, '', $le_id);
-        $cur_amt = ceil($result / 5) * 5;
-        if ($cur_amt < $result) {
-            $cur_amt += 5;
-        }
+
+        // Use your clean rounding logic
+        $cur_amt = ceilAmount($result);
+
         return $cur_amt;
     }
 
@@ -627,18 +635,23 @@ function payableCalculation($loanFrom, $interest_amount, $pdo, $le_id, $date)
 
     if ($loanFrom['interest_calculate'] == "Month") {
         $last_month = clone $cur_date;
-        $last_month->modify('-1 month'); // Last month same date
+        $last_month->modify('first day of this month');
+        $last_month->modify('-1 day'); // Last day of previous month
+
         $st_date = clone $issued_date;
 
-        while ($st_date->format('Y-m') <= $last_month->format('Y-m')) {
+        while ($st_date <= $last_month) {
             $end_date = clone $st_date;
             $end_date->modify('last day of this month');
-            $start = clone $st_date; // Due to mutation in function
 
+            // Prevent overshooting
+            if ($end_date > $last_month) {
+                $end_date = clone $last_month;
+            }
+
+            $start = clone $st_date;
             $result += dueAmtCalculation($pdo, $start, $end_date,  $interest_amount, $loanFrom, 'payable', $le_id);
-
-            $st_date->modify('+1 month');
-            $st_date->modify('first day of this month');
+            $st_date->modify('first day of next month');
         }
     } elseif ($loanFrom['interest_calculate'] == "Days") {
         $last_date = clone $cur_date;
@@ -667,10 +680,9 @@ function calculateNewInterestAmt($interest_rate_calc, $balance_amount, $interest
         $int = ($balance_amount * ($interest_rate_calc / 100) / 30);
     }
 
-    $curInterest = ceil($int / 5) * 5; //to increase Interest to nearest multiple of 5
-    if ($curInterest < $int) {
-        $curInterest += 5;
-    }
+    // Use your clean rounding logic
+    $curInterest = ceilAmount($int);
+
     $response = $curInterest;
 
     return $response;
@@ -756,8 +768,8 @@ function dueAmtCalculation($pdo, $start_date, $end_date, $interest_amount, $loan
 
                 $result += $cur_result;
                 $monthly_interest_data[$month_key] = ($monthly_interest_data[$month_key] ?? 0) + $cur_result;
+                $start->setDate($start->format('Y'), $start->format('m'), 1);
                 $start->modify('+1 month');
-                $start->modify('first day of this month');
             }
         } elseif ($interest_calculate === 'Days') {
             while ($start->format('Y-m-d') <= $end->format('Y-m-d')) {
@@ -778,14 +790,20 @@ function getPaidInterest($pdo, $le_id, $date)
 {
     $date = date('Y-m-d', strtotime($date));
 
-    $qry = $pdo->query("SELECT COALESCE(SUM(interest_amount_track), 0) + COALESCE(SUM(interest_waiver), 0) AS int_paid FROM `collection` WHERE loan_entry_id = '$le_id' and (interest_amount_track != '' and interest_amount_track IS NOT NULL OR interest_waiver != '' and interest_waiver IS NOT NULL)  AND collection_date <= $date ");
+    $qry = $pdo->query("SELECT COALESCE(SUM(interest_amount_track), 0) + COALESCE(SUM(interest_waiver), 0) AS int_paid FROM `collection` WHERE loan_entry_id = '$le_id' and (interest_amount_track != '' and interest_amount_track IS NOT NULL OR interest_waiver != '' and interest_waiver IS NOT NULL)  AND collection_date <= '$date' ");
     $int_paid = $qry->fetch()['int_paid'];
     return intVal($int_paid);
 }
 
 function ceilAmount($amt)
 {
-    $cur_amt = ceil($amt / 5) * 5; //ceil will set the number to nearest upper integer//i.e ceil(121/5)*5 = 125
+    // Round the amount to avoid floating point precision errors.
+    $amt = round($amt, 2);  // Round to two decimal places (or adjust as needed)
+    $cur_amt = ceil($amt / 5) * 5;
+    // If cur_amt is exactly equal to amt (with small floating point tolerance), don't increment.
+    if (abs($cur_amt - $amt) < 0.01) {
+        return $cur_amt;
+    }
     if ($cur_amt < $amt) {
         $cur_amt += 5;
     }
