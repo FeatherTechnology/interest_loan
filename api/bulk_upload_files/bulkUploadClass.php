@@ -92,7 +92,7 @@ class bulkUploadClass
         $guarantor_relationshipArray = ['Father' => 'Father', 'Mother' => 'Mother', 'Spouse' => 'Spouse', 'Sister' => 'Sister', 'Brother' => 'Brother', 'Son' => 'Son', 'Daughter' => 'Daughter', 'Other' => 'Other'];
         $dataArray['fam_relationship'] = $this->arrayItemChecker($guarantor_relationshipArray, $dataArray['fam_relationship']);
 
-        $dataArray['fam_mobile'] = strlen($dataArray['fam_mobile']) == 10 ? $dataArray['fam_mobile'] : 'Invalid';
+        $dataArray['fam_mobile'] = strlen($dataArray['fam_mobile']) == 10 ? $dataArray['fam_mobile'] : '';
 
         $interest_calculateArray = ['Month' => 'Month', 'Days' => 'Days'];
         $dataArray['interest_calculate'] = $this->arrayItemChecker($interest_calculateArray, $dataArray['interest_calculate']);
