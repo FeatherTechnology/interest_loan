@@ -75,7 +75,7 @@ try {
     $till_now_payable_check = intval($interest_amount_track) + intval($interest_waiver) - intval($till_now_payable);
 
     if ($principal_check == 0 && $penalty_check == 0 && $fine_charge_check == 0 && $till_now_payable_check == 0) {
-        $closedQry = $pdo->query("UPDATE `customer_status` SET `collection_status`='Closed', `status`='10',`update_login_id`='$user_id',`updated_on`=now() WHERE `loan_entry_id`='$le_id' "); //balance is zero change the customer status as 10, moved to closed.
+        $closedQry = $pdo->query("UPDATE `customer_status` SET `collection_status`='Closed', `status`='10', `in_closed_date`=now(), `update_login_id`='$user_id',`updated_on`=now() WHERE `loan_entry_id`='$le_id' "); //balance is zero change the customer status as 10, moved to closed.
         if ($closedQry) {
             $result = '3';
         }
