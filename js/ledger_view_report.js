@@ -4,9 +4,10 @@ $(document).ready(function () {
     $('#ledger_view_report_btn').click(function () {
         let toDate = $('#to_date').val();
         let loan_category = $('#loan_category').val();
+        let month_count = $('#month_count').val();
 
-        if (!toDate || !loan_category) {
-            swalError('Missing Fields', 'Both Date and Loan Category are required.');
+        if (!toDate || !loan_category || !month_count) {
+            swalError('Missing Fields', 'Date, Loan Category, and Months are required.');
             return;
         }
 
@@ -15,7 +16,7 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: url,
-            data: { toDate: toDate, loan_category: loan_category },
+            data: { toDate: toDate, loan_category: loan_category , month_count: month_count },
             success: function (data) {
                 $('.reportDiv').empty().html(data);
             }

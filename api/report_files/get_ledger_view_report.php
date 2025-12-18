@@ -4,7 +4,7 @@ require_once '../../include/views/money_format_india.php';
 $inputDate = $_POST['toDate'];
 $loan_category = $_POST['loan_category'];
 $to_date = date('Y-m-d', strtotime($inputDate)) . ' 23:59:59';
-
+$month_count = $_POST['month_count'];
 ?>
 
 <style>
@@ -41,7 +41,7 @@ $to_date = date('Y-m-d', strtotime($inputDate)) . ' 23:59:59';
             <?php
             $todate = new DateTime($to_date);
             $startDate = clone $todate;
-            $startDate->modify('-11 months');
+            $startDate->modify('-' . ($month_count - 1) . ' months');
             $months = generateMonths($startDate, $todate);
 
             foreach ($months as $month) {

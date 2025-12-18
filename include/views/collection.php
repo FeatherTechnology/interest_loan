@@ -128,6 +128,7 @@
                                             <th>Loan Category</th>
                                             <th>Loan Date</th>
                                             <th>Loan Amount</th>
+                                            <th>Interest Rate</th>
                                             <th>Balance Amount</th>
                                             <th>Status</th>
                                             <th>Sub Status</th>

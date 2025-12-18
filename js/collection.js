@@ -516,7 +516,7 @@ $(function () {
 
 function getCollectionListTable(collection_status) {
     let params = { 'collection_status': collection_status };
-    serverSideTable('#collection_list_table', params, 'api/collection_files/collection_list.php');
+    serverSideTable('#collection_list_table', params, 'api/collection_files/collection_list.php', "Collection List");
 }
 
 function swapTableAndCreation() {
@@ -594,6 +594,7 @@ function OnLoadFunctions(cus_id) {
                     'loan_category',
                     'issue_date',
                     'loan_amount',
+                    'interest_rate_calc',
                     'bal_amount',
                     'status',
                     'sub_status',
@@ -601,7 +602,7 @@ function OnLoadFunctions(cus_id) {
                     'action'
                 ];
                 appendDataToTable('#loan_list_table', response, columnMapping);
-                setdtable('#loan_list_table');
+                setdtable('#loan_list_table', "Loan List");
                 //Dropdown in List Screen
                 setDropdownScripts();
             }
@@ -643,7 +644,7 @@ function getFineFormTable(le_id) {
             'fine_charge'
         ];
         appendDataToTable('#fine_form_table', response, fineColumn);
-        setdtable('#fine_form_table');
+        setdtable('#fine_form_table', "Fine List");
 
         $('#fine_purpose').val('');
         $('#fine_Amnt').val('');

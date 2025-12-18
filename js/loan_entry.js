@@ -894,7 +894,7 @@ $(function () {
 });
 
 function getLoanEntryTable() {
-    serverSideTable('#loan_entry_table', '', 'api/loan_entry_files/loan_entry_list.php');
+    serverSideTable('#loan_entry_table', '', 'api/loan_entry_files/loan_entry_list.php' , 'Loan Entry List');
 }
 
 function checkAdditionalRenewal(cus_id) {
@@ -1309,7 +1309,7 @@ function getKycTable() {
             'action'
         ];
         appendDataToTable('#kyc_creation_table', response, columnMapping);
-        setdtable('#kyc_creation_table');
+        setdtable('#kyc_creation_table', "KYC Creation List");
         $('#kyc_form input').val('');
         $('#kyc_form input').css('border', '1px solid #cecece');
         $('#kyc_form select').css('border', '1px solid #cecece');
@@ -1335,7 +1335,7 @@ function getKycInfoTable() {
                 'upload',
             ];
             appendDataToTable('#kyc_info', response, columnMapping);
-            setdtable('#kyc_info');
+            setdtable('#kyc_info', "KYC Info List");
             resolve();
         },
             "json"
@@ -1414,7 +1414,7 @@ function getProofTable() {
             'action'
         ];
         appendDataToTable('#proof_creation_table', response, columnMapping);
-        setdtable('#proof_creation_table');
+        setdtable('#proof_creation_table', "Proof Creation List");
     }, 'json')
 }
 
@@ -1448,7 +1448,7 @@ function getBankTable() {
             'action'
         ];
         appendDataToTable('#bank_creation_table', response, columnMapping);
-        setdtable('#bank_creation_table');
+        setdtable('#bank_creation_table', "Bank Creation List");
         $('#bank_form input').val('');
         $('#bank_form input').css('border', '1px solid #cecece');
 
@@ -1467,7 +1467,7 @@ function getBankInfoTable() {
             'ifsc_code',
         ];
         appendDataToTable('#bank_info', response, columnMapping);
-        setdtable('#bank_info');
+        setdtable('#bank_info', "Bank Info List");
     }, 'json')
 }
 
@@ -1498,7 +1498,7 @@ function getPropertyTable() {
             'action'
         ];
         appendDataToTable('#property_creation_table', response, columnMapping);
-        setdtable('#property_creation_table');
+        setdtable('#property_creation_table', "Property Creation List");
         $('#property_form input').val('');
         $('#property_form input').css('border', '1px solid #cecece');
         $('#property_form select').css('border', '1px solid #cecece');
@@ -1519,7 +1519,7 @@ function getPropertyInfoTable() {
             'fam_relationship',
         ];
         appendDataToTable('#prop_info', response, columnMapping);
-        setdtable('#prop_info');
+        setdtable('#prop_info', "Property Info List");
     }, 'json')
 }
 
@@ -1739,7 +1739,7 @@ function getDocNeedTable(cusProfileId) {
             "action"
         ]
         appendDataToTable('#doc_need_table', response, loanCategoryColumn);
-        setdtable('#doc_need_table');
+        setdtable('#doc_need_table', "Document Need List");
     }, 'json');
 }
 

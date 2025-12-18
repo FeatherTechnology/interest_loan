@@ -23,8 +23,10 @@ LEFT JOIN area_name_creation anc ON cc.area = anc.id
 LEFT JOIN area_creation ac ON cc.line = ac.line_id 
 LEFT JOIN branch_creation bc ON ac.branch_id = bc.id 
 LEFT JOIN customer_status cs ON cc.cus_id = cs.cus_id
+JOIN users u ON FIND_IN_SET(cc.line, u.line)
+JOIN users us ON FIND_IN_SET(le.loan_category, us.loan_category)
 INNER JOIN (SELECT MAX(id) as max_id FROM customer_creation GROUP BY cus_id) latest ON cc.id = latest.max_id 
-WHERE cs.status IN ('10', '11') AND cc.insert_login_id = '$user_id'";
+WHERE cs.status IN ('10', '11') AND u.id ='$user_id' AND us.id ='$user_id'";
 
 if (isset($_POST['search'])) {
     if ($_POST['search'] != "") {

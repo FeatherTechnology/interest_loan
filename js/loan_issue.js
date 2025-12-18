@@ -967,7 +967,7 @@ $(function () {
 });
 
 function getLoanIssueTable() {
-    serverSideTable('#loan_issue_table', '', 'api/loan_issue_files/loan_issue_list.php');
+    serverSideTable('#loan_issue_table', '', 'api/loan_issue_files/loan_issue_list.php', 'Loan Issue List');
 }
 
 function swapTableAndCreation() {
@@ -1025,7 +1025,7 @@ function getDocNeedTable(cusProfileId) {
             "document_name"
         ]
         appendDataToTable('#doc_need_table', response, docColumn);
-        setdtable('#doc_need_table');
+        setdtable('#doc_need_table', "Document Need List");
     }, 'json');
 }
 
@@ -1046,7 +1046,7 @@ function getChequeCreationTable() {
             "action"
         ]
         appendDataToTable('#cheque_creation_table', response, chequeColumn);
-        setdtable('#cheque_creation_table');
+        setdtable('#cheque_creation_table', "Cheque Creation List");
     }, 'json');
 }
 
@@ -1071,7 +1071,7 @@ function getChequeInfoTable() {
         ];
 
         appendDataToTable('#cheque_info_table', response, chequeColumn);
-        setdtable('#cheque_info_table');
+        setdtable('#cheque_info_table', "Cheque Info List");
 
     }, 'json');
 }
@@ -1151,7 +1151,7 @@ function getDocCreationTable() {
             "action"
         ]
         appendDataToTable('#doc_creation_table', response, docInfoColumn);
-        setdtable('#doc_creation_table')
+        setdtable('#doc_creation_table', "Document Creation List");
     }, 'json');
 }
 
@@ -1170,7 +1170,7 @@ function getDocInfoTable() {
             "upload"
         ]
         appendDataToTable('#document_info', response, docColumn);
-        setdtable('#document_info')
+        setdtable('#document_info', "Document Info List");
 
     }, 'json');
 }
@@ -1217,7 +1217,7 @@ function getMortCreationTable() {
             "action"
         ]
         appendDataToTable('#mortgage_creation_table', response, mortInfoColumn);
-        setdtable('#mortgage_creation_table')
+        setdtable('#mortgage_creation_table', "Mortgage Creation List");
     }, 'json');
 }
 
@@ -1240,7 +1240,7 @@ function getMortInfoTable() {
             "upload"
         ]
         appendDataToTable('#mortgage_info', response, mortgageColumn);
-        setdtable('#mortgage_info')
+        setdtable('#mortgage_info', "Mortgage Info List");
     }, 'json');
 }
 
@@ -1278,7 +1278,7 @@ function getEndorsementCreationTable() {
             "action"
         ]
         appendDataToTable('#endorsement_creation_table', response, endorsementInfoColumn);
-        setdtable('#endorsement_creation_table')
+        setdtable('#endorsement_creation_table', "Endorsement Creation List");
     }, 'json');
 }
 
@@ -1299,7 +1299,7 @@ function getEndorsementInfoTable() {
             "upload"
         ]
         appendDataToTable('#endorsement_info', response, endorsementColumn);
-        setdtable('#endorsement_info')
+        setdtable('#endorsement_info', "Endorsement Info List");
 
     }, 'json');
 }
@@ -1335,7 +1335,7 @@ function getGoldCreationTable() {
             "action"
         ]
         appendDataToTable('#gold_creation_table', response, goldInfoColumn);
-        setdtable('#gold_creation_table')
+        setdtable('#gold_creation_table', "Gold Creation List");
     }, 'json');
 }
 
@@ -1353,7 +1353,7 @@ function getGoldInfoTable() {
             "value"
         ]
         appendDataToTable('#gold_info', response, goldColumn);
-        setdtable('#gold_info')
+        setdtable('#gold_info', "Gold Info List");
 
     }, 'json');
 }

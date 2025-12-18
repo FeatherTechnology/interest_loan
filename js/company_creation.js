@@ -143,7 +143,7 @@ function getCompanyTable() {
             'action'
         ];
         appendDataToTable('#company_creation_table', response, columnMapping);
-        setdtable('#company_creation_table');
+        setdtable('#company_creation_table', "Company Creation List");
 
         if (response.length > 0) {
             $('#add_company').hide();

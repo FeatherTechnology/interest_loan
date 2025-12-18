@@ -72,6 +72,6 @@ require_once '../../include/views/money_format_india.php';
 
 <script type="text/javascript">
     $(function() {
-        setdtable('#collectionChargeListTable');
+        setdtable('#collectionChargeListTable' , "Fine Chart List");
     });
 </script>

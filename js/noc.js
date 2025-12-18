@@ -201,7 +201,7 @@ $(function () {
 // <--------------------------------------------------------------------- NOC List Function Start --------------------------------------------------------------->
 
 function getNOCList() {
-    serverSideTable('#noc_list_table', '', 'api/noc_files/noc_list.php');
+    serverSideTable('#noc_list_table', '', 'api/noc_files/noc_list.php', 'Noc List');
 }
 
 // <--------------------------------------------------------------------- Personal Info Function Start ---------------------------------------------------------->
@@ -248,7 +248,7 @@ function getNOCLoanList(cus_id) {
                 'action'
             ];
             appendDataToTable('#noc_loan_list_table', response, columnMapping);
-            setdtable('#noc_loan_list_table');
+            setdtable('#noc_loan_list_table', "NOC Loan List");
             //Dropdown in List Screen
             setDropdownScripts();
         }
@@ -292,7 +292,7 @@ function getChequeList(le_id) {
             'cheque_no', 'date_of_noc', 'noc_member', 'noc_relationship', 'action'
         ];
         appendDataToTable('#noc_cheque_list_table', response, nocChequeColumns);
-        setdtable('#noc_cheque_list_table');
+        setdtable('#noc_cheque_list_table', "NOC Cheque List");
     }, 'json');
 }
 
@@ -308,7 +308,7 @@ function getMortgageList(le_id) {
             'designation', 'reg_office', 'date_of_noc', 'noc_member', 'noc_relationship', 'action'
         ];
         appendDataToTable('#noc_mortgage_list_table', response, nocMortgageColumns);
-        setdtable('#noc_mortgage_list_table');
+        setdtable('#noc_mortgage_list_table', "NOC Mortgage List");
     }, 'json');
 }
 
@@ -324,7 +324,7 @@ function getEndorsementList(le_id) {
             'key_original', 'rc_original', 'date_of_noc', 'noc_member', 'noc_relationship', 'action'
         ];
         appendDataToTable('#noc_endorsement_list_table', response, nocEndorseColumns);
-        setdtable('#noc_endorsement_list_table');
+        setdtable('#noc_endorsement_list_table', "NOC Endorsement List");
     }, 'json');
 }
 
@@ -340,7 +340,7 @@ function getOtherDocumentList(le_id) {
             'noc_member', 'noc_relationship', 'action'
         ];
         appendDataToTable('#noc_document_list_table', response, nocDocInfoColumns);
-        setdtable('#noc_document_list_table');
+        setdtable('#noc_document_list_table', "NOC Document List");
     }, 'json');
 }
 
@@ -356,7 +356,7 @@ function getGoldList(le_id) {
             'noc_member', 'noc_relationship', 'action'
         ];
         appendDataToTable('#noc_gold_list_table', response, nocGoldColumns);
-        setdtable('#noc_gold_list_table');
+        setdtable('#noc_gold_list_table', "NOC Gold List");
     }, 'json');
 }
 

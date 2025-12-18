@@ -30,7 +30,7 @@ $(document).ready(function () {
             let buttons = [];
 
             // Add Excel button only if download access is 1
-            if (downloadAccess === '1') {
+            if (downloadAccess === 1) {
                 buttons.push({
                     extend: 'excel',
                     title: "Closed Report List"

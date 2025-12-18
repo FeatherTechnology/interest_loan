@@ -105,6 +105,7 @@ FROM
     LEFT JOIN agent_creation ac ON le.agent_id_calc = ac.id
     LEFT JOIN guarantor_info gi ON le.id = gi.loan_entry_id
     LEFT JOIN family_info fi ON gi.family_info_id = fi.id
+    LEFT JOIN loan_issue li ON le.id = li.loan_entry_id AND li.balance_amount = 0
     LEFT JOIN (
     SELECT 
         loan_entry_id, 

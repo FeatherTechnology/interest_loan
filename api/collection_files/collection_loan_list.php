@@ -15,7 +15,7 @@ $bal_amt = explode(',', $_POST["bal_amt"]);
 
 $loan_list_arr = array();
 
-$qry = $pdo->query("SELECT le.id as le_id, le.cus_id, le.loan_id, lc.loan_category, li.issue_date, le.loan_amount, us.collection_access
+$qry = $pdo->query("SELECT le.id as le_id, le.cus_id, le.loan_id, lc.loan_category, li.issue_date, le.loan_amount, us.collection_access , le.interest_rate_calc
 FROM loan_entry le
 JOIN customer_creation cc ON le.cus_id = cc.cus_id
 JOIN loan_category_creation lcc ON le.loan_category = lcc.id
@@ -33,6 +33,15 @@ if ($qry->rowCount() > 0) {
     while ($loanInfo = $qry->fetch(PDO::FETCH_ASSOC)) {
         $loanInfo['issue_date'] = date('d-m-Y', strtotime($loanInfo['issue_date']));
         $loanInfo['loan_amount'] = moneyFormatIndia($loanInfo['loan_amount']);
+
+        $rate = $loanInfo['interest_rate_calc'];
+
+        if ($rate === null || trim($rate) === '' || (is_numeric($rate) && (float)$rate == 0)) {
+            $loanInfo['interest_rate_calc'] = '0 %';
+        } else {
+            $loanInfo['interest_rate_calc'] = rtrim(rtrim((string)$rate, '0'), '.') . ' %';
+        }
+
         $loanInfo['bal_amount'] = moneyFormatIndia($bal_amt[$i - 1]);
         $loanInfo['status'] = 'Present';
 

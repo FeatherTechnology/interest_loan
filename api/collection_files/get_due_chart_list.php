@@ -702,8 +702,8 @@ function dueAmtCalculation($pdo, $start_date, $end_date, $interest_amount, $loan
     $loanRow = $pdo->query("SELECT loan_amnt_calc FROM loan_entry WHERE id = '$le_id'")->fetch(PDO::FETCH_ASSOC);
     $default_balance = $loanRow['loan_amnt_calc'];
 
-    $collections = $pdo->query("SELECT principal_amount_track, collection_date FROM collection 
-        WHERE loan_entry_id = '$le_id' AND principal_amount_track != '' ORDER BY collection_date ASC")->fetchAll();
+    $collections = $pdo->query("SELECT principal_amount_track, principal_waiver, collection_date FROM collection 
+        WHERE loan_entry_id = '$le_id' AND (principal_amount_track != '' OR principal_waiver != '') ORDER BY collection_date ASC")->fetchAll();
 
     if (!empty($collections)) {
 
@@ -716,19 +716,21 @@ function dueAmtCalculation($pdo, $start_date, $end_date, $interest_amount, $loan
             $today_str = $start->format('Y-m-d');
             $month_key = $start->format('Y-m-01');
             $paid_principal_today = 0;
+            $paid_principal_waiver = 0;
 
             while ($collection_index < count($collections)) {
                 $collection = $collections[$collection_index];
                 $collection_date = (new DateTime($collection['collection_date']))->format('Y-m-d');
                 if ($collection_date == $today_str) {
                     $paid_principal_today += (float)$collection['principal_amount_track'];
+                    $paid_principal_waiver += (float)$collections[$collection_index]['principal_waiver'];
                     $collection_index++;
                 } else {
                     break;
                 }
             }
 
-            $current_balance -= $paid_principal_today;
+            $current_balance = max(0, $current_balance - ($paid_principal_today + $paid_principal_waiver));
 
             $interest_today = calculateNewInterestAmt($interest_rate_calc, $current_balance, $interest_calculate);
 

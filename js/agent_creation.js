@@ -126,7 +126,7 @@ function getAgentTable() {
             'action'
         ];
         appendDataToTable('#agent_create', response, columnMapping);
-        setdtable('#agent_create');
+        setdtable('#agent_create', "Agent Creation List");
 
     }, 'json')
 }
