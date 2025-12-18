@@ -27,7 +27,7 @@ $month_count = $_POST['month_count'];
     }
 </style>
 
-<table class="table custom-table">
+<table id = "ledger_view_report_table" class="table custom-table">
     <thead>
         <tr>
             <th rowspan="2" style="width: 50px;">S.No</th>
@@ -210,3 +210,11 @@ function generateMonths($start, $end)
 }
 
 $pdo = null; // Close Connection
+
+?>
+
+<script type="text/javascript">
+    $(function() {
+        setdtable('#ledger_view_report_table',"Ledger View Report List");
+    });
+</script>
