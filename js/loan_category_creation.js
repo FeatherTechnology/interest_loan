@@ -252,7 +252,7 @@ function getLoanCategoryTable() {
             "action"
         ]
         appendDataToTable('#loan_category_table', response, loanCategoryColumn);
-        setdtable('#loan_category_table');
+        setdtable('#loan_category_table', "Loan Category List");
     }, 'json');
 }
 
@@ -310,7 +310,7 @@ function getLoanCategoryCreationTable() {
             'action'
         ];
         appendDataToTable('#loancategory_creation_table', response, columnMapping);
-        setdtable('#loancategory_creation_table');
+        setdtable('#loancategory_creation_table', "Loan Category Creation List");
     }, 'json');
 }
 

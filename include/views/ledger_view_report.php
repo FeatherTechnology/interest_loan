@@ -10,6 +10,16 @@
                     </select>
                 </div>
             </div>
+            <div class="col-lg-2 col-md-2">
+                <div class="form-group">
+                    <select class="form-control" id="month_count" name="month_count" style="margin-top: 15px;border-radius: 5px;height: 45px;">
+                        <option value="">Select Months</option>
+                        <?php for ($m = 1; $m <= 12; $m++) { ?>
+                            <option value="<?= $m ?>"><?= $m ?> Month<?= $m > 1 ? 's' : '' ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+            </div>
             <input type="button" id='ledger_view_report_btn' name='ledger_view_report_btn' class="toggle-button" style="background-color: #d67089;color:white" value='Search'>
         </div> <br />
         <!-- Balance report Start -->

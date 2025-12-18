@@ -255,23 +255,23 @@ function getUserAccess(callback) {
 		dataType: 'json', // Expect JSON response
 		success: function (response) {
 			// Check if response contains download_access
-			const downloadAccess = response.download_access || 0; // Default to 0 if not found
+			const downloadAccess = Number(response.download_access) || 0; // Default to 0 if not found
 			callback(downloadAccess);
 		},
 	});
 }
 
 // Initialize DataTable with user access controls
-function setdtable(table_id) {
+function setdtable(table_id,excelTitle) {
 	// Fetch user access and initialize DataTable based on it
 	getUserAccess(function (downloadAccess) {
 		let buttons = [];
 
 		// Add Excel button if download access is 1
-		if (downloadAccess === '1') {
+		if (downloadAccess === 1) {
 			buttons.push({
 				extend: 'excel',
-				title: "Export Data"
+				title: excelTitle
 			});
 		}
 
@@ -336,16 +336,16 @@ function appendDataToTable(tableSelector, response, columnMapping) {
 /////////////////////////////////////////////////////
 
 // / Function to initialize DataTable with conditional Excel button
-function serverSideTable(tableSelector, params, apiUrl) {
+function serverSideTable(tableSelector, params, apiUrl, excelTitle) {
 	// Fetch user access and initialize DataTable based on it
 	getUserAccess(function (downloadAccess) {
 		let buttons = [];
 
 		// Add Excel button if download access is 1
-		if (downloadAccess === '1') {
+		if (downloadAccess === 1) {
 			buttons.push({
 				extend: 'excel',
-				title: "Branch List"
+				title: excelTitle
 			});
 		}
 

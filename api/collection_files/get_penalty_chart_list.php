@@ -70,6 +70,6 @@ require_once '../../include/views/money_format_india.php';
 
 <script type="text/javascript">
     $(function() {
-        setdtable('#penaltyListTable');
+        setdtable('#penaltyListTable',"Penalty Chart List");
     });
 </script>

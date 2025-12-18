@@ -4,7 +4,7 @@ require_once '../../include/views/money_format_india.php';
 $inputDate = $_POST['toDate'];
 $loan_category = $_POST['loan_category'];
 $to_date = date('Y-m-d', strtotime($inputDate)) . ' 23:59:59';
-
+$month_count = $_POST['month_count'];
 ?>
 
 <style>
@@ -27,7 +27,7 @@ $to_date = date('Y-m-d', strtotime($inputDate)) . ' 23:59:59';
     }
 </style>
 
-<table class="table custom-table">
+<table id = "ledger_view_report_table" class="table custom-table">
     <thead>
         <tr>
             <th rowspan="2" style="width: 50px;">S.No</th>
@@ -41,7 +41,7 @@ $to_date = date('Y-m-d', strtotime($inputDate)) . ' 23:59:59';
             <?php
             $todate = new DateTime($to_date);
             $startDate = clone $todate;
-            $startDate->modify('-11 months');
+            $startDate->modify('-' . ($month_count - 1) . ' months');
             $months = generateMonths($startDate, $todate);
 
             foreach ($months as $month) {
@@ -210,3 +210,11 @@ function generateMonths($start, $end)
 }
 
 $pdo = null; // Close Connection
+
+?>
+
+<script type="text/javascript">
+    $(function() {
+        setdtable('#ledger_view_report_table',"Ledger View Report List");
+    });
+</script>

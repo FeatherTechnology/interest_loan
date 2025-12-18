@@ -783,7 +783,7 @@ $(function () {
 });
 
 function getCustomerEntryTable() {
-    serverSideTable("#customer_create", "", "api/customer_creation_files/customer_creation_list.php");
+    serverSideTable("#customer_create", "", "api/customer_creation_files/customer_creation_list.php" , "Customer Creation List");
 }
 
 async function swapTableAndCreation() {
@@ -954,7 +954,7 @@ function getFamilyInfoTable() {
                     "fam_mobile",
                 ];
                 appendDataToTable("#fam_info_table", response, columnMapping);
-                setdtable("#fam_info_table");
+                setdtable("#fam_info_table", "Family Info List");
                 resolve();
             },
             "json"
@@ -979,7 +979,7 @@ function getFamilyTable() {
                 "action",
             ];
             appendDataToTable("#family_creation_table", response, columnMapping);
-            setdtable("#family_creation_table");
+            setdtable("#family_creation_table", "Family Creation List");
             $("#family_form input").val("");
             $("#family_form input").css("border", "1px solid #cecece");
             $("#family_form select").css("border", "1px solid #cecece");
@@ -1025,7 +1025,7 @@ function getKycTable() {
             'action'
         ];
         appendDataToTable('#kyc_creation_table', response, columnMapping);
-        setdtable('#kyc_creation_table');
+        setdtable('#kyc_creation_table', "KYC Creation List");
         $('#kyc_form input').val('');
         $('#kyc_form input').css('border', '1px solid #cecece');
         $('#kyc_form select').css('border', '1px solid #cecece');
@@ -1051,7 +1051,7 @@ function getKycInfoTable() {
                 'upload',
             ];
             appendDataToTable('#kyc_info', response, columnMapping);
-            setdtable('#kyc_info');
+            setdtable('#kyc_info', "KYC Info List");
             resolve();
         },
             "json"
@@ -1130,7 +1130,7 @@ function getProofTable() {
             'action'
         ];
         appendDataToTable('#proof_creation_table', response, columnMapping);
-        setdtable('#proof_creation_table');
+        setdtable('#proof_creation_table', "Proof Creation List");
     }, 'json')
 }
 
@@ -1164,7 +1164,7 @@ function getBankTable() {
             'action'
         ];
         appendDataToTable('#bank_creation_table', response, columnMapping);
-        setdtable('#bank_creation_table');
+        setdtable('#bank_creation_table', "Bank Creation List");
         $('#bank_form input').val('');
         $('#bank_form input').css('border', '1px solid #cecece');
 
@@ -1183,7 +1183,7 @@ function getBankInfoTable() {
             'ifsc_code',
         ];
         appendDataToTable('#bank_info', response, columnMapping);
-        setdtable('#bank_info');
+        setdtable('#bank_info', "Bank Info List");
     }, 'json')
 }
 
@@ -1214,7 +1214,7 @@ function getPropertyTable() {
             'action'
         ];
         appendDataToTable('#property_creation_table', response, columnMapping);
-        setdtable('#property_creation_table');
+        setdtable('#property_creation_table', "Property Creation List");
         $('#property_form input').val('');
         $('#property_form input').css('border', '1px solid #cecece');
         $('#property_form select').css('border', '1px solid #cecece');
@@ -1235,7 +1235,7 @@ function getPropertyInfoTable() {
             'fam_relationship',
         ];
         appendDataToTable('#prop_info', response, columnMapping);
-        setdtable('#prop_info');
+        setdtable('#prop_info', "Property Info List");
     }, 'json')
 }
 
